@@ -15,7 +15,7 @@ const CommentController = require('../../controllers/CommentController');
 // Routes
 // *************************************** Comments ***************************************
 // CREATE
-router.post('/', authentication, adminAuthorization, trimmer, sanitizer, CommentController.create);
+router.post('/', authentication, adminAuthorization, trimmer, sanitizer, CommentController.createComment);
 
 // READ
 router.get('/', authentication, adminAuthorization, CommentController.getComments);
