@@ -1,0 +1,26 @@
+import { useEffect, useState } from 'react';
+import { apiUsers } from '../api/users';
+
+export const useUsers = () => {
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await apiUsers();
+        if (response.ok) {
+          const usersData = await response.json();
+          setUsers(usersData);
+        } else {
+          const json = await response.json();
+          console.error(json.message);
+        }
+      } catch (error) {
+        //
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  return users;
+};
