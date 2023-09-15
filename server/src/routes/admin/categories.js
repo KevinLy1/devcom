@@ -10,20 +10,20 @@ const { adminAuthorization } = require('../../middlewares/authorization');
 // const validation
 
 // Contrôleur
-const AdminController = require('../../controllers/AdminController');
+const CategoryController = require('../../controllers/CategoryController');
 
 // ******************************* CRUD Categories ************************************
 // CREATE
-router.post('/categories', authentication, adminAuthorization, trimmer, sanitizer, AdminController.createCategory);
+router.post('/', authentication, adminAuthorization, trimmer, sanitizer, CategoryController.createCategory);
 
 // READ
-router.get('/categories', authentication, adminAuthorization, AdminController.getCategories);
-router.get('/categories/:id', authentication, adminAuthorization, AdminController.getCategoryById);
+router.get('/', authentication, adminAuthorization, CategoryController.getCategories);
+router.get('/:id', authentication, adminAuthorization, CategoryController.getCategoryById);
 
 // UPDATE
-router.put('/categories/:id', authentication, adminAuthorization, trimmer, sanitizer, AdminController.updateCategory);
+router.put('/:id', authentication, adminAuthorization, trimmer, sanitizer, CategoryController.updateCategory);
 
 // DELETE
-router.delete('/categories/:id', authentication, adminAuthorization, AdminController.deleteCategory);
+router.delete('/:id', authentication, adminAuthorization, CategoryController.deleteCategory);
 
 module.exports = router;

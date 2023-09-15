@@ -4,10 +4,10 @@ class CommentController {
   async createComment(req, res) {
     try {
       await Comment.create(req.body);
-      return res.sendStatus(201);
+      return res.status(201).json({ message: 'Commentaire ajouté' });
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 
@@ -17,11 +17,11 @@ class CommentController {
       if (comments) {
         res.status(200).json(comments);
       } else {
-        res.status(404).json({ message: 'No comments found.' });
+        res.status(404).json({ message: 'Aucun commentaire' });
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 
@@ -34,14 +34,14 @@ class CommentController {
         if (comment) {
           res.status(200).json(comment);
         } else {
-          res.status(404).json({ message: `Comment #${id} not found` });
+          res.status(404).json({ message: `Commentaire #${id} non trouvé` });
         }
       } else {
-        res.sendStatus(400);
+        res.status(400).json({ message: 'Mauvaise requête' });
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 
@@ -53,18 +53,18 @@ class CommentController {
         const existingComment = await Comment.findById(id);
 
         if (!existingComment) {
-          return res.status(404).json({ message: `Comment #${id} not found` });
+          return res.status(404).json({ message: `Commentaire #${id} non trouvé` });
         } else {
           await Comment.update(id, req.body);
 
-          return res.status(200).json({ message: 'Update successful' });
+          return res.status(200).json({ message: 'Mise à jour réussie' });
         }
       } else {
-        res.sendStatus(400);
+        res.status(400).json({ message: 'Mauvaise requête' });
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 
@@ -78,14 +78,14 @@ class CommentController {
           await Comment.remove(id);
           res.status(200).json({ message: `Comment #${id} deleted` });
         } else {
-          res.status(404).json({ message: `Comment #${id} not found` });
+          res.status(404).json({ message: `Commentaire #${id} non trouvé` });
         }
       } else {
-        res.sendStatus(400);
+        res.status(400).json({ message: 'Mauvaise requête' });
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 
@@ -99,9 +99,7 @@ class CommentController {
         if (comment) {
           const checkReputation = await Comment.checkReputation(req.body.id_user, idComment);
           if (checkReputation)
-            return res.status(401).json({
-              message: `Reputation already set on comment #${idComment} by user #${req.body.id_user}`
-            });
+            return res.status(401).json({ message: 'Réputation déjà existante' });
 
           const commentReputation = await Comment.createCommentReputation({
             id_comment: idComment,
@@ -109,14 +107,14 @@ class CommentController {
           });
           return res.status(201).json(commentReputation);
         } else {
-          res.status(404).json({ message: `Comment #${idComment} not found` });
+          res.status(404).json({ message: `Commentaire #${idComment} non trouvé` });
         }
       } else {
-        res.sendStatus(400);
+        res.status(400).json({ message: 'Mauvaise requête' });
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 
@@ -129,14 +127,14 @@ class CommentController {
         if (commentReputations) {
           res.status(200).json(commentReputations);
         } else {
-          res.status(404).json({ message: `No reputation for comment #${idComment}` });
+          res.status(404).json({ message: `Aucune réputation pour le commentaire #${idComment}` });
         }
       } else {
-        res.sendStatus(400);
+        res.status(400).json({ message: 'Mauvaise requête' });
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 
@@ -148,23 +146,21 @@ class CommentController {
         const existingComment = await Comment.findById(idComment);
 
         if (!existingComment) {
-          return res.status(404).json({ message: `Comment #${idComment} not found` });
+          return res.status(404).json({ message: `Commentaire #${idComment} non trouvé` });
         } else {
           const checkReputation = await Comment.checkReputation(req.body.id_user, idComment);
           if (checkReputation)
-            return res.status(401).json({
-              message: `Reputation already set on comment #${idComment} by user #${req.body.id_user}`
-            });
+            return res.status(401).json({ message: 'Réputation déjà existante' });
 
           await Comment.updateCommentReputation(req.body.id_user, idComment);
-          return res.status(200).json({ message: 'Update successful' });
+          return res.status(200).json({ message: 'Mise à jour réussie' });
         }
       } else {
-        res.sendStatus(400);
+        res.status(400).json({ message: 'Mauvaise requête' });
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 
@@ -176,16 +172,16 @@ class CommentController {
         const existingComment = await Comment.de(req.body.id_user, idComment);
         if (existingComment) {
           await Comment.deleteCommentReputation(idComment, req.body.id_comment);
-          res.status(200).json({ message: `Reputation deleted` });
+          res.status(200).json({ message: `Réputation supprimée` });
         } else {
-          res.status(404).json({ message: `Comment #${idComment} not found` });
+          res.status(404).json({ message: `Commentaire #${idComment} non trouvé` });
         }
       } else {
-        res.sendStatus(400);
+        res.status(400).json({ message: 'Mauvaise requête' });
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 }

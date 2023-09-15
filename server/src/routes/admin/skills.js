@@ -10,20 +10,20 @@ const { adminAuthorization } = require('../../middlewares/authorization');
 // const validation
 
 // Contrôleur
-const AdminController = require('../../controllers/AdminController');
+const SkillController = require('../../controllers/SkillController');
 
 // Routes
 // CREATE
-router.post('/skills', authentication, adminAuthorization, trimmer, sanitizer, AdminController.createSkill);
+router.post('/', authentication, adminAuthorization, trimmer, sanitizer, SkillController.createSkill);
 
 // READ
-router.get('/skills', authentication, adminAuthorization, AdminController.getSkills);
-router.get('/skills/:id', authentication, adminAuthorization, AdminController.getSkillById);
+router.get('/', authentication, adminAuthorization, SkillController.getSkills);
+router.get('/:id', authentication, adminAuthorization, SkillController.getSkillById);
 
 // UPDATE
-router.put('/skills/:id', authentication, adminAuthorization, trimmer, sanitizer, AdminController.updateSkill);
+router.put('/:id', authentication, adminAuthorization, trimmer, sanitizer, SkillController.updateSkill);
 
 // DELETE
-router.delete('/skills/:id', authentication, adminAuthorization, AdminController.deleteSkill);
+router.delete('/:id', authentication, adminAuthorization, SkillController.deleteSkill);
 
 module.exports = router;

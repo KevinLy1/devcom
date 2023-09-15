@@ -9,7 +9,8 @@
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
     "crypto": "node ./src/utils/crypto.js",
     "faker": "node ./src/seeders/faker.js",
-    "test:sanitizer": "node ./src/tests/sanitizer.js"
+    "test:sanitizer": "node ./src/tests/sanitizer.js",
+    "loadData": "node ./src/tests/data.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",

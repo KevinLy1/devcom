@@ -1,5 +1,6 @@
 const EntityRepository = require('../repository/EntityRepository');
 const publicationsTable = 'publications';
+const commentsTable = 'comments';
 const joinCategories = 'publication_categories';
 const joinPublicationReputations = 'publication_reputations';
 
@@ -14,9 +15,25 @@ class Publication {
     return publications.length > 0 ? publications : null;
   }
 
+  async findLatestArticles() {
+    const publications = await EntityRepository.executeQueryWithValues(
+      `SELECT * FROM ${publicationsTable} WHERE type = 'article' ORDER BY date_creation DESC LIMIT 6`
+    );
+    return publications.length > 0 ? publications : null;
+  }
+
+  async findLatestDiscussions() {
+    const publications = await EntityRepository.executeQueryWithValues(
+      `SELECT * FROM ${publicationsTable} WHERE type = 'discussion' ORDER BY date_creation DESC LIMIT 6`
+    );
+    return publications.length > 0 ? publications : null;
+  }
+
   async findById(id) {
     const publications = await EntityRepository.getEntities(publicationsTable, {
-      where: { id_publication: id }
+      where: {
+        id_publication: id
+      }
     });
 
     return publications.length > 0 ? publications[0] : null;
@@ -33,9 +50,7 @@ class Publication {
 
   async remove(id) {
     return await EntityRepository.deleteEntity(publicationsTable, {
-      where: {
-        id_publication: id
-      }
+      id_publication: id
     });
   }
 
@@ -45,7 +60,7 @@ class Publication {
   }
 
   async getCategories(idPublication) {
-    const resultTable = 'publications';
+    const resultTable = 'categories';
     const categories = await EntityRepository.getEntities(joinCategories, {
       where: {
         id_publication: idPublication
@@ -54,7 +69,7 @@ class Publication {
       joinConditions: {
         joinType: 'LEFT JOIN',
         table: `${resultTable}`,
-        on: `${joinCategories}.id_publication = ${resultTable}.id_publication`
+        on: `${joinCategories}.id_category = ${resultTable}.id_category`
       }
     });
 
@@ -88,7 +103,7 @@ class Publication {
 
   async checkReputation(idUser, idPublication) {
     const reputations = await EntityRepository.getEntities(joinPublicationReputations, {
-      includeFields: ['reputaton_value'],
+      includeFields: ['reputation_value'],
       where: {
         id_user: idUser,
         id_publication: idPublication
@@ -105,7 +120,7 @@ class Publication {
       }
     });
 
-    return total.length > 0 ? total.length : null;
+    return total.length > 0 ? total : null;
   }
 
   async updatePublicationReputation(idUser, idPublication, data) {
@@ -121,9 +136,17 @@ class Publication {
   }
   async deletePublicationReputation(idUser, idPublication) {
     return await EntityRepository.deleteEntity(joinPublicationReputations, {
+      id_user: idUser,
+      id_publication: idPublication
+    });
+  }
+
+  // ********************************************** Publication comments **********************************************
+
+  async getComments(id) {
+    return await EntityRepository.getEntities(commentsTable, {
       where: {
-        id_user: idUser,
-        id_publication: idPublication
+        id_publication: id
       }
     });
   }

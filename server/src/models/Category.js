@@ -1,5 +1,6 @@
 const EntityRepository = require('../repository/EntityRepository');
 const categoriesTable = 'categories';
+const joinPublications = 'publication_categories';
 
 class Category {
   async create(data) {
@@ -13,7 +14,7 @@ class Category {
 
   async findById(id) {
     const categories = await EntityRepository.getEntities(categoriesTable, {
-      where: { id_skill: id }
+      where: { id_category: id }
     });
 
     return categories.length > 0 ? categories[0] : null;
@@ -38,6 +39,14 @@ class Category {
 
   async remove(id) {
     return await EntityRepository.deleteEntity(categoriesTable, {
+      where: {
+        id_category: id
+      }
+    });
+  }
+
+  async getPublications(id) {
+    return await EntityRepository.getEntities(joinPublications, {
       where: {
         id_category: id
       }

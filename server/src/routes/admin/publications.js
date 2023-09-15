@@ -46,4 +46,8 @@ router.get('/:id/reputation', authentication, adminAuthorization, PublicationCon
 // DELETE
 router.delete('/:id/reputation', authentication, adminAuthorization, PublicationController.removePublicationReputation);
 
+// *************************************** Publication comments ***************************************
+// READ
+router.get('/:id/comments', authentication, adminAuthorization, PublicationController.getPublicationComments);
+
 module.exports = router;

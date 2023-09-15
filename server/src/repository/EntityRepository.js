@@ -100,11 +100,11 @@ const updateEntity = async (tableName, options) => {
     const whereKeys = Object.keys(where);
 
     if (whereKeys.length === 0) {
-      throw new Error('No WHERE conditions provided.');
+      throw new Error('Il manque des conditions WHERE');
     }
 
     if (setKeys.length === 0) {
-      throw new Error('No fields to update provided.');
+      throw new Error('Il manque le nom des champs à mettre à jour');
     }
 
     const setClause = setKeys.map((key) => `\`${key}\` = ?`).join(', ');

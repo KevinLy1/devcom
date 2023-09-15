@@ -10,19 +10,19 @@ const { adminAuthorization } = require('../../middlewares/authorization');
 // const validation
 
 // Contrôleur
-const AdminController = require('../../controllers/AdminController');
+const SocialNetworkController = require('../../controllers/SocialNetworkController');
 
 // CREATE
-router.post('/social-networks', authentication, adminAuthorization, trimmer, sanitizer, AdminController.createSocialNetwork);
+router.post('/', authentication, adminAuthorization, trimmer, sanitizer, SocialNetworkController.createSocialNetwork);
 
 // READ
-router.get('/social-networks', authentication, adminAuthorization, AdminController.getSocialNetworks);
-router.get('/social-networks/:id', authentication, adminAuthorization, AdminController.getSocialNetworkById);
+router.get('/', authentication, adminAuthorization, SocialNetworkController.getSocialNetworks);
+router.get('/:id', authentication, adminAuthorization, SocialNetworkController.getSocialNetworkById);
 
 // UPDATE
-router.put('/social-networks/:id', authentication, adminAuthorization, trimmer, sanitizer, AdminController.updateSocialNetwork);
+router.put('/:id', authentication, adminAuthorization, trimmer, sanitizer, SocialNetworkController.updateSocialNetwork);
 
 // DELETE
-router.delete('/social-networks/:id', authentication, adminAuthorization, AdminController.deleteSocialNetwork);
+router.delete('/:id', authentication, adminAuthorization, SocialNetworkController.deleteSocialNetwork);
 
 module.exports = router;

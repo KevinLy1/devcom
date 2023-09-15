@@ -4,8 +4,11 @@ Pour générer un certificat SSL en local, utiliser "mkcert" dans le dossier "ce
 
 Exemple :
 ```shell
-# Environment
+# Environnement
 NODE_ENV = production
+
+# CORS
+CORS_ORIGIN = http://localhost:3000 # l'URL du client
 
 # Certificats (si NODE_ENV = production)
 # chemin vers le fichier de clé privée du certificat SSL
@@ -15,7 +18,7 @@ CERT_PUBLIC_KEY_PATH = ./certs/localhost.pem
 # autorité de certification
 CA_PATH = 
 
-# Database Connection
+# Connexion à la base de données
 DB_HOST = localhost
 DB_PORT = 3306
 DB_DIALECT = mariadb
@@ -23,7 +26,7 @@ DB_NAME = devcom
 DB_USER = root
 DB_PASSWORD = root
 
-# Server port
+# Pour du serveur
 SERVER_PORT = 4000
 
 # BCRYPT
@@ -31,6 +34,9 @@ BCRYPT_SALT_ROUNDS = 10
 
 # JWT
 JWT_SECRET_KEY = SECRET_KEY # Utiliser "yarn crypto" pour générer une clé secrète et remplacer SECRET_KEY
-JWT_EXPIRATION = 900 # 900 seconds (15 minutes)
-JWT_COOKIE_EXPIRATION = 900000 # 900 milliseconds (15 minutes)
+REFRESH_JWT_SECRET_KEY = SECRET_KEY_2 # Utiliser encore "yarn crypto" pour générer une autre clé secrète et remplacer SECRET_KEY_2
+JWT_EXPIRATION = 900 # 900 secondes (15 minutes)
+REFRESH_JWT_EXPIRATION = 86400 # 86400 secondes (1 jour)
+JWT_COOKIE_EXPIRATION = 900000 # 900000 millisecondes (15 minutes)
+REFRESH_JWT_COOKIE_EXPIRATION = 86400000 # 86400000 millisecondes (1 jour)
 ```

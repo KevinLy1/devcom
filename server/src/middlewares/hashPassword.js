@@ -9,12 +9,12 @@ const hashPassword = (req, res, next) => {
   if (password) {
     bcrypt.genSalt(saltRounds, (err, salt) => {
       if (err) {
-        return res.status(500).json({ error: 'Error occured during password hash.' });
+        return res.status(500).json({ message: 'Erreur pendant le hachage du mot de passe' });
       }
 
       bcrypt.hash(password, salt, (err, hash) => {
         if (err) {
-          return res.status(500).json({ error: 'Error occured during password hash.' });
+          return res.status(500).json({ message: 'Erreur pendant le hachage du mot de passe' });
         }
 
         req.body.password = hash;

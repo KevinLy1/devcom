@@ -2,16 +2,19 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
 const authentication = (req, res, next) => {
+  const accessToken = req.cookies.accessToken;
+
+  if (!accessToken) {
+    return res.status(401).json({ message: 'Accès non autorisé' });
+  }
+
   try {
-    const token = req.cookies.token;
+    const data = jwt.verify(accessToken, process.env.JWT_SECRET_KEY);
+    req.user = data;
 
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    req.user = decodedToken;
-
-    next();
-  } catch (error) {
-    console.error(error);
-    res.sendStatus(401);
+    return next();
+  } catch {
+    res.status(401).json({ message: 'Accès non autorisé' });
   }
 };
 

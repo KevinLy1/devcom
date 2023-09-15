@@ -21,12 +21,9 @@ const createUsers = () => {
       biography: faker.lorem.paragraph(),
       web_url: faker.internet.url(),
       date_registration: faker.date.past(),
-      date_last_login: faker.date.past(),
-      role: faker.helpers.arrayElement(['administrator', 'moderator', 'user'])
+      role: faker.helpers.arrayElement(['administrator', 'user'])
     });
   }
-
-  return console.log('Users created');
 };
 
 const createSkills = () => {
@@ -36,8 +33,6 @@ const createSkills = () => {
       icon: faker.image.avatarGitHub()
     });
   }
-
-  return console.log('Skills created');
 };
 
 const createSocialNetworks = () => {
@@ -47,14 +42,12 @@ const createSocialNetworks = () => {
       icon: faker.image.avatarGitHub()
     });
   }
-
-  return console.log('Social networks created');
 };
 
 const createPublications = () => {
   for (let i = 0; i < nbEntities; i++) {
     Publication.create({
-      type: faker.helpers.arrayElement(['article', 'question']),
+      type: faker.helpers.arrayElement(['article', 'discussion']),
       title: faker.lorem.words(5),
       description: faker.lorem.sentence(),
       content: faker.lorem.paragraphs(3),
@@ -64,8 +57,6 @@ const createPublications = () => {
       date_update: faker.date.recent()
     });
   }
-
-  return console.log('Publications created');
 };
 
 const createComments = () => {
@@ -78,8 +69,6 @@ const createComments = () => {
       content: faker.lorem.sentence()
     });
   }
-
-  return console.log('Comments created');
 };
 
 const createChildComments = () => {
@@ -93,9 +82,36 @@ const createChildComments = () => {
       parent_comment: faker.number.int({ min: 1, max: nbEntities })
     });
   }
-
-  return console.log('Child comments created');
 };
+
+// const createComments = async () => {
+//   for (let i = 0; i < nbEntities; i++) {
+//     const idPublication = faker.number.int({ min: 1, max: nbEntities });
+
+//     // Créez le commentaire principal et récupérez son insertId
+//     const parentCommentResult = await Comment.create({
+//       date_creation: faker.date.past(),
+//       date_update: faker.date.recent(),
+//       id_publication: idPublication,
+//       id_user: faker.number.int({ min: 1, max: nbEntities }),
+//       content: faker.lorem.sentence()
+//     });
+
+//     const parentCommentId = parentCommentResult.insertId;
+
+//     // Créez trois commentaires enfants pour chaque commentaire principal
+//     for (let j = 0; j < 3; j++) {
+//       await Comment.create({
+//         date_creation: faker.date.past(),
+//         date_update: faker.date.recent(),
+//         id_publication: idPublication,
+//         id_user: faker.number.int({ min: 1, max: nbEntities }),
+//         content: faker.lorem.sentence(),
+//         parent_comment: parentCommentId // Utilisez l'insertId du commentaire principal comme parent
+//       });
+//     }
+//   }
+// };
 
 const createCategories = () => {
   for (let i = 0; i < nbEntities; i++) {
@@ -103,8 +119,6 @@ const createCategories = () => {
       title: faker.lorem.word()
     });
   }
-
-  return console.log('Categories created');
 };
 
 const createUserSocialNetworks = () => {
@@ -199,25 +213,6 @@ const createPublicationReputation = () => {
   }
 };
 
-const createCommentReputation = () => {
-  const uniqueIds = new Set();
-
-  while (uniqueIds.size < nbEntities) {
-    const idUser = faker.number.int({ min: 1, max: nbEntities });
-    const idComment = faker.number.int({ min: 1, max: nbEntities });
-
-    const uniqueId = `${idUser}-${idComment}`;
-    if (!uniqueIds.has(uniqueId)) {
-      uniqueIds.add(uniqueId);
-      Comment.createCommentReputation({
-        id_user: idUser,
-        id_comment: idComment,
-        reputation_value: faker.helpers.arrayElement([1, -1])
-      });
-    }
-  }
-};
-
 // Appeler les fonctions pour créer les entrées dans chaque table
 createUsers();
 createSkills();
@@ -230,5 +225,5 @@ createUserSkills();
 createUserFavoritePublications();
 createPublicationCategories();
 createPublicationReputation();
-createCommentReputation();
 createChildComments();
+console.log('Génération des données terminées');

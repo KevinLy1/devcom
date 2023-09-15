@@ -1,14 +1,21 @@
 const Publication = require('../models/Publication');
 
+BigInt.prototype.toJSON = function () {
+  return this.toString();
+};
+
 class PublicationController {
   // ******************************************** CRUD Publications  ************************************************
   async createPublication(req, res) {
     try {
-      await Publication.create(req.body);
-      return res.sendStatus(201);
+      const result = await Publication.create(req.body);
+      const id_publication = result.insertId;
+      return res
+        .status(201)
+        .json({ message: 'Publication ajoutée', id_publication: id_publication });
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 
@@ -18,11 +25,39 @@ class PublicationController {
       if (publications) {
         res.status(200).json(publications);
       } else {
-        res.status(404).json({ message: 'No publications found.' });
+        res.status(404).json({ message: 'Aucune publication' });
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
+    }
+  }
+
+  async getLatestArticles(req, res) {
+    try {
+      const publications = await Publication.findLatestArticles();
+      if (publications) {
+        res.status(200).json(publications);
+      } else {
+        res.status(404).json({ message: 'Aucun article' });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
+    }
+  }
+
+  async getLatestDiscussions(req, res) {
+    try {
+      const publications = await Publication.findLatestDiscussions();
+      if (publications) {
+        res.status(200).json(publications);
+      } else {
+        res.status(404).json({ message: 'Aucune question' });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 
@@ -35,14 +70,14 @@ class PublicationController {
         if (publication) {
           res.status(200).json(publication);
         } else {
-          res.status(404).json({ message: `Publication #${id} not found` });
+          res.status(404).json({ message: `Publication #${id} non trouvée` });
         }
       } else {
-        res.sendStatus(400);
+        res.status(400).json({ message: 'Mauvaise requête' });
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 
@@ -54,18 +89,18 @@ class PublicationController {
         const existingPublication = await Publication.findById(id);
 
         if (!existingPublication) {
-          return res.status(404).json({ message: `Publication #${id} not found` });
+          return res.status(404).json({ message: `Publication #${id} non trouvée` });
         } else {
           await Publication.update(id, req.body);
 
-          return res.status(200).json({ message: 'Update successful' });
+          return res.status(200).json({ message: 'Mise à jour réussie' });
         }
       } else {
-        res.sendStatus(400);
+        res.status(400).json({ message: 'Mauvaise requête' });
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 
@@ -77,16 +112,16 @@ class PublicationController {
         const publication = await Publication.findById(id);
         if (publication) {
           await Publication.remove(id);
-          res.status(200).json({ message: `Publication #${id} deleted` });
+          res.status(200).json({ message: `Publication #${id} supprimée` });
         } else {
-          res.status(404).json({ message: `Publication #${id} not found` });
+          res.status(404).json({ message: `Publication #${id} non trouvée` });
         }
       } else {
-        res.sendStatus(400);
+        res.status(400).json({ message: 'Mauvaise requête' });
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 
@@ -104,7 +139,7 @@ class PublicationController {
           );
           if (checkCategoryExistence)
             return res.status(401).json({
-              message: `Category already assigned on publication #${idPublication}`
+              message: `Catégorie déjà assignée à la publication #${idPublication}`
             });
 
           const PublicationCategory = await Publication.addCategory({
@@ -113,14 +148,14 @@ class PublicationController {
           });
           return res.status(201).json(PublicationCategory);
         } else {
-          res.status(404).json({ message: `Publication #${idPublication} not found` });
+          res.status(404).json({ message: `Publication #${idPublication} non trouvée` });
         }
       } else {
-        res.sendStatus(400);
+        res.status(400).json({ message: 'Mauvaise requête' });
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 
@@ -135,14 +170,14 @@ class PublicationController {
         } else {
           res
             .status(404)
-            .json({ message: `No categories found for publication #${idPublication}` });
+            .json({ message: `Aucune catégorie pour la publication #${idPublication}` });
         }
       } else {
-        res.sendStatus(400);
+        res.status(400).json({ message: 'Mauvaise requête' });
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 
@@ -153,17 +188,17 @@ class PublicationController {
       if (!isNaN(idPublication)) {
         const publication = await Publication.findById(idPublication);
         if (publication) {
-          await Publication.removeCategory(idPublication, req.body.id_publication);
-          res.status(200).json({ message: `Favorite publication deleted` });
+          await Publication.removeCategory(idPublication, req.body.id_category);
+          res.status(200).json({ message: `Catégorie supprimée` });
         } else {
-          res.status(404).json({ message: `Publication #${idPublication} not found` });
+          res.status(404).json({ message: `Publication #${idPublication} non trouvée` });
         }
       } else {
-        res.sendStatus(400);
+        res.status(400).json({ message: 'Mauvaise requête' });
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 
@@ -181,7 +216,7 @@ class PublicationController {
           );
           if (checkReputation)
             return res.status(401).json({
-              message: `Reputation already set on publication #${idPublication} by user #${req.body.id_user}`
+              message: `Réputation déjà existante sur la publication #${idPublication} par l'utilisateur #${req.body.id_user}`
             });
 
           const publicationReputation = await Publication.createPublicationReputation({
@@ -190,14 +225,14 @@ class PublicationController {
           });
           return res.status(201).json(publicationReputation);
         } else {
-          res.status(404).json({ message: `Publication #${idPublication} not found` });
+          res.status(404).json({ message: `Publication #${idPublication} non trouvée` });
         }
       } else {
-        res.sendStatus(400);
+        res.status(400).json({ message: 'Mauvaise requête' });
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 
@@ -210,14 +245,16 @@ class PublicationController {
         if (publicationReputations) {
           res.status(200).json(publicationReputations);
         } else {
-          res.status(404).json({ message: `No reputation for publication #${idPublication}` });
+          res
+            .status(404)
+            .json({ message: `Aucune réputation pour la publication #${idPublication}` });
         }
       } else {
-        res.sendStatus(400);
+        res.status(400).json({ message: 'Mauvaise requête' });
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 
@@ -229,26 +266,25 @@ class PublicationController {
         const existingPublication = await Publication.findById(idPublication);
 
         if (!existingPublication) {
-          return res.status(404).json({ message: `Publication #${idPublication} not found` });
+          return res.status(404).json({ message: `Publication #${idPublication} non trouvée` });
         } else {
           const checkReputation = await Publication.checkReputation(
             req.body.id_user,
             idPublication
           );
-          if (checkReputation)
-            return res.status(401).json({
-              message: `Reputation already set on publication #${idPublication} by user #${req.body.id_user}`
+          if (checkReputation) {
+            await Publication.updatePublicationReputation(req.body.id_user, idPublication, {
+              reputation_value: req.body.reputation_value
             });
-
-          await Publication.updatePublicationReputation(req.body.id_user, idPublication);
-          return res.status(200).json({ message: 'Update successful' });
+            return res.status(200).json({ message: 'Mise à jour réussie' });
+          }
         }
       } else {
-        res.sendStatus(400);
+        res.status(400).json({ message: 'Mauvaise requête' });
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 
@@ -257,22 +293,43 @@ class PublicationController {
       const idPublication = req.params.id;
 
       if (!isNaN(idPublication)) {
-        const existingPublication = await Publication.deletePublicationReputation(
-          req.body.id_user,
-          idPublication
-        );
+        const existingPublication = await Publication.findById(idPublication);
         if (existingPublication) {
-          await Publication.removeCategory(idPublication, req.body.id_publication);
-          res.status(200).json({ message: `Reputation deleted` });
+          await Publication.deletePublicationReputation(req.body.id_user, idPublication);
+          res.status(200).json({ message: `Réputation supprimée` });
         } else {
-          res.status(404).json({ message: `Publication #${idPublication} not found` });
+          res.status(404).json({ message: `Publication #${idPublication} non trouvée` });
         }
       } else {
-        res.sendStatus(400);
+        res.status(400).json({ message: 'Mauvaise requête' });
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
+    }
+  }
+
+  // ******************************************** Publication comments  ************************************************
+
+  async getPublicationComments(req, res) {
+    try {
+      const idPublication = req.params.id;
+
+      if (!isNaN(idPublication)) {
+        const publicationComments = await Publication.getComments(idPublication);
+        if (publicationComments) {
+          res.status(200).json(publicationComments);
+        } else {
+          res
+            .status(404)
+            .json({ message: `Aucun commentaire pour la publication #${idPublication}` });
+        }
+      } else {
+        res.status(400).json({ message: 'Mauvaise requête' });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 }

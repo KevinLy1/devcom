@@ -9,6 +9,12 @@ const options = {
   port: process.env.DB_PORT
 };
 
-const pool = mariadb.createPool(options);
+let pool;
+
+try {
+  pool = mariadb.createPool(options);
+} catch (error) {
+  console.error("Une erreur s'est produite pendant la connexion à la base de données", error);
+}
 
 module.exports = pool;

@@ -178,7 +178,7 @@ class User {
     const publications = await EntityRepository.getEntities(joinFavoritePublications, {
       where: {
         id_user: idUser,
-        id_skill: idPublication
+        id_publication: idPublication
       },
       whereOperator: 'AND'
     });
@@ -189,7 +189,7 @@ class User {
   async removeFavoritePublication(idUser, idPublication) {
     return await EntityRepository.deleteEntity({
       id_user: idUser,
-      id_skill: idPublication
+      id_publication: idPublication
     });
   }
 }

@@ -12,20 +12,21 @@ class UserProfileController {
         if (user) {
           const checkSkillExistence = await User.checkSkillExistence(idUser, req.body.id_skill);
           if (checkSkillExistence)
-            return res.status(401).json({ message: `Skill already owned by user #${idUser}` });
-          // Vérifier pour l'erreur TypeError: Do not know how to serialize a BigInt mais l'insertion fonctionne
+            return res
+              .status(401)
+              .json({ message: `Compétence déjà existante pour l'utilisateur #${idUser}` });
 
           const userSkill = await User.addSkill({ id_user: idUser, ...req.body });
           return res.status(201).json(userSkill);
         } else {
-          res.status(404).json({ message: `User #${idUser} not found` });
+          res.status(404).json({ message: `Utilisateur #${idUser} non trouvé` });
         }
       } else {
-        res.sendStatus(400);
+        res.status(400).json({ message: 'Mauvaise requête' });
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 
@@ -38,14 +39,14 @@ class UserProfileController {
         if (userSkills) {
           res.status(200).json(userSkills);
         } else {
-          res.status(404).json({ message: `No skills found for user #${idUser}` });
+          res.status(404).json({ message: `Aucune compétence pour l'utilisateur #${idUser}` });
         }
       } else {
-        res.sendStatus(400);
+        res.status(400).json({ message: 'Mauvaise requête' });
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 
@@ -57,16 +58,16 @@ class UserProfileController {
         const user = await User.findById(idUser);
         if (user) {
           await User.removeSkill(idUser, req.body.id_skill);
-          res.status(200).json({ message: `Skill deleted` });
+          res.status(200).json({ message: `Compétence supprimée` });
         } else {
-          res.status(404).json({ message: `User #${idUser} not found` });
+          res.status(404).json({ message: `Utilisateur #${idUser} non trouvé` });
         }
       } else {
-        res.sendStatus(400);
+        res.status(400).json({ message: 'Mauvaise requête' });
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 
@@ -84,19 +85,19 @@ class UserProfileController {
           if (checkSocialNetworkExistence)
             return res
               .status(401)
-              .json({ message: `Social network already assigned by user #${idUser}` });
+              .json({ message: `Réseau social déjà ajouté pour l'utilisateur #${idUser}` });
 
           const userSocialNetwork = await User.addSocialNetwork({ id_user: idUser, ...req.body });
           return res.status(201).json(userSocialNetwork);
         } else {
-          res.status(404).json({ message: `User #${idUser} not found` });
+          res.status(404).json({ message: `Utilisateur #${idUser} non trouvé` });
         }
       } else {
-        res.sendStatus(400);
+        res.status(400).json({ message: 'Mauvaise requête' });
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 
@@ -109,14 +110,14 @@ class UserProfileController {
         if (userSocialNetworks) {
           res.status(200).json(userSocialNetworks);
         } else {
-          res.status(404).json({ message: `No social networks found for user #${idUser}` });
+          res.status(404).json({ message: `Aucun réseau social pour l'utilisateur #${idUser}` });
         }
       } else {
-        res.sendStatus(400);
+        res.status(400).json({ message: 'Mauvaise requête' });
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 
@@ -128,7 +129,7 @@ class UserProfileController {
         const existingUser = await User.findById(idUser);
 
         if (!existingUser) {
-          return res.status(404).json({ message: `User #${idUser} not found` });
+          return res.status(404).json({ message: `Utilisateur #${idUser} non trouvé` });
         } else {
           const checkSocialNetworkExistence = await User.checkSocialNetworkExistence(
             idUser,
@@ -137,17 +138,17 @@ class UserProfileController {
           if (checkSocialNetworkExistence)
             return res
               .status(401)
-              .json({ message: `Social network already assigned by user #${idUser}` });
+              .json({ message: `Réseau social déjà ajouté par l'utilisateur #${idUser}` });
 
           await User.updateSocialNetwork(idUser, req.body.id_social_network);
-          return res.status(200).json({ message: 'Update successful' });
+          return res.status(200).json({ message: 'Mise à jour réussie' });
         }
       } else {
-        res.sendStatus(400);
+        res.status(400).json({ message: 'Mauvaise requête' });
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 
@@ -159,16 +160,16 @@ class UserProfileController {
         const user = await User.findById(idUser);
         if (user) {
           await User.removeSocialNetwork(idUser, req.body.id_social_network);
-          res.status(200).json({ message: `Social network deleted` });
+          res.status(200).json({ message: `Réseau social supprimé` });
         } else {
-          res.status(404).json({ message: `User #${idUser} not found` });
+          res.status(404).json({ message: `Utilisateur #${idUser} non trouvé` });
         }
       } else {
-        res.sendStatus(400);
+        res.status(400).json({ message: 'Mauvaise requête' });
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 
@@ -186,7 +187,7 @@ class UserProfileController {
           if (checkFavoritePublicationExistence)
             return res
               .status(401)
-              .json({ message: `Publication already in favorites of user #${idUser}` });
+              .json({ message: `Publication déjà dans les favoris de l'utilisateur #${idUser}` });
 
           const userFavoritePublication = await User.addFavoritePublication({
             id_user: idUser,
@@ -194,14 +195,14 @@ class UserProfileController {
           });
           return res.status(201).json(userFavoritePublication);
         } else {
-          res.status(404).json({ message: `User #${idUser} not found` });
+          res.status(404).json({ message: `Utilisateur #${idUser} non trouvé` });
         }
       } else {
-        res.sendStatus(400);
+        res.status(400).json({ message: 'Mauvaise requête' });
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 
@@ -214,14 +215,16 @@ class UserProfileController {
         if (userFavoritePublications) {
           res.status(200).json(userFavoritePublications);
         } else {
-          res.status(404).json({ message: `No favorite publications found for user #${idUser}` });
+          res
+            .status(404)
+            .json({ message: `Pas de publication favorite pour l'utilisateur #${idUser}` });
         }
       } else {
-        res.sendStatus(400);
+        res.status(400).json({ message: 'Mauvaise requête' });
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 
@@ -233,16 +236,16 @@ class UserProfileController {
         const user = await User.findById(idUser);
         if (user) {
           await User.removeFavoritePublication(idUser, req.body.id_publication);
-          res.status(200).json({ message: `Favorite publication deleted` });
+          res.status(200).json({ message: `Favori supprimé` });
         } else {
-          res.status(404).json({ message: `User #${idUser} not found` });
+          res.status(404).json({ message: `Utilisateur #${idUser} non trouvé` });
         }
       } else {
-        res.sendStatus(400);
+        res.status(400).json({ message: 'Mauvaise requête' });
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      res.status(500).json({ message: 'Erreur de serveur interne' });
     }
   }
 }
