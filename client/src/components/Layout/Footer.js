@@ -1,6 +1,6 @@
 import { Typography } from '@material-tailwind/react';
 
-export function Footer() {
+const Footer = () => {
   const publishingYear = 2023;
   let currentYear = new Date().getFullYear();
 
@@ -32,4 +32,6 @@ export function Footer() {
       </Typography>
     </footer>
   );
-}
+};
+
+export default Footer;

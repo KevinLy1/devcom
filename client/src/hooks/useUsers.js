@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { apiUsers } from '../api/users';
 
-export const useUsers = () => {
+const useUsers = () => {
   const [users, setUsers] = useState([]);
   useEffect(() => {
     const fetchUsers = async () => {
@@ -24,3 +24,5 @@ export const useUsers = () => {
 
   return users;
 };
+
+export default useUsers;

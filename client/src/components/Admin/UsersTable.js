@@ -82,7 +82,7 @@ const TABLE_ROWS = [
   }
 ];
 
-export function UsersTable() {
+const UsersTable = () => {
   return (
     <Card className="h-full w-full">
       <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -214,4 +214,6 @@ export function UsersTable() {
       </CardFooter>
     </Card>
   );
-}
+};
+
+export default UsersTable;

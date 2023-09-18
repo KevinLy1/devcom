@@ -132,13 +132,18 @@ export const useDiscussions = () => {
   useEffect(() => {
     const fetchDiscussions = async () => {
       try {
+        let discussionsData = [];
         const response = await apiPublicationsByCategory(id);
         if (response.ok) {
-          const publicationsData = await response.json();
-          const discussions = publicationsData.filter(
-            (publication) => publication.type === 'discussion'
-          );
-          setDiscussions(discussions);
+          const publications = await response.json();
+          publications.forEach(async (publication) => {
+            const response2 = await apiPublicationById(publication.id_publication);
+            if (response2.ok) {
+              const publicationData = await response2.json();
+              if (publicationData.type === 'discussion') discussionsData.push(publicationData);
+              setDiscussions(discussionsData);
+            }
+          });
         } else {
           const json = await response.json();
           console.error(json.message);

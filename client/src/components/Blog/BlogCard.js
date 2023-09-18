@@ -8,7 +8,7 @@ import {
   Avatar
 } from '@material-tailwind/react';
 
-export function BlogCard(props) {
+const BlogCard = (props) => {
   return (
     <Card className="max-w-[24rem] overflow-hidden flex flex-col">
       <CardHeader
@@ -54,4 +54,6 @@ export function BlogCard(props) {
       </CardFooter>
     </Card>
   );
-}
+};
+
+export default BlogCard;

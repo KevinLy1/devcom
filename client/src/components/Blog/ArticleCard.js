@@ -12,11 +12,16 @@ import {
 } from '../../api/publications';
 import { notification } from 'antd';
 
-export function ArticleCard(props) {
+const ArticleCard = (props) => {
   const { userData } = useAuth();
 
-  const categoriesTitles =
-    props.categories.length > 0 ? props.categories.map((category) => category.title) : [];
+  const categories =
+    props.categories.length > 0
+      ? props.categories.map((category) => ({
+          id_category: category.id_category,
+          title: category.title
+        }))
+      : [];
 
   let totalReputation = 0;
   if (props.reputation.length > 0) {
@@ -189,12 +194,12 @@ export function ArticleCard(props) {
             )}
           </span>
           <div className="flex space-x-2">
-            {categoriesTitles.map((category, index) => (
-              <div
-                key={index}
-                className="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-gray-800 dark:bg-slate-800 rounded cursor-pointer hover:bg-gray-500 dark:hover:bg-gray-700">
-                {category}
-              </div>
+            {categories.map((category) => (
+              <Link key={category.id_category} to={`/category/${category.id_category}`}>
+                <div className="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-gray-800 dark:bg-slate-800 rounded cursor-pointer hover:bg-gray-500 dark:hover:bg-gray-700">
+                  {category.title}
+                </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -238,8 +243,13 @@ export function ArticleCard(props) {
         <div className="flex items-center gap-1">
           <FiMessageCircle className="text-gray-500 dark:text-gray-400" />
           <span className="text-gray-500 dark:text-gray-400">{nbComments}</span>
+          {/* <Link to={`/article/${props.idPublication}#comments`}>
+            <span className="text-gray-500 dark:text-gray-400">{nbComments}</span>
+          </Link> */}
         </div>
       </CardFooter>
     </Card>
   );
-}
+};
+
+export default ArticleCard;

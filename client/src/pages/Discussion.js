@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import useDocumentTitle from '../hooks/useDocumentTitle';
-import { Discussion } from '../components/Blog/Discussion';
-import { Comment } from '../components/Blog/Comment';
+import Discussion from '../components/Blog/Discussion';
+import Comment from '../components/Blog/Comment';
 import { apiUserById } from '../api/users';
 import {
   apiPublicationById,

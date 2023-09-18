@@ -7,7 +7,7 @@ import {
   apiPublicationComments
 } from '../api/publications';
 
-export const usePublications = () => {
+const usePublications = () => {
   const [publications, setPublications] = useState([]);
   useEffect(() => {
     const fetchPublications = async () => {
@@ -192,3 +192,5 @@ export const useDiscussions = () => {
 
   return { discussions, users, categories, reputations, comments };
 };
+
+export default usePublications;

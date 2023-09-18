@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import useDocumentTitle from '../hooks/useDocumentTitle';
-import { ArticleCard } from '../components/Blog/ArticleCard';
+import ArticleCard from '../components/Blog/ArticleCard';
 import { FaAngleDoubleLeft, FaAngleLeft, FaAngleRight, FaAngleDoubleRight } from 'react-icons/fa';
-import moment from 'moment';
-import 'moment/locale/fr';
 import { Input } from '@material-tailwind/react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useArticles } from '../hooks/usePublications';
+import moment from 'moment';
+import 'moment/locale/fr';
 
 const ArticlesPage = () => {
   useDocumentTitle('Liste des articles');

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-export const CategoryCard = (props) => {
+const CategoryCard = (props) => {
   return (
     <Link
       className="relative cursor-pointer hover:shadow-sm space-y-8 flex flex-col justify-between md:min-h-[178px]"
@@ -40,3 +40,5 @@ export const CategoryCard = (props) => {
     </Link>
   );
 };
+
+export default CategoryCard;

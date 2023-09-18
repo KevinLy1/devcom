@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import useDocumentTitle from '../hooks/useDocumentTitle';
-import { DiscussionCard } from '../components/Blog/DiscussionCard';
+import DiscussionCard from '../components/Blog/DiscussionCard';
 import { FaAngleDoubleLeft, FaAngleLeft, FaAngleRight, FaAngleDoubleRight } from 'react-icons/fa';
 import moment from 'moment';
 import 'moment/locale/fr';

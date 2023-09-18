@@ -19,6 +19,7 @@ router.post('/', authentication, trimmer, sanitizer, CommentController.createCom
 // READ
 router.get('/', CommentController.getComments);
 router.get('/:id', CommentController.getCommentById);
+router.get('/:id/replies', CommentController.getReplies);
 
 // UPDATE
 router.get('/:id', authentication, authorAuthorization, trimmer, sanitizer, CommentController.updateComment);

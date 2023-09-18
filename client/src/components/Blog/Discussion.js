@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Breadcrumbs } from '@material-tailwind/react';
 
-export const Discussion = (props) => {
+const Discussion = (props) => {
   const categoriesTitles =
     props.categories.length > 0 ? props.categories.map((category) => category.title) : [];
 
@@ -168,65 +168,6 @@ export const Discussion = (props) => {
       </div>
     </>
   );
-  // return (
-  //   <div className="flex flex-col gap-3">
-  //     <Breadcrumbs
-  //       separator={<ArrowLongRightIcon className="h-4 w-4 text-white" strokeWidth={2.5} />}
-  //       className="rounded-full border border-white bg-gradient-to-tr from-gray-900 to-gray-800 p-1">
-  //       <a href="#" className="rounded-full bg-white px-3 py-1 font-medium text-gray-900">
-  //         Docs
-  //       </a>
-  //       <a href="#" className="rounded-full bg-white px-3 py-1 font-medium text-gray-900">
-  //         Components
-  //       </a>
-  //       <a href="#" className="rounded-full bg-white px-3 py-1 font-medium text-gray-900">
-  //         Breadcrumbs
-  //       </a>
-  //     </Breadcrumbs>
-  //     <div className="flex justify-center space-x-2 mb-4">
-  //       {categoriesTitles.map((category, index) => (
-  //         <div
-  //           key={index}
-  //           className="uppercase px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-gray-800 dark:bg-slate-800 rounded cursor-pointer hover:bg-gray-500 dark:hover:bg-blue-900">
-  //           {category}
-  //         </div>
-  //       ))}
-  //     </div>
-  //     <div className="flex justify-between mx-auto max-w-screen-xl">
-  //       <article className="mx-auto w-full max-w-2xl">
-  //         <div className="mb-4 lg:mb-6">
-  //           <h1 className="mb-4 text-3xl font-extrabold leading-tight lg:mb-6 lg:text-4xl">
-  //             {props.title}
-  //           </h1>
-  //           <address className="flex items-center mb-6 not-italic my-10">
-  //             <div className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
-  //               <img
-  //                 className="mr-4 w-16 h-16 rounded-full"
-  //                 src={props.authorAvatar}
-  //                 alt={props.author}
-  //               />
-  //               <div>
-  //                 <Link to={`/users/${props.idUser}`} rel="author" className="text-xl font-bold">
-  //                   {props.author}
-  //                 </Link>
-  //                 <p className="text-base font-light text-gray-700 dark:text-gray-400">
-  //                   Publié le : <time>{props.dateCreation}</time>
-  //                   <br />
-  //                   Dernière mise à jour : <time>{props.dateUpdate}</time>
-  //                 </p>
-  //               </div>
-  //             </div>
-  //           </address>
-  //         </div>
-  //         {props.image && (
-  //           <div className="w-full h-52 max-h-52">
-  //             <img src={props.image} alt={props.title} className="w-full h-full object-cover" />
-  //           </div>
-  //         )}
-  //         <div className="italic my-10">{props.description}</div>
-  //         <div>{props.content}</div>
-  //       </article>
-  //     </div>
-  //   </div>
-  // );
 };
+
+export default Discussion;

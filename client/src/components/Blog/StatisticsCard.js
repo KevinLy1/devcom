@@ -1,4 +1,4 @@
-export const StatisticsCard = (props) => {
+const StatisticsCard = (props) => {
   return (
     <div className="flex flex-col sm:flex-row gap-x-4 gap-y-4 rounded-2xl sm:max-w-none lg:max-w-none lg:flex-none lg:flex-col lg:items-start lg:gap-x-16 lg:p-8">
       <div className="flex w-48 lg:w-auto items-center gap-4">
@@ -11,3 +11,5 @@ export const StatisticsCard = (props) => {
     </div>
   );
 };
+
+export default StatisticsCard;

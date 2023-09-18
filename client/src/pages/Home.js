@@ -1,11 +1,11 @@
-import { BlogCard } from '../components/Blog/BlogCard';
-import { StatisticsCard } from '../components/Blog/StatisticsCard';
-import { CategoryCard } from '../components/Blog/CategoryCard';
+import BlogCard from '../components/Blog/BlogCard';
+import StatisticsCard from '../components/Blog/StatisticsCard';
+import CategoryCard from '../components/Blog/CategoryCard';
 import useDocumentTitle from '../hooks/useDocumentTitle';
 import useCategories from '../hooks/useCategories';
 import { useLatestArticles, useLatestDiscussions } from '../hooks/useLatestPublications';
-import { useUsers } from '../hooks/useUsers';
-import { usePublications } from '../hooks/usePublications';
+import useUsers from '../hooks/useUsers';
+import usePublications from '../hooks/usePublications';
 import moment from 'moment';
 import 'moment/locale/fr';
 

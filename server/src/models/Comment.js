@@ -35,6 +35,16 @@ class Comment {
       }
     });
   }
+
+  async getReplies(id) {
+    const replies = await EntityRepository.getEntities(commentsTable, {
+      where: {
+        parent_comment: id
+      }
+    });
+
+    return replies.length > 0 ? replies : null;
+  }
 }
 
 module.exports = new Comment();

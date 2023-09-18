@@ -18,7 +18,7 @@ import useAuth from '../../contexts/AuthContext';
 import { notification } from 'antd';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 
-export function Header() {
+const Header = () => {
   const categories = useCategories();
 
   const [openNav, setOpenNav] = useState(false);
@@ -218,4 +218,6 @@ export function Header() {
       </Collapse>
     </Navbar>
   );
-}
+};
+
+export default Header;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Tabs, TabsHeader, TabsBody, Tab, TabPanel } from '@material-tailwind/react';
 import { Square3Stack3DIcon, UserCircleIcon, Cog6ToothIcon } from '@heroicons/react/24/solid';
-import { UsersTable } from '../../components/Admin/UsersTable';
+import UsersTable from '../../components/Admin/UsersTable';
 
 const AdminDashboardPage = () => {
   const data = [

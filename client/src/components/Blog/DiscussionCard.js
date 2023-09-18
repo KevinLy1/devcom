@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 // } from '../../api/publications';
 // import { notification } from 'antd';
 
-export function DiscussionCard(props) {
+const DiscussionCard = (props) => {
   // const { userData } = useAuth();
 
   const categoriesTitles =
@@ -238,4 +238,6 @@ export function DiscussionCard(props) {
       </div>
     </div>
   );
-}
+};
+
+export default DiscussionCard;
