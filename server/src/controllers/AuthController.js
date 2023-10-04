@@ -10,7 +10,6 @@ class AuthController {
       if (!user) {
         return res.status(401).json({ message: 'Identifiants invalides' });
       } else {
-        // console.log(user);
         const passwordCheck = await bcrypt.compare(req.body.password, user.password);
         if (!passwordCheck) {
           res.status(401).json({ message: 'Identifiants invalides' });

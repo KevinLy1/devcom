@@ -1,19 +1,26 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Avatar, Card, CardHeader, CardBody, CardFooter, Button } from '@material-tailwind/react';
 import { FiMessageCircle } from 'react-icons/fi';
-import { AiOutlineStar } from 'react-icons/ai';
-import { FaThumbsUp, FaThumbsDown } from 'react-icons/fa';
+import { FaThumbsUp, FaThumbsDown, FaStar } from 'react-icons/fa';
 import { useAuth } from '../../contexts/AuthContext';
-import { apiAddFavoritePublication, apiDeleteFavoritePublication } from '../../api/users';
 import {
   apiCreatePublicationReputation,
-  apiDeletePublicationReputation
+  apiDeletePublicationReputation,
+  apiUpdatePublicationReputation
 } from '../../api/publications';
+import { apiAddFavoritePublication, apiDeleteFavoritePublication } from '../../api/users';
 import { notification } from 'antd';
 
 const ArticleCard = (props) => {
   const { userData } = useAuth();
+
+  const [articleLocalState, setArticleLocalState] = useState({
+    isLiked: false,
+    isDisliked: false,
+    isFavorite: false,
+    reputation: 0
+  });
 
   const categories =
     props.categories.length > 0
@@ -23,31 +30,84 @@ const ArticleCard = (props) => {
         }))
       : [];
 
-  let totalReputation = 0;
-  if (props.reputation.length > 0) {
-    for (let i = 0; i < props.reputation.length; i++) {
-      totalReputation += props.reputation[i].reputation_value;
+  useEffect(() => {
+    let totalReputation = 0;
+    let isLiked = false;
+    let isDisliked = false;
+    let isFavorite = false;
+
+    if (props.reputation.length > 0) {
+      for (let i = 0; i < props.reputation.length; i++) {
+        totalReputation += props.reputation[i].reputation_value;
+      }
+      if (userData) {
+        isLiked = props.reputation.some(
+          (reputation) =>
+            reputation.id_user === userData.id_user && reputation.reputation_value === 1
+        );
+        isDisliked = props.reputation.some(
+          (reputation) =>
+            reputation.id_user === userData.id_user && reputation.reputation_value === -1
+        );
+        isFavorite = props.isFavorite;
+      }
     }
-  }
+    setArticleLocalState((prevState) => ({
+      ...prevState,
+      isLiked: isLiked,
+      isDisliked: isDisliked,
+      isFavorite: isFavorite,
+      reputation: totalReputation
+    }));
+  }, [props.reputation, props.isFavorite, userData]);
 
   const nbComments = props.comments.length > 0 ? props.comments.length : 0;
 
   const handleDislike = async () => {
     if (userData) {
-      const response = await apiCreatePublicationReputation(props.idPublication, {
-        id_user: userData.id_user,
-        reputation_value: -1
-      });
-      if (response.ok) {
-        notification.success({
-          message: `Dislike de la publication ${props.idPublication}`
+      if (articleLocalState.isLiked) {
+        const response = await apiUpdatePublicationReputation(props.idPublication, {
+          id_user: userData.id_user,
+          reputation_value: -1
         });
+        if (response.ok) {
+          setArticleLocalState((prevState) => ({
+            ...prevState,
+            isLiked: false,
+            isDisliked: true,
+            reputation: prevState.reputation - 2
+          }));
+          notification.success({
+            message: `Dislike de la publication ${props.idPublication}`
+          });
+        } else {
+          const error = await response.json();
+          notification.error({
+            message: 'Erreur lors du dislike',
+            description: error.message
+          });
+        }
       } else {
-        const error = await response.json();
-        notification.error({
-          message: 'Erreur lors du dislike',
-          description: error.message
+        const response = await apiCreatePublicationReputation(props.idPublication, {
+          id_user: userData.id_user,
+          reputation_value: -1
         });
+        if (response.ok) {
+          setArticleLocalState((prevState) => ({
+            ...prevState,
+            isDisliked: true,
+            reputation: prevState.reputation - 1
+          }));
+          notification.success({
+            message: `Dislike de la publication ${props.idPublication}`
+          });
+        } else {
+          const error = await response.json();
+          notification.error({
+            message: 'Erreur lors du dislike',
+            description: error.message
+          });
+        }
       }
     } else {
       notification.error({
@@ -58,43 +118,49 @@ const ArticleCard = (props) => {
 
   const handleLike = async () => {
     if (userData) {
-      const response = await apiCreatePublicationReputation(props.idPublication, {
-        id_user: userData.id_user,
-        reputation_value: 1
-      });
-      if (response.ok) {
-        notification.success({
-          message: `Like de la publication ${props.idPublication}`
+      if (articleLocalState.isDisliked) {
+        const response = await apiUpdatePublicationReputation(props.idPublication, {
+          id_user: userData.id_user,
+          reputation_value: 1
         });
+        if (response.ok) {
+          setArticleLocalState((prevState) => ({
+            ...prevState,
+            isLiked: true,
+            isDisliked: false,
+            reputation: prevState.reputation + 2
+          }));
+          notification.success({
+            message: `Like de la publication ${props.idPublication}`
+          });
+        } else {
+          const error = await response.json();
+          notification.error({
+            message: 'Erreur lors du like',
+            description: error.message
+          });
+        }
       } else {
-        const error = await response.json();
-        notification.error({
-          message: 'Erreur lors du like',
-          description: error.message
+        const response = await apiCreatePublicationReputation(props.idPublication, {
+          id_user: userData.id_user,
+          reputation_value: 1
         });
-      }
-    } else {
-      notification.error({
-        message: "Action impossible, vous n'êtes pas connecté(e)"
-      });
-    }
-  };
-
-  const handleFavorite = async () => {
-    if (userData) {
-      const response = await apiAddFavoritePublication(userData.id_user, {
-        id_publication: props.idPublication
-      });
-      if (response.ok) {
-        notification.success({
-          message: `Publication ${props.idPublication} ajoutée aux favoris !`
-        });
-      } else {
-        const error = await response.json();
-        notification.error({
-          message: "Erreur lors de l'ajout du favori",
-          description: error.message
-        });
+        if (response.ok) {
+          setArticleLocalState((prevState) => ({
+            ...prevState,
+            isLiked: true,
+            reputation: prevState.reputation + 1
+          }));
+          notification.success({
+            message: `Like de la publication ${props.idPublication}`
+          });
+        } else {
+          const error = await response.json();
+          notification.error({
+            message: 'Erreur lors du like',
+            description: error.message
+          });
+        }
       }
     } else {
       notification.error({
@@ -109,6 +175,11 @@ const ArticleCard = (props) => {
         id_user: userData.id_user
       });
       if (response.ok) {
+        setArticleLocalState((prevState) => ({
+          ...prevState,
+          isDisliked: false,
+          reputation: prevState.reputation + 1
+        }));
         notification.success({
           message: `Dislike de la publication ${props.idPublication} annulé`
         });
@@ -132,6 +203,11 @@ const ArticleCard = (props) => {
         id_user: userData.id_user
       });
       if (response.ok) {
+        setArticleLocalState((prevState) => ({
+          ...prevState,
+          isLiked: false,
+          reputation: prevState.reputation - 1
+        }));
         notification.success({
           message: `Like de la publication ${props.idPublication} annulé`
         });
@@ -149,19 +225,50 @@ const ArticleCard = (props) => {
     }
   };
 
-  const handleRemoveFavorite = async () => {
+  const handleFavorite = async () => {
+    if (userData) {
+      const response = await apiAddFavoritePublication(userData.id_user, {
+        id_publication: props.idPublication
+      });
+      if (response.ok) {
+        setArticleLocalState((prevState) => ({
+          ...prevState,
+          isFavorite: true
+        }));
+        // notification.success({
+        //   message: `Publication ${props.idPublication} ajoutée aux favoris`
+        // });
+      } else {
+        const error = await response.json();
+        notification.error({
+          message: "Erreur lors de l'ajout du favori",
+          description: error.message
+        });
+      }
+    } else {
+      notification.error({
+        message: "Action impossible, vous n'êtes pas connecté(e)"
+      });
+    }
+  };
+
+  const handleCancelFavorite = async () => {
     if (userData) {
       const response = await apiDeleteFavoritePublication(userData.id_user, {
         id_publication: props.idPublication
       });
       if (response.ok) {
-        notification.success({
-          message: `Publication ${props.idPublication} supprimée des favoris !`
-        });
+        setArticleLocalState((prevState) => ({
+          ...prevState,
+          isFavorite: false
+        }));
+        // notification.success({
+        //   message: `Publication ${props.idPublication} supprimée des favoris`
+        // });
       } else {
         const error = await response.json();
         notification.error({
-          message: 'Erreur lors de la suppresion du favori',
+          message: 'Erreur lors de la suppression du favori',
           description: error.message
         });
       }
@@ -226,26 +333,23 @@ const ArticleCard = (props) => {
       <CardFooter className="mt-2 flex justify-between">
         <div className="flex items-center gap-1 dark:text-white">
           <FaThumbsUp
-            className={`cursor-pointer ${props.isLiked ? 'text-green-500' : ''}`}
-            onClick={props.isLiked ? handleCancelLike : handleLike}
+            className={`cursor-pointer ${articleLocalState.isLiked ? 'text-green-500' : ''}`}
+            onClick={articleLocalState.isLiked ? handleCancelLike : handleLike}
           />
-          {totalReputation}
+          {articleLocalState.reputation}
           <FaThumbsDown
-            className={`cursor-pointer ${props.isDisliked ? 'text-red-500' : ''}`}
-            onClick={props.isDisliked ? handleCancelDislike : handleDislike}
+            className={`cursor-pointer ${articleLocalState.isDisliked ? 'text-red-500' : ''}`}
+            onClick={articleLocalState.isDisliked ? handleCancelDislike : handleDislike}
           />
-          <AiOutlineStar
-            className={`cursor-pointer ${props.isFavorite ? 'text-yellow-500' : ''}`}
-            onClick={props.isFavorite ? handleRemoveFavorite : handleFavorite}
+          <FaStar
+            className={`cursor-pointer ${articleLocalState.isFavorite ? 'text-yellow-500' : ''}`}
+            onClick={articleLocalState.isFavorite ? handleCancelFavorite : handleFavorite}
           />
         </div>
         Partager
         <div className="flex items-center gap-1">
           <FiMessageCircle className="text-gray-500 dark:text-gray-400" />
           <span className="text-gray-500 dark:text-gray-400">{nbComments}</span>
-          {/* <Link to={`/article/${props.idPublication}#comments`}>
-            <span className="text-gray-500 dark:text-gray-400">{nbComments}</span>
-          </Link> */}
         </div>
       </CardFooter>
     </Card>

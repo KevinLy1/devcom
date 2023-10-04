@@ -97,7 +97,7 @@ const Article = (props) => {
                     <div className="flex flex-wrap gap-2">
                       {categories.map((category) => (
                         <Link key={category.id_category} to={`/category/${category.id_category}`}>
-                          <div className="uppercase px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-gray-800 dark:bg-slate-800 rounded cursor-pointer hover:bg-gray-500 dark:hover:bg-blue-900">
+                          <div className="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-gray-800 dark:bg-slate-800 rounded cursor-pointer hover:bg-gray-500 dark:hover:bg-blue-900">
                             {category.title}
                           </div>
                         </Link>

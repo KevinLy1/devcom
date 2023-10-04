@@ -157,21 +157,39 @@ class User {
     return await EntityRepository.createEntity(joinFavoritePublications, data);
   }
 
+  // async getFavoritePublications(idUser) {
+  //   const resultTable = 'publications';
+  //   const publications = await EntityRepository.getEntities(joinFavoritePublications, {
+  //     where: {
+  //       id_user: idUser
+  //     },
+  //     join: true,
+  //     joinConditions: {
+  //       joinType: 'LEFT JOIN',
+  //       table: `${resultTable}`,
+  //       on: `${joinFavoritePublications}.id_publication = ${resultTable}.id_publication`
+  //     }
+  //   });
+
+  //   return publications.length > 0 ? publications : null;
+  // }
+
   async getFavoritePublications(idUser) {
-    const resultTable = 'publications';
-    const publications = await EntityRepository.getEntities(joinFavoritePublications, {
+    // const resultTable = 'publications';
+
+    const favoritesPublications = await EntityRepository.getEntities(joinFavoritePublications, {
       where: {
         id_user: idUser
-      },
-      join: true,
-      joinConditions: {
-        joinType: 'LEFT JOIN',
-        table: `${resultTable}`,
-        on: `${joinFavoritePublications}.id_publication = ${resultTable}.id_publication`
       }
+      // join: true,
+      // joinConditions: {
+      //   joinType: 'LEFT JOIN',
+      //   table: `${resultTable}`,
+      //   on: `${joinFavoritePublications}.id_publication = ${resultTable}.id_publication`
+      // }
     });
 
-    return publications.length > 0 ? publications : null;
+    return favoritesPublications.length > 0 ? favoritesPublications : null;
   }
 
   async checkFavoritePublicationExistence(idUser, idPublication) {
@@ -187,7 +205,7 @@ class User {
   }
 
   async removeFavoritePublication(idUser, idPublication) {
-    return await EntityRepository.deleteEntity({
+    return await EntityRepository.deleteEntity(joinFavoritePublications, {
       id_user: idUser,
       id_publication: idPublication
     });

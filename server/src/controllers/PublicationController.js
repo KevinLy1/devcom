@@ -273,10 +273,16 @@ class PublicationController {
             idPublication
           );
           if (checkReputation) {
-            await Publication.updatePublicationReputation(req.body.id_user, idPublication, {
-              reputation_value: req.body.reputation_value
-            });
+            await Publication.updatePublicationReputation(
+              req.body.id_user,
+              idPublication,
+              req.body.reputation_value
+            );
             return res.status(200).json({ message: 'Mise à jour réussie' });
+          } else {
+            res
+              .status(404)
+              .json({ message: "La réputation n'existe pas et ne peut pas être mise à jour" });
           }
         }
       } else {

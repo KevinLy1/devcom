@@ -4,8 +4,8 @@ import { Square3Stack3DIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 import { useCategory, useArticles, useDiscussions } from '../hooks/useCategory';
 import ArticleCard from '../components/Blog/ArticleCard';
 import DiscussionCard from '../components/Blog/DiscussionCard';
+import useDocumentTitle from '../hooks/useDocumentTitle';
 import moment from 'moment';
-import 'moment/locale/fr';
 
 const CategoryPage = () => {
   const category = useCategory();
@@ -23,8 +23,8 @@ const CategoryPage = () => {
     reputations: reputationsDiscussions,
     comments: commentsDiscussions
   } = useDiscussions();
-  console.log('articles' + articles);
-  console.log('discussions' + discussions);
+
+  useDocumentTitle(`Catégorie ${category.title}`);
 
   const data = [
     {

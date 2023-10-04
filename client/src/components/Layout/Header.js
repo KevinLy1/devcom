@@ -109,7 +109,7 @@ const Header = () => {
             <>
               <Link to="/register">
                 <Button variant="gradient" size="sm" className="hidden lg:inline-block">
-                  <span>S'inscrire</span>
+                  <span>Inscription</span>
                 </Button>
               </Link>
               <Link to="/login">
@@ -127,9 +127,9 @@ const Header = () => {
                   </Button>
                 </Link>
               )}
-              <Link to="/profile">
+              <Link to="/dashboard">
                 <Button variant="gradient" size="sm" className="hidden lg:inline-block">
-                  <span>Profil</span>
+                  <span>Tableau de bord</span>
                 </Button>
               </Link>
               <Button
@@ -180,7 +180,7 @@ const Header = () => {
           <>
             <Link to="/register">
               <Button variant="gradient" size="sm" fullWidth className="mb-2">
-                <span>S'inscrire</span>
+                <span>Inscription</span>
               </Button>
             </Link>
             <Link to="/login">
@@ -198,9 +198,9 @@ const Header = () => {
                 </Button>
               </Link>
             )}
-            <Link to="/profile">
+            <Link to="/dashboard">
               <Button variant="gradient" size="sm" fullWidth className="mb-2">
-                <span>Profil</span>
+                <span>Tableau de bord</span>
               </Button>
             </Link>
             <Link to="/logout">

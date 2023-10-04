@@ -14,8 +14,7 @@ CREATE TABLE IF NOT EXISTS users (
   biography TEXT NULL,
   web_url VARCHAR(255) NULL,
   date_registration DATETIME NOT NULL,
-  date_last_login DATETIME NULL,
-  role ENUM('administrator', 'moderator', 'user') NOT NULL DEFAULT 'user'
+  role ENUM('administrator', 'user') NOT NULL DEFAULT 'user'
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS skills (
@@ -32,7 +31,7 @@ CREATE TABLE IF NOT EXISTS social_networks (
 
 CREATE TABLE IF NOT EXISTS publications (
   id_publication INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  type ENUM('article', 'question') NOT NULL DEFAULT 'article',
+  type ENUM('article', 'discussion') NOT NULL DEFAULT 'article',
   title VARCHAR(255) NOT NULL,
   description VARCHAR(255) NULL,
   content TEXT NOT NULL,
@@ -104,18 +103,6 @@ CREATE TABLE IF NOT EXISTS publication_reputations (
   FOREIGN KEY (id_publication) REFERENCES publications (id_publication) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS comment_reputations (
-  id_user INT NOT NULL,
-  id_comment INT NOT NULL,
-  reputation_value INT NOT NULL,
-  PRIMARY KEY (id_user, id_comment),
-  FOREIGN KEY (id_user) REFERENCES users (id_user) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (id_comment) REFERENCES comments (id_comment) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB;
-
 -- Contraintes sur les réputations
 ALTER TABLE publication_reputations
-  ADD CONSTRAINT constraint_reputation_value CHECK (reputation_value = 1 OR reputation_value = -1);
-
-ALTER TABLE comment_reputations
   ADD CONSTRAINT constraint_reputation_value CHECK (reputation_value = 1 OR reputation_value = -1);

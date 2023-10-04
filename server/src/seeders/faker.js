@@ -71,7 +71,7 @@ const createComments = () => {
   }
 };
 
-const createChildComments = () => {
+const createCommentReplies = () => {
   for (let i = 0; i < nbEntities; i++) {
     Comment.create({
       date_creation: faker.date.past(),
@@ -225,5 +225,5 @@ createUserSkills();
 createUserFavoritePublications();
 createPublicationCategories();
 createPublicationReputation();
-createChildComments();
+createCommentReplies();
 console.log('Génération des données terminées');

@@ -16,7 +16,7 @@ import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { notification } from 'antd';
 
 const DiscussionsPage = () => {
-  useDocumentTitle('Liste des articles');
+  useDocumentTitle('Liste des discussions');
 
   const [articles, setArticles] = useState([]);
   const [users, setUsers] = useState({});

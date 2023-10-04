@@ -6,7 +6,7 @@ const router = require('express').Router();
 const trimmer = require('../middlewares/trimmer');
 const sanitizer = require('../middlewares/sanitizer');
 const authentication = require('../middlewares/authentication');
-const { authorAuthorization } = require('../middlewares/authorization');
+const { authorCommentAuthorization } = require('../middlewares/authorization');
 // const validation
 
 // Contrôleur
@@ -22,9 +22,9 @@ router.get('/:id', CommentController.getCommentById);
 router.get('/:id/replies', CommentController.getReplies);
 
 // UPDATE
-router.get('/:id', authentication, authorAuthorization, trimmer, sanitizer, CommentController.updateComment);
+router.get('/:id', authentication, authorCommentAuthorization, trimmer, sanitizer, CommentController.updateComment);
 
 // DELETE
-router.delete('/:id', authentication, authorAuthorization, CommentController.deleteComment);
+router.delete('/:id', authentication, authorCommentAuthorization, CommentController.deleteComment);
 
 module.exports = router;

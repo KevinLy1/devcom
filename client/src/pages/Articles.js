@@ -5,6 +5,7 @@ import { FaAngleDoubleLeft, FaAngleLeft, FaAngleRight, FaAngleDoubleRight } from
 import { Input } from '@material-tailwind/react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useArticles } from '../hooks/usePublications';
+import useFavorites from '../hooks/useFavorites';
 import moment from 'moment';
 import 'moment/locale/fr';
 
@@ -12,6 +13,8 @@ const ArticlesPage = () => {
   useDocumentTitle('Liste des articles');
 
   const { articles, users, categories, reputations, comments } = useArticles();
+  const favorites = useFavorites();
+  console.log('Les favoris : ', favorites);
 
   // État pour stocker la page actuelle
   const [currentPage, setCurrentPage] = useState(1);
@@ -159,6 +162,9 @@ const ArticlesPage = () => {
               title={article.title}
               categories={categories[article.id_publication] || []}
               reputation={reputations[article.id_publication] || []}
+              isFavorite={favorites.some(
+                (favorite) => favorite.id_publication === article.id_publication
+              )}
               comments={comments[article.id_publication] || []}
               description={article.description}
               image={article.image}
@@ -166,9 +172,6 @@ const ArticlesPage = () => {
               author={users[article.id_user]?.username}
               authorAvatar={users[article.id_user]?.avatar}
               idPublication={article.id_publication}
-              isLiked={reputations[article.id_publication]?.reputation_value === 1 || false}
-              isDisliked={reputations[article.id_publication]?.reputation_value !== 1 || false}
-              // isFavourite={}
               dateCreation={moment(article.date_creation).format('LLLL')}
               dateUpdate={moment(article.date_update).format('LLLL')}
             />

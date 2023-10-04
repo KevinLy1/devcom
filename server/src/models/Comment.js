@@ -30,9 +30,7 @@ class Comment {
 
   async remove(id) {
     return await EntityRepository.deleteEntity(commentsTable, {
-      where: {
-        id_comment: id
-      }
+      id_comment: id
     });
   }
 

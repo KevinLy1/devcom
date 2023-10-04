@@ -85,7 +85,7 @@ const DiscussionPage = () => {
     getArticleComments();
   }, [id]);
 
-  useDocumentTitle(article.title);
+  useDocumentTitle('article.title');
 
   useEffect(() => {
     async function getCommentsData() {

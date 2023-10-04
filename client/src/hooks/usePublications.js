@@ -33,10 +33,10 @@ const usePublications = () => {
 
 export const useArticles = () => {
   const [articles, setArticles] = useState([]);
-  const [users, setUsers] = useState({});
-  const [categories, setCategories] = useState({});
-  const [reputations, setReputations] = useState({});
-  const [comments, setComments] = useState({});
+  const [users, setUsers] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [reputations, setReputations] = useState([]);
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     const fetchArticles = async () => {

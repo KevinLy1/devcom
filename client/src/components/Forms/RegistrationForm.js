@@ -3,6 +3,7 @@ import { apiCreateUser } from '../../api/users';
 import { notification } from 'antd';
 import { useNavigate } from 'react-router-dom';
 // import { apiUploadAvatar } from '../api/users';
+import moment from 'moment-timezone';
 
 const RegistrationForm = () => {
   const navigate = useNavigate();
@@ -44,13 +45,11 @@ const RegistrationForm = () => {
       return; // Sortir de la fonction handleSubmit() si ça ne correspond pas
     }
 
-    const currentDate = new Date();
-    const formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' '); // Format MySQL/MariaDB : "YYYY-MM-DD HH:MM:SS"
+    const currentDate = moment().tz('Europe/Paris').format('YYYY-MM-DD HH:mm:ss');
 
-    const formDataWithDate = { ...formData, date_registration: formattedDate };
+    const formDataWithDate = { ...formData, date_registration: currentDate };
 
     try {
-      console.log(formDataWithDate);
       const response = await apiCreateUser(formDataWithDate);
       if (response.ok) {
         // if (avatarFile) {

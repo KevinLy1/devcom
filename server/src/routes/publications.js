@@ -6,7 +6,7 @@ const router = require('express').Router();
 const trimmer = require('../middlewares/trimmer');
 const sanitizer = require('../middlewares/sanitizer');
 const authentication = require('../middlewares/authentication');
-const { authorAuthorization } = require('../middlewares/authorization');
+const { authorPublicationAuthorization } = require('../middlewares/authorization');
 // const validation
 
 // Contrôleur
@@ -24,20 +24,20 @@ router.get('/discussions/latest', PublicationController.getLatestDiscussions);
 router.get('/:id', PublicationController.getPublicationById);
 
 // UPDATE
-router.put('/:id', authentication, authorAuthorization, trimmer, sanitizer, PublicationController.updatePublication);
+router.put('/:id', authentication, authorPublicationAuthorization, trimmer, sanitizer, PublicationController.updatePublication);
 
 // DELETE
-router.delete('/:id', authentication, authorAuthorization, PublicationController.deletePublication);
+router.delete('/:id', authentication, authorPublicationAuthorization, PublicationController.deletePublication);
 
 // *************************************** Publication Categories ***************************************
 // CREATE
-router.post('/:id/categories', authentication, authorAuthorization, trimmer, sanitizer, PublicationController.addPublicationCategory);
+router.post('/:id/categories', authentication, authorPublicationAuthorization, trimmer, sanitizer, PublicationController.addPublicationCategory);
 
 // READ
 router.get('/:id/categories', PublicationController.getPublicationCategories);
 
 // DELETE
-router.delete('/:id/categories', authentication, authorAuthorization, PublicationController.removePublicationCategory);
+router.delete('/:id/categories', authentication, authorPublicationAuthorization, PublicationController.removePublicationCategory);
 
 // *************************************** Publication Reputation ***************************************
 // CREATE
@@ -45,6 +45,9 @@ router.post('/:id/reputation', authentication, trimmer, sanitizer, PublicationCo
 
 // READ
 router.get('/:id/reputation', PublicationController.getPublicationReputations);
+
+// UPDATE
+router.put('/:id/reputation', authentication, trimmer, sanitizer, PublicationController.updatePublicationReputation);
 
 // DELETE
 router.delete('/:id/reputation', authentication, PublicationController.removePublicationReputation);

@@ -1,78 +1,63 @@
+import { Link } from 'react-router-dom';
 import CommentReply from './CommentReply';
 import useCommentReplies from '../../hooks/useCommentReplies';
+import useAuth from '../../contexts/AuthContext';
+import { IconButton } from '@material-tailwind/react';
+import { TrashIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
+import { apiDeleteComment } from '../../api/comments';
 import moment from 'moment';
-import 'moment/locale/fr';
 
 const Comment = (props) => {
   const { replies, replyAuthor } = useCommentReplies(props.idComment);
+  const { userData } = useAuth();
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await apiDeleteComment(props.idComment);
+      if (response.ok) {
+        window.location.reload();
+      }
+    } catch {
+      //
+    }
+  };
 
   return (
     <>
       <div className="p-6 mb-6 text-base bg-gray-200 dark:bg-slate-950 rounded-lg">
         <div className="flex justify-between items-center mb-2">
           <div className="flex items-center flex-wrap">
-            <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
+            <Link to={`/user/${props.idUser}`} className="inline-flex items-center mr-3 text-sm">
               <img
                 className="mr-2 w-6 h-6 rounded-full"
-                src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
+                src={props.authorAvatar ? props.authorAvatar : '/assets/img/default-avatar.svg'}
                 alt={props.author}
               />
               {props.author}
-            </p>
+            </Link>
             <p className="text-sm text-gray-600 dark:text-gray-400">
               <time dateTime="2022-02-08" title="February 8th, 2022">
                 {props.dateCreation}
               </time>
             </p>
           </div>
-          <button
-            id="dropdownComment1Button"
-            data-dropdown-toggle="dropdownComment1"
-            className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-            type="button">
-            <svg
-              className="w-5 h-5"
-              aria-hidden="true"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg">
-              <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path>
-            </svg>
-            <span className="sr-only">Comment settings</span>
-          </button>
+          {userData &&
+            (userData.id_user === props.idUser ? (
+              <div className="flex gap-4">
+                <IconButton color="amber">
+                  <PencilSquareIcon strokeWidth={2.5} className="h-4 w-4" />
+                </IconButton>
 
-          <div
-            id="dropdownComment1"
-            className="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
-            <ul
-              className="py-1 text-sm text-gray-700 dark:text-gray-200"
-              aria-labelledby="dropdownMenuIconHorizontalButton">
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                  Edit
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                  Remove
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                  Report
-                </a>
-              </li>
-            </ul>
-          </div>
+                <IconButton color="red" onClick={handleDelete}>
+                  <TrashIcon strokeWidth={2.5} className="h-4 w-4" />
+                </IconButton>
+              </div>
+            ) : null)}
         </div>
         <p>{props.content}</p>
-        {props.dateUpdate && (
+        {props.dateUpdate !== null && (
           <p className="text-sm text-gray-600 dark:text-gray-400">
             <time dateTime="2022-02-08" title="February 8th, 2022">
               Édité le {props.dateUpdate}
@@ -105,8 +90,9 @@ const Comment = (props) => {
         replies.map((reply) => (
           <CommentReply
             key={reply.id_comment}
-            parent={props.id_comment}
+            idUser={reply.id_user}
             author={replyAuthor[reply.id_user]?.username}
+            authorAvatar={replyAuthor[reply.id_user]?.avatar}
             content={reply.content}
             dateCreation={moment(reply.date_creation).format('LLLL')}
             dateUpdate={moment(reply.date_update).format('LLLL')}

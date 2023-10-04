@@ -1,14 +1,12 @@
 export const apiUsers = async () => {
   return await fetch(`${process.env.REACT_APP_API_URL}/users`, {
-    method: 'GET',
-    credentials: 'include'
+    method: 'GET'
   });
 };
 
 export const apiUserById = async (id) => {
   return await fetch(`${process.env.REACT_APP_API_URL}/users/${id}`, {
-    method: 'GET',
-    credentials: 'include'
+    method: 'GET'
   });
 };
 
@@ -34,7 +32,8 @@ export const apiUpdateUser = async (id, data) => {
 
 export const apiDeleteUser = async (id) => {
   return await fetch(`${process.env.REACT_APP_API_URL}/users/${id}`, {
-    method: 'DELETE'
+    method: 'DELETE',
+    credentials: 'include'
   });
 };
 
@@ -51,9 +50,17 @@ export async function apiUploadAvatar(id, data) {
 
 export async function apiDeleteAvatar(id) {
   return await fetch(`${process.env.REACT_APP_API_URL}/users/${id}/avatar`, {
-    method: 'DELETE'
+    method: 'DELETE',
+    credentials: 'include'
   });
 }
+
+export const apiFavoritePublications = async (id) => {
+  return await fetch(`${process.env.REACT_APP_API_URL}/users/${id}/favorite-publications`, {
+    method: 'GET',
+    credentials: 'include'
+  });
+};
 
 export const apiAddFavoritePublication = async (id, data) => {
   return await fetch(`${process.env.REACT_APP_API_URL}/users/${id}/favorite-publications`, {

@@ -4,7 +4,7 @@ import Layout from './components/Layout/Layout';
 import HomePage from './pages/Home';
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
-import ProfilePage from './pages/Profile';
+import ProfilePage from './pages/Dashboard/Profile';
 import AdminDashboardPage from './pages/Admin/Dashboard';
 import { AuthProvider } from './contexts/AuthContext';
 import UserRoute from './routes/UserRoute';
@@ -16,6 +16,7 @@ import CategoryPage from './pages/Category';
 import DiscussionsPage from './pages/Discussions';
 import DiscussionPage from './pages/Discussion';
 import UserPage from './pages/User';
+import DashboardPage from './pages/Dashboard';
 import ScrollToTop from './hooks/ScrollToTop';
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
             <Route path="/discussion/:id" element={<DiscussionPage />} />
             <Route path="/category/:id" element={<CategoryPage />} />
             <Route path="/user/:id" element={<UserPage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
 
             {/* Guest only routes */}
             <Route exact path="/register" element={<GuestRoute />}>

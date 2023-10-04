@@ -3,9 +3,8 @@ import useArticle from '../hooks/useArticle';
 import Article from '../components/Blog/Article';
 import Comment from '../components/Blog/Comment';
 import CommentForm from '../components/Forms/CommentForm';
-import { useAuth } from '../contexts/AuthContext';
+import useAuth from '../contexts/AuthContext';
 import moment from 'moment';
-import 'moment/locale/fr';
 
 const ArticlePage = () => {
   const { article, articleAuthor, categories, comments, commentAuthor, totalComments } =
@@ -44,7 +43,9 @@ const ArticlePage = () => {
                 <Comment
                   key={comment.id_comment}
                   idComment={comment.id_comment}
+                  idUser={comment.id_user}
                   author={commentAuthor[comment.id_user]?.username}
+                  authorAvatar={commentAuthor[comment.id_user]?.avatar}
                   content={comment.content}
                   dateCreation={moment(comment.date_creation).format('LLLL')}
                   dateUpdate={moment(comment.date_update).format('LLLL')}

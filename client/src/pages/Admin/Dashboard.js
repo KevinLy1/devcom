@@ -2,6 +2,7 @@ import React from 'react';
 import { Tabs, TabsHeader, TabsBody, Tab, TabPanel } from '@material-tailwind/react';
 import { Square3Stack3DIcon, UserCircleIcon, Cog6ToothIcon } from '@heroicons/react/24/solid';
 import UsersTable from '../../components/Admin/UsersTable';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 
 const AdminDashboardPage = () => {
   const data = [
@@ -35,6 +36,9 @@ const AdminDashboardPage = () => {
           constantly trying to express ourselves and actualize our dreams.`
     }
   ];
+
+  useDocumentTitle('Administration');
+
   return (
     <Tabs value="dashboard">
       <TabsHeader>

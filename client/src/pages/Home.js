@@ -64,15 +64,23 @@ const HomePage = () => {
       )}
 
       {categories.length > 0 ? (
-        <section className="mx-auto grid gap-6 md:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:max-w-none auto-rows-fr mt-12">
-          {categories.map((category, index) => (
+        <section className="mx-auto hidden lg:grid lg:gap-6 lg:grid-cols-4 lg:max-w-none auto-rows-fr mt-12">
+          {categories.slice(0, 8).map((category) => (
             <CategoryCard
-              key={index}
+              key={category.id_category}
               title={category.title}
               link={`/category/${category.id_category}`}
               className="text-black dark:text-white"
             />
           ))}
+          {/* {categories.map((category) => (
+            <CategoryCard
+              key={category.id_category}
+              title={category.title}
+              link={`/category/${category.id_category}`}
+              className="text-black dark:text-white"
+            />
+          ))} */}
         </section>
       ) : (
         'Aucune catégorie'
@@ -82,52 +90,56 @@ const HomePage = () => {
         <h2 className="text-4xl leading-10 lg:text-5xl font-semibold tracking-tighter text-eclipse lg:leading-12">
           Les 6 derniers articles
         </h2>
-        {articles.length > 0 ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 mt-8 gap-5">
-            {articles.map((article) => (
-              <BlogCard
-                key={article.id_publication}
-                type="article"
-                idPublication={article.id_publication}
-                title={article.title}
-                image={article.image}
-                description={article.description}
-                idUser={article.id_user}
-                author={articleUsers[article.id_user]?.username}
-                authorAvatar={articleUsers[article.id_user]?.avatar}
-                dateCreation={moment(article.date_creation).format('L')}
-              />
-            ))}
-          </div>
-        ) : (
-          'Aucun article'
-        )}
+        <div className="flex justify-center md:justify-around">
+          {articles.length > 0 ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 mt-8 gap-5">
+              {articles.map((article) => (
+                <BlogCard
+                  key={article.id_publication}
+                  type="article"
+                  idPublication={article.id_publication}
+                  title={article.title}
+                  image={article.image}
+                  description={article.description}
+                  idUser={article.id_user}
+                  author={articleUsers[article.id_user]?.username}
+                  authorAvatar={articleUsers[article.id_user]?.avatar}
+                  dateCreation={moment(article.date_creation).format('L')}
+                />
+              ))}
+            </div>
+          ) : (
+            'Aucun article'
+          )}
+        </div>
       </section>
 
       <section className="py-12 lg:py-16 relative">
         <h2 className="text-4xl leading-10 lg:text-5xl font-semibold tracking-tighter text-eclipse lg:leading-12">
           Les 6 dernières discussions
         </h2>
-        {discussions.length > 0 ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 mt-8 gap-5">
-            {discussions.map((discussion) => (
-              <BlogCard
-                key={discussion.id_publication}
-                type="discussion"
-                idPublication={discussion.id_publication}
-                title={discussion.title}
-                image={discussion.image}
-                description={discussion.description}
-                idUser={discussion.id_user}
-                author={discussionUsers[discussion.id_user]?.username}
-                authorAvatar={discussionUsers[discussion.id_user]?.avatar}
-                dateCreation={moment(discussion.date_creation).format('L')}
-              />
-            ))}
-          </div>
-        ) : (
-          'Aucune discussion'
-        )}
+        <div className="flex justify-center md:justify-around">
+          {discussions.length > 0 ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 mt-8 gap-5">
+              {discussions.map((discussion) => (
+                <BlogCard
+                  key={discussion.id_publication}
+                  type="discussion"
+                  idPublication={discussion.id_publication}
+                  title={discussion.title}
+                  image={discussion.image}
+                  description={discussion.description}
+                  idUser={discussion.id_user}
+                  author={discussionUsers[discussion.id_user]?.username}
+                  authorAvatar={discussionUsers[discussion.id_user]?.avatar}
+                  dateCreation={moment(discussion.date_creation).format('L')}
+                />
+              ))}
+            </div>
+          ) : (
+            'Aucune discussion'
+          )}
+        </div>
       </section>
     </>
   );
