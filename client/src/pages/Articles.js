@@ -13,8 +13,8 @@ const ArticlesPage = () => {
   useDocumentTitle('Liste des articles');
 
   const { articles, users, categories, reputations, comments } = useArticles();
+
   const favorites = useFavorites();
-  console.log('Les favoris : ', favorites);
 
   // État pour stocker la page actuelle
   const [currentPage, setCurrentPage] = useState(1);
@@ -74,27 +74,21 @@ const ArticlesPage = () => {
               <button
                 onClick={() => setSortBy('newest')}
                 className={`px-2 py-1 rounded-lg ${
-                  sortBy === 'newest'
-                    ? 'bg-black text-white dark:bg-blue-800'
-                    : 'bg-gray-300 dark:bg-slate-600'
+                  sortBy === 'newest' ? 'bg-black text-white dark:bg-blue-800' : 'bg-gray-300 dark:bg-slate-600'
                 }`}>
                 Plus récent
               </button>
               <button
                 onClick={() => setSortBy('oldest')}
                 className={`px-2 py-1 ml-2 rounded-lg ${
-                  sortBy === 'oldest'
-                    ? 'bg-black text-white dark:bg-blue-800'
-                    : 'bg-gray-300 dark:bg-slate-600'
+                  sortBy === 'oldest' ? 'bg-black text-white dark:bg-blue-800' : 'bg-gray-300 dark:bg-slate-600'
                 }`}>
                 Plus ancien
               </button>
               <button
                 onClick={() => setSortBy('latestUpdate')}
                 className={`px-2 py-1 ml-2 rounded-lg ${
-                  sortBy === 'latestUpdate'
-                    ? 'bg-black text-white dark:bg-blue-800'
-                    : 'bg-gray-300 dark:bg-slate-600'
+                  sortBy === 'latestUpdate' ? 'bg-black text-white dark:bg-blue-800' : 'bg-gray-300 dark:bg-slate-600'
                 }`}>
                 Dernière mise à jour
               </button>
@@ -131,9 +125,7 @@ const ArticlesPage = () => {
                 key={number}
                 onClick={() => paginate(number)}
                 className={`px-2 py-1 mx-1 rounded-lg ${
-                  number === currentPage
-                    ? 'bg-gray-500 dark:bg-slate-950'
-                    : 'bg-gray-300 dark:bg-slate-800'
+                  number === currentPage ? 'bg-gray-500 dark:bg-slate-950' : 'bg-gray-300 dark:bg-slate-800'
                 }`}>
                 {number}
               </button>
@@ -162,9 +154,7 @@ const ArticlesPage = () => {
               title={article.title}
               categories={categories[article.id_publication] || []}
               reputation={reputations[article.id_publication] || []}
-              isFavorite={favorites.some(
-                (favorite) => favorite.id_publication === article.id_publication
-              )}
+              isFavorite={favorites.some((favorite) => favorite.id_publication === article.id_publication)}
               comments={comments[article.id_publication] || []}
               description={article.description}
               image={article.image}
@@ -198,9 +188,7 @@ const ArticlesPage = () => {
                 key={number}
                 onClick={() => paginate(number)}
                 className={`px-2 py-1 mx-1 rounded-lg ${
-                  number === currentPage
-                    ? 'bg-gray-500 dark:bg-slate-950'
-                    : 'bg-gray-300 dark:bg-slate-800'
+                  number === currentPage ? 'bg-gray-500 dark:bg-slate-950' : 'bg-gray-300 dark:bg-slate-800'
                 }`}>
                 {number}
               </button>

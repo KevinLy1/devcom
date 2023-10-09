@@ -32,11 +32,7 @@ const ProfilePage = () => {
         </Breadcrumbs> */}
 
         <div className="flex justify-around gap-3 sm:flex-wrap md:flex-nowrap">
-          <ProfileCard
-            key={userData.id_user}
-            username={userData.username}
-            avatar={userData.avatar}
-          />
+          <ProfileCard key={userData.id_user} username={userData.username} avatar={userData.avatar} />
           <ProfileDetails
             key={userData.id_user}
             firstName={userData.first_name}

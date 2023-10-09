@@ -4,7 +4,8 @@ import { apiUserById } from '../api/users';
 import {
   apiPublicationById,
   apiPublicationCategories,
-  apiPublicationComments
+  apiPublicationComments,
+  apiPublicationReputation
 } from '../api/publications';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -16,6 +17,7 @@ const useArticle = () => {
   const [article, setArticle] = useState({});
   const [articleAuthor, setArticleAuthor] = useState({});
   const [categories, setCategories] = useState({});
+  const [reputations, setReputations] = useState({});
   const [comments, setComments] = useState({});
   const [commentAuthor, setCommentAuthor] = useState({});
   const [totalComments, setTotalComments] = useState(0);
@@ -40,13 +42,20 @@ const useArticle = () => {
             }
 
             if (!categories[publicationData.id_publication]) {
-              const responseCategories = await apiPublicationCategories(
-                publicationData.id_publication
-              );
+              const responseCategories = await apiPublicationCategories(publicationData.id_publication);
               const categoriesData = await responseCategories.json();
               setCategories((prevCategories) => ({
                 ...prevCategories,
                 [publicationData.id_publication]: categoriesData
+              }));
+            }
+
+            if (!reputations[publicationData.id_publication]) {
+              const responseReputations = await apiPublicationReputation(publicationData.id_publication);
+              const reputationsData = await responseReputations.json();
+              setReputations((prevReputations) => ({
+                ...prevReputations,
+                [publicationData.id_publication]: reputationsData
               }));
             }
           } else {
@@ -105,7 +114,15 @@ const useArticle = () => {
     getCommentsData();
   }, [comments]);
 
-  return { article, articleAuthor, categories, comments, commentAuthor, totalComments };
+  return {
+    article,
+    articleAuthor,
+    categories,
+    reputations,
+    comments,
+    commentAuthor,
+    totalComments
+  };
 };
 
 export default useArticle;

@@ -6,6 +6,7 @@ import useCategories from '../hooks/useCategories';
 import { useLatestArticles, useLatestDiscussions } from '../hooks/useLatestPublications';
 import useUsers from '../hooks/useUsers';
 import usePublications from '../hooks/usePublications';
+import useFavorites from '../hooks/useFavorites';
 import moment from 'moment';
 import 'moment/locale/fr';
 
@@ -16,8 +17,9 @@ const HomePage = () => {
   const categories = useCategories();
   const publications = usePublications();
 
-  const { articles, users: articleUsers } = useLatestArticles();
-  const { discussions, users: discussionUsers } = useLatestDiscussions();
+  const { articles, users: articleUsers, reputations: articleReputations } = useLatestArticles();
+  const { discussions, users: discussionUsers, reputations: discussionReputations } = useLatestDiscussions();
+  const favorites = useFavorites();
 
   return (
     <>
@@ -30,35 +32,23 @@ const HomePage = () => {
           </span>
         </h1>
         <h2 className="mt-4 sm:mt-10 text-lg leading-8 mx-auto max-w-5xl">
-          Restez curieux. Découvrez des articles, des astuces, des questions de la communauté et
-          l'expertise de développeurs chevronnés sur n'importe quel sujet.
+          Restez curieux. Découvrez des articles, des astuces, des questions de la communauté et l'expertise de
+          développeurs chevronnés sur n'importe quel sujet.
         </h2>
       </section>
 
       {(users.length > 0 || publications.length > 0 || categories.length > 0) && (
         <div className="mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-y-12 sm:mt-10 lg:mx-0 lg:max-w-none lg:grid-cols-3 sm:auto-rows-fr">
           {users.length > 0 && (
-            <StatisticsCard
-              number={users.length}
-              title="Contributeurs"
-              description="Rejoignez notre communauté !"
-            />
+            <StatisticsCard number={users.length} title="Contributeurs" description="Rejoignez notre communauté !" />
           )}
 
           {publications.length > 0 && (
-            <StatisticsCard
-              number={publications.length}
-              title="Contributions"
-              description="Participez également !"
-            />
+            <StatisticsCard number={publications.length} title="Contributions" description="Participez également !" />
           )}
 
           {categories.length > 0 && (
-            <StatisticsCard
-              number={categories.length}
-              title="Catégories"
-              description="sur divers sujets"
-            />
+            <StatisticsCard number={categories.length} title="Catégories" description="sur divers sujets" />
           )}
         </div>
       )}
@@ -99,6 +89,8 @@ const HomePage = () => {
                   type="article"
                   idPublication={article.id_publication}
                   title={article.title}
+                  reputation={articleReputations[article.id_publication] || []}
+                  isFavorite={favorites.some((favorite) => favorite.id_publication === article.id_publication)}
                   image={article.image}
                   description={article.description}
                   idUser={article.id_user}
@@ -127,6 +119,8 @@ const HomePage = () => {
                   type="discussion"
                   idPublication={discussion.id_publication}
                   title={discussion.title}
+                  reputation={discussionReputations[discussion.id_publication] || []}
+                  isFavorite={favorites.some((favorite) => favorite.id_publication === discussion.id_publication)}
                   image={discussion.image}
                   description={discussion.description}
                   idUser={discussion.id_user}

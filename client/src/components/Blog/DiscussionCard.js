@@ -14,8 +14,7 @@ import { Link } from 'react-router-dom';
 const DiscussionCard = (props) => {
   // const { userData } = useAuth();
 
-  const categoriesTitles =
-    props.categories.length > 0 ? props.categories.map((category) => category.title) : [];
+  const categoriesTitles = props.categories.length > 0 ? props.categories.map((category) => category.title) : [];
 
   let totalReputation = 0;
   if (props.reputation.length > 0) {
@@ -179,9 +178,7 @@ const DiscussionCard = (props) => {
           </div>
           <div className="flex items-center space-x-8">
             {categoriesTitles.map((category, index) => (
-              <button
-                key={index}
-                className="rounded-2xl border bg-neutral-100 px-3 py-1 text-xs font-semibold">
+              <button key={index} className="rounded-2xl border bg-neutral-100 px-3 py-1 text-xs font-semibold">
                 {category}
               </button>
             ))}

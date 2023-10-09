@@ -3,11 +3,7 @@ import useDocumentTitle from '../hooks/useDocumentTitle';
 import Discussion from '../components/Blog/Discussion';
 import Comment from '../components/Blog/Comment';
 import { apiUserById } from '../api/users';
-import {
-  apiPublicationById,
-  apiPublicationCategories,
-  apiPublicationComments
-} from '../api/publications';
+import { apiPublicationById, apiPublicationCategories, apiPublicationComments } from '../api/publications';
 import { useParams } from 'react-router-dom';
 import moment from 'moment';
 import 'moment/locale/fr';
@@ -46,9 +42,7 @@ const DiscussionPage = () => {
             }
 
             if (!categories[publicationData.id_publication]) {
-              const responseCategories = await apiPublicationCategories(
-                publicationData.id_publication
-              );
+              const responseCategories = await apiPublicationCategories(publicationData.id_publication);
               const categoriesData = await responseCategories.json();
               setCategories((prevCategories) => ({
                 ...prevCategories,

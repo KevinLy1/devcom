@@ -1,7 +1,56 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Breadcrumbs } from '@material-tailwind/react';
+import {
+  handleLike,
+  handleDislike,
+  handleCancelLike,
+  handleCancelDislike,
+  handleFavorite,
+  handleCancelFavorite
+} from '../../actions/publicationActions';
+import { FaThumbsUp, FaThumbsDown, FaBookmark } from 'react-icons/fa';
+import useAuth from '../../contexts/AuthContext';
 
 const Article = (props) => {
+  const { userData } = useAuth();
+
+  const [articleLocalState, setArticleLocalState] = useState({
+    isLiked: false,
+    isDisliked: false,
+    isFavorite: false,
+    reputation: 0
+  });
+
+  useEffect(() => {
+    let totalReputation = 0;
+    let isLiked = false;
+    let isDisliked = false;
+    let isFavorite = false;
+
+    if (props.reputation.length > 0) {
+      for (let i = 0; i < props.reputation.length; i++) {
+        totalReputation += props.reputation[i].reputation_value;
+      }
+      if (userData) {
+        isLiked = props.reputation.some(
+          (reputation) => reputation.id_user === userData.id_user && reputation.reputation_value === 1
+        );
+        isDisliked = props.reputation.some(
+          (reputation) => reputation.id_user === userData.id_user && reputation.reputation_value === -1
+        );
+        isFavorite = props.isFavorite;
+      }
+    }
+    setArticleLocalState((prevState) => ({
+      ...prevState,
+      isLiked: isLiked,
+      isDisliked: isDisliked,
+      isFavorite: isFavorite,
+      reputation: totalReputation
+    }));
+  }, [props.reputation, props.isFavorite, userData]);
+
   const categories =
     props.categories.length > 0
       ? props.categories.map((category) => ({
@@ -15,11 +64,7 @@ const Article = (props) => {
       <div className="flex flex-col items-center gap-5">
         <Breadcrumbs separator=">" className="bg-gray-500 dark:bg-slate-900">
           <Link to="/" className="opacity-60 dark:text-white">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4"
-              viewBox="0 0 20 20"
-              fill="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
               <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
             </svg>
           </Link>
@@ -42,11 +87,7 @@ const Article = (props) => {
         <p className="italic">{props.description}</p>
         <address className="flex items-center mb-6 not-italic">
           <div className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
-            <img
-              className="mr-4 w-16 h-16 rounded-full"
-              src={props.authorAvatar}
-              alt={props.author}
-            />
+            <img className="mr-4 w-16 h-16 rounded-full" src={props.authorAvatar} alt={props.author} />
             <div>
               <Link to={`/user/${props.idUser}`} rel="author" className="text-xl font-bold">
                 {props.author}
@@ -92,7 +133,7 @@ const Article = (props) => {
                 <div className="my-2">
                   <div className="flex flex-col space-y-4">
                     <p className="text-sm font-medium text-eclipse/60 uppercase tracking-wide">
-                      Catégories
+                      {categories.length > 0 && <span>Catégorie{categories.length > 1 ? 's' : ''}</span>}
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {categories.map((category) => (
@@ -104,6 +145,33 @@ const Article = (props) => {
                       ))}
                     </div>
                   </div>
+                </div>
+                <div className="flex items-center gap-1 dark:text-white">
+                  <FaThumbsUp
+                    className={`cursor-pointer ${articleLocalState.isLiked ? 'text-green-500' : ''}`}
+                    onClick={
+                      articleLocalState.isLiked
+                        ? () => handleCancelLike(userData, props, setArticleLocalState)
+                        : () => handleLike(userData, props, articleLocalState, setArticleLocalState)
+                    }
+                  />
+                  {articleLocalState.reputation}
+                  <FaThumbsDown
+                    className={`cursor-pointer ${articleLocalState.isDisliked ? 'text-red-500' : ''}`}
+                    onClick={
+                      articleLocalState.isDisliked
+                        ? () => handleCancelDislike(userData, props, setArticleLocalState)
+                        : () => handleDislike(userData, props, articleLocalState, setArticleLocalState)
+                    }
+                  />
+                  <FaBookmark
+                    className={`cursor-pointer ${articleLocalState.isFavorite ? 'text-yellow-500' : ''}`}
+                    onClick={
+                      articleLocalState.isFavorite
+                        ? () => handleCancelFavorite(userData, props, setArticleLocalState)
+                        : () => handleFavorite(userData, props, setArticleLocalState)
+                    }
+                  />
                 </div>
                 <div className="my-2">
                   <div className="flex flex-col bg-linen rounded-lg p-4 space-y-4">

@@ -4,6 +4,7 @@ import ProfileDetails from '../components/Profile/ProfileDetails';
 import moment from 'moment';
 import 'moment/locale/fr';
 import useDocumentTitle from '../hooks/useDocumentTitle';
+import validator from 'validator';
 
 const UserPage = () => {
   const user = useUser();
@@ -18,7 +19,7 @@ const UserPage = () => {
         firstName={user.first_name}
         lastName={user.last_name}
         gender={user.gender}
-        webUrl={user.web_url}
+        webUrl={user.web_url ? validator.unescape(user.web_url) : ''}
         email={user.email}
         dateRegistration={moment(user.date_registration).format('LLLL')}
         biography={user.biography}

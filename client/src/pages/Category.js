@@ -47,12 +47,8 @@ const CategoryPage = () => {
                 author={usersArticles[article.id_user]?.username}
                 authorAvatar={usersArticles[article.id_user]?.avatar}
                 idPublication={article.id_publication}
-                isLiked={
-                  reputationsArticles[article.id_publication]?.reputation_value === 1 || false
-                }
-                isDisliked={
-                  reputationsArticles[article.id_publication]?.reputation_value !== 1 || false
-                }
+                isLiked={reputationsArticles[article.id_publication]?.reputation_value === 1 || false}
+                isDisliked={reputationsArticles[article.id_publication]?.reputation_value !== 1 || false}
                 // isFavourite={}
                 dateCreation={moment(article.date_creation).format('LLLL')}
                 dateUpdate={moment(article.date_update).format('LLLL')}
@@ -84,12 +80,8 @@ const CategoryPage = () => {
                 author={usersDiscussions[discussion.id_user]?.username}
                 authorAvatar={usersDiscussions[discussion.id_user]?.avatar}
                 idPublication={discussion.id_publication}
-                isLiked={
-                  reputationsDiscussions[discussion.id_publication]?.reputation_value === 1 || false
-                }
-                isDisliked={
-                  reputationsDiscussions[discussion.id_publication]?.reputation_value !== 1 || false
-                }
+                isLiked={reputationsDiscussions[discussion.id_publication]?.reputation_value === 1 || false}
+                isDisliked={reputationsDiscussions[discussion.id_publication]?.reputation_value !== 1 || false}
                 // isFavourite={}
                 dateCreation={moment(discussion.date_creation).format('LLLL')}
                 dateUpdate={moment(discussion.date_update).format('LLLL')}

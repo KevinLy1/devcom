@@ -4,12 +4,15 @@ import Article from '../components/Blog/Article';
 import Comment from '../components/Blog/Comment';
 import CommentForm from '../components/Forms/CommentForm';
 import useAuth from '../contexts/AuthContext';
+import useFavorites from '../hooks/useFavorites';
 import moment from 'moment';
 
 const ArticlePage = () => {
-  const { article, articleAuthor, categories, comments, commentAuthor, totalComments } =
-    useArticle();
+  const { article, articleAuthor, categories, comments, reputations, commentAuthor, totalComments } = useArticle();
+
   const { userData } = useAuth();
+
+  const favorites = useFavorites();
 
   useDocumentTitle(article.title);
 
@@ -20,6 +23,8 @@ const ArticlePage = () => {
           key={article.id_publication}
           title={article.title}
           categories={categories[article.id_publication] || []}
+          reputation={reputations[article.id_publication] || []}
+          isFavorite={favorites.some((favorite) => favorite.id_publication === article.id_publication)}
           description={article.description}
           content={article.content}
           image={article.image}

@@ -63,11 +63,7 @@ class AuthController {
   }
 
   async logout(req, res) {
-    return res
-      .clearCookie('refreshToken')
-      .clearCookie('accessToken')
-      .status(200)
-      .json({ message: 'Logout' });
+    return res.clearCookie('refreshToken').clearCookie('accessToken').status(200).json({ message: 'Logout' });
   }
 
   async getAccessTokenData(req, res) {
@@ -83,10 +79,7 @@ class AuthController {
       const refreshToken = req.cookies.refreshToken;
 
       try {
-        const decodedRefreshToken = await jwt.verify(
-          refreshToken,
-          process.env.REFRESH_JWT_SECRET_KEY
-        );
+        const decodedRefreshToken = await jwt.verify(refreshToken, process.env.REFRESH_JWT_SECRET_KEY);
 
         const user = await User.findByUsername(decodedRefreshToken.username);
 

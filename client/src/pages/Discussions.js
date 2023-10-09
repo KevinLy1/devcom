@@ -161,27 +161,21 @@ const DiscussionsPage = () => {
               <button
                 onClick={() => setSortBy('newest')}
                 className={`px-2 py-1 rounded-lg ${
-                  sortBy === 'newest'
-                    ? 'bg-black text-white dark:bg-blue-800'
-                    : 'bg-gray-300 dark:bg-slate-600'
+                  sortBy === 'newest' ? 'bg-black text-white dark:bg-blue-800' : 'bg-gray-300 dark:bg-slate-600'
                 }`}>
                 Plus récent
               </button>
               <button
                 onClick={() => setSortBy('oldest')}
                 className={`px-2 py-1 ml-2 rounded-lg ${
-                  sortBy === 'oldest'
-                    ? 'bg-black text-white dark:bg-blue-800'
-                    : 'bg-gray-300 dark:bg-slate-600'
+                  sortBy === 'oldest' ? 'bg-black text-white dark:bg-blue-800' : 'bg-gray-300 dark:bg-slate-600'
                 }`}>
                 Plus ancien
               </button>
               <button
                 onClick={() => setSortBy('latestUpdate')}
                 className={`px-2 py-1 ml-2 rounded-lg ${
-                  sortBy === 'latestUpdate'
-                    ? 'bg-black text-white dark:bg-blue-800'
-                    : 'bg-gray-300 dark:bg-slate-600'
+                  sortBy === 'latestUpdate' ? 'bg-black text-white dark:bg-blue-800' : 'bg-gray-300 dark:bg-slate-600'
                 }`}>
                 Dernière mise à jour
               </button>
@@ -218,9 +212,7 @@ const DiscussionsPage = () => {
                 key={number}
                 onClick={() => paginate(number)}
                 className={`px-2 py-1 mx-1 rounded-lg ${
-                  number === currentPage
-                    ? 'bg-gray-500 dark:bg-slate-950'
-                    : 'bg-gray-300 dark:bg-slate-800'
+                  number === currentPage ? 'bg-gray-500 dark:bg-slate-950' : 'bg-gray-300 dark:bg-slate-800'
                 }`}>
                 {number}
               </button>
@@ -288,9 +280,7 @@ const DiscussionsPage = () => {
                 key={number}
                 onClick={() => paginate(number)}
                 className={`px-2 py-1 mx-1 rounded-lg ${
-                  number === currentPage
-                    ? 'bg-gray-500 dark:bg-slate-950'
-                    : 'bg-gray-300 dark:bg-slate-800'
+                  number === currentPage ? 'bg-gray-500 dark:bg-slate-950' : 'bg-gray-300 dark:bg-slate-800'
                 }`}>
                 {number}
               </button>

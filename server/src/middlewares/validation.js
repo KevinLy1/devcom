@@ -42,14 +42,8 @@ class Validation {
       }
 
       // Valider le prénom (facultatif)
-      if (
-        firstName &&
-        !validator.isAlpha(firstName) &&
-        !validator.isLength(firstName, { min: 2 })
-      ) {
-        throw new Error(
-          'Le prénom ne doit comporter que des lettres et avoir une longueur minimale de 2 caractères'
-        );
+      if (firstName && !validator.isAlpha(firstName) && !validator.isLength(firstName, { min: 2 })) {
+        throw new Error('Le prénom ne doit comporter que des lettres et avoir une longueur minimale de 2 caractères');
       }
 
       // Valider le nom de famille (facultatif)

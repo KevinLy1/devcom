@@ -125,10 +125,7 @@ const UsersTable = () => {
             <tr>
               {TABLE_HEAD.map((head) => (
                 <th key={head} className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70">
+                  <Typography variant="small" color="blue-gray" className="font-normal leading-none opacity-70">
                     {head}
                   </Typography>
                 </th>
@@ -149,10 +146,7 @@ const UsersTable = () => {
                         <Typography variant="small" color="blue-gray" className="font-normal">
                           {name}
                         </Typography>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal opacity-70">
+                        <Typography variant="small" color="blue-gray" className="font-normal opacity-70">
                           {email}
                         </Typography>
                       </div>
@@ -163,10 +157,7 @@ const UsersTable = () => {
                       <Typography variant="small" color="blue-gray" className="font-normal">
                         {job}
                       </Typography>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal opacity-70">
+                      <Typography variant="small" color="blue-gray" className="font-normal opacity-70">
                         {org}
                       </Typography>
                     </div>

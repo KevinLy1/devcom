@@ -85,9 +85,7 @@ const LoginForm = () => {
           </div>
 
           <div className="flex justify-center">
-            <button
-              type="submit"
-              className="px-4 py-2 rounded bg-slate-300 dark:bg-slate-900 focus:outline-none">
+            <button type="submit" className="px-4 py-2 rounded bg-slate-300 dark:bg-slate-900 focus:outline-none">
               Connexion
             </button>
           </div>

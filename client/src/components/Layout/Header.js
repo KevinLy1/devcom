@@ -132,18 +132,12 @@ const Header = () => {
                   <span>Tableau de bord</span>
                 </Button>
               </Link>
-              <Button
-                variant="gradient"
-                size="sm"
-                className="hidden lg:inline-block"
-                onClick={handleLogout}>
+              <Button variant="gradient" size="sm" className="hidden lg:inline-block" onClick={handleLogout}>
                 <span>Déconnexion</span>
               </Button>
             </>
           )}
-          <span
-            className="cursor-pointer"
-            onClick={() => toggleTheme(theme === 'dark' ? 'light' : 'dark')}>
+          <span className="cursor-pointer" onClick={() => toggleTheme(theme === 'dark' ? 'light' : 'dark')}>
             {theme === 'dark' ? <FaMoon size={20} /> : <FaSun size={20} />}
           </span>
           <IconButton
@@ -204,12 +198,7 @@ const Header = () => {
               </Button>
             </Link>
             <Link to="/logout">
-              <Button
-                variant="gradient"
-                size="sm"
-                fullWidth
-                className="mb-2"
-                onClick={handleLogout}>
+              <Button variant="gradient" size="sm" fullWidth className="mb-2" onClick={handleLogout}>
                 <span>Déconnexion</span>
               </Button>
             </Link>

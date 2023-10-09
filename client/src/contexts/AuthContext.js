@@ -74,9 +74,7 @@ export const AuthProvider = ({ children }) => {
     verifyToken();
   }, []);
 
-  return (
-    <AuthContext.Provider value={{ userData, login, logout }}>{children}</AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ userData, login, logout }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {

@@ -6,7 +6,8 @@ const generateRandomPhrase = () => {
     "Hello, <'world'>!",
     "It's a 'beautiful' day.",
     'Coding is fun & challenging.',
-    "I like using 'JavaScript'."
+    "I like using 'JavaScript'.",
+    "<script>alert('XSS')</script>"
   ];
 
   const randomIndex = Math.floor(Math.random() * phrases.length);

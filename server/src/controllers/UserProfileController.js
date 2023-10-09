@@ -12,9 +12,7 @@ class UserProfileController {
         if (user) {
           const checkSkillExistence = await User.checkSkillExistence(idUser, req.body.id_skill);
           if (checkSkillExistence)
-            return res
-              .status(401)
-              .json({ message: `Compétence déjà existante pour l'utilisateur #${idUser}` });
+            return res.status(401).json({ message: `Compétence déjà existante pour l'utilisateur #${idUser}` });
 
           const userSkill = await User.addSkill({ id_user: idUser, ...req.body });
           return res.status(201).json(userSkill);
@@ -83,9 +81,7 @@ class UserProfileController {
             req.body.id_social_network
           );
           if (checkSocialNetworkExistence)
-            return res
-              .status(401)
-              .json({ message: `Réseau social déjà ajouté pour l'utilisateur #${idUser}` });
+            return res.status(401).json({ message: `Réseau social déjà ajouté pour l'utilisateur #${idUser}` });
 
           const userSocialNetwork = await User.addSocialNetwork({ id_user: idUser, ...req.body });
           return res.status(201).json(userSocialNetwork);
@@ -136,9 +132,7 @@ class UserProfileController {
             req.body.id_social_network
           );
           if (checkSocialNetworkExistence)
-            return res
-              .status(401)
-              .json({ message: `Réseau social déjà ajouté par l'utilisateur #${idUser}` });
+            return res.status(401).json({ message: `Réseau social déjà ajouté par l'utilisateur #${idUser}` });
 
           await User.updateSocialNetwork(idUser, req.body.id_social_network);
           return res.status(200).json({ message: 'Mise à jour réussie' });
@@ -185,9 +179,7 @@ class UserProfileController {
             req.body.id_publication
           );
           if (checkFavoritePublicationExistence)
-            return res
-              .status(401)
-              .json({ message: `Publication déjà dans les favoris de l'utilisateur #${idUser}` });
+            return res.status(401).json({ message: `Publication déjà dans les favoris de l'utilisateur #${idUser}` });
 
           const userFavoritePublication = await User.addFavoritePublication({
             id_user: idUser,
@@ -215,9 +207,7 @@ class UserProfileController {
         if (userFavoritePublications) {
           res.status(200).json(userFavoritePublications);
         } else {
-          res
-            .status(404)
-            .json({ message: `Pas de publication favorite pour l'utilisateur #${idUser}` });
+          res.status(404).json({ message: `Pas de publication favorite pour l'utilisateur #${idUser}` });
         }
       } else {
         res.status(400).json({ message: 'Mauvaise requête' });

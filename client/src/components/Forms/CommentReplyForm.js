@@ -4,13 +4,14 @@ import { apiCreateComment } from '../../api/comments';
 import useAuth from '../../contexts/AuthContext';
 import moment from 'moment-timezone';
 
-const CommentForm = () => {
+const CommentReplyForm = (props) => {
   const { userData } = useAuth();
   const { id } = useParams();
 
   const [formData, setFormData] = useState({
     id_user: userData.id_user,
-    id_publication: id
+    id_publication: id,
+    parent_comment: props.parent
   });
 
   const handleChange = (e) => {
@@ -62,4 +63,4 @@ const CommentForm = () => {
   );
 };
 
-export default CommentForm;
+export default CommentReplyForm;

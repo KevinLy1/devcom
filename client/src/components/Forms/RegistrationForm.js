@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { apiCreateUser } from '../../api/users';
 import { notification } from 'antd';
 import { useNavigate } from 'react-router-dom';
-// import { apiUploadAvatar } from '../api/users';
+import { apiUploadAvatar } from '../../api/users';
 import moment from 'moment-timezone';
 
 const RegistrationForm = () => {
@@ -11,7 +11,7 @@ const RegistrationForm = () => {
   const [formData, setFormData] = useState({});
   const [confirmPassword, setConfirmPassword] = useState(null);
 
-  // const [avatarFile, setAvatarFile] = useState(null);
+  const [avatarFile, setAvatarFile] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,12 +21,12 @@ const RegistrationForm = () => {
     }));
   };
 
-  // const handleFileChange = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     setAvatarFile(file);
-  //   }
-  // };
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setAvatarFile(file);
+    }
+  };
 
   const handleConfirmPassword = (e) => {
     const { value } = e.target;
@@ -52,22 +52,22 @@ const RegistrationForm = () => {
     try {
       const response = await apiCreateUser(formDataWithDate);
       if (response.ok) {
-        // if (avatarFile) {
-        //   // Si un avatar a été sélectionné, préparez l'envoi du fichier
-        //   const formDataWithAvatar = new FormData();
-        //   formDataWithAvatar.append('avatar', avatarFile);
+        if (avatarFile) {
+          // Si un avatar a été sélectionné, préparez l'envoi du fichier
+          const formDataWithAvatar = new FormData();
+          formDataWithAvatar.append('avatar', avatarFile);
 
-        //   const json = await response.json();
-        //   const avatarResponse = await apiUploadAvatar(json.id_user, formDataWithAvatar);
+          const json = await response.json();
+          const avatarResponse = await apiUploadAvatar(json.id_user, formDataWithAvatar);
 
-        //   if (!avatarResponse.ok) {
-        //     notification.error({
-        //       placement: 'top',
-        //       message: "Erreur pendant le chargement de l'avatar",
-        //       description: json.message
-        //     });
-        //   }
-        // }
+          if (!avatarResponse.ok) {
+            notification.error({
+              placement: 'top',
+              message: "Erreur pendant le chargement de l'avatar",
+              description: json.message
+            });
+          }
+        }
         notification.success({
           placement: 'top',
           message: 'Inscription réussie'
@@ -96,7 +96,7 @@ const RegistrationForm = () => {
         <h2 className="text-2xl font-semibold mb-6">Formulaire d'inscription</h2>
 
         <form onSubmit={handleSubmit}>
-          {/* <h3 className="text-xl font-semibold mb-6">Informations obligatoires</h3> */}
+          <h3 className="text-xl font-semibold mb-6">Informations obligatoires</h3>
 
           <div className="mb-4">
             <label htmlFor="username" className="block mb-1 font-medium">
@@ -158,7 +158,7 @@ const RegistrationForm = () => {
             />
           </div>
 
-          {/* <h3 className="text-xl font-semibold mb-6">Informations facultatives</h3>
+          <h3 className="text-xl font-semibold mb-6">Informations facultatives</h3>
 
           <div className="mb-4">
             <label htmlFor="gender" className="block mb-1 font-medium">
@@ -245,12 +245,10 @@ const RegistrationForm = () => {
               onChange={handleFileChange}
               className="w-full p-2 border dark:border-gray-900 rounded bg-slate-50 dark:bg-slate-900 dark:focus:bg-slate-800"
             />
-          </div> */}
+          </div>
 
           <div className="flex justify-center">
-            <button
-              type="submit"
-              className="px-4 py-2 rounded bg-slate-300 dark:bg-slate-900 focus:outline-none">
+            <button type="submit" className="px-4 py-2 rounded bg-slate-300 dark:bg-slate-900 focus:outline-none">
               Inscription
             </button>
           </div>

@@ -12,12 +12,10 @@ class UserController {
   async createUser(req, res) {
     try {
       const checkUsernameUnicity = await User.findByUsername(req.body.username);
-      if (checkUsernameUnicity)
-        return res.status(401).json({ message: "Nom d'utilisateur déjà existant" });
+      if (checkUsernameUnicity) return res.status(401).json({ message: "Nom d'utilisateur déjà existant" });
 
       const checkEmailUnicity = await User.findByEmail(req.body.email);
-      if (checkEmailUnicity)
-        return res.status(401).json({ message: 'Adresse e-mail déjà existante' });
+      if (checkEmailUnicity) return res.status(401).json({ message: 'Adresse e-mail déjà existante' });
 
       const result = await User.create(req.body);
       const id_user = result.insertId;

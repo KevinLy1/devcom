@@ -26,9 +26,8 @@ const Footer = () => {
         </ul>
       </div>
       <Typography className="text-center font-normal">
-        Copyright &copy; DevCom -{' '}
-        {currentYear === publishingYear ? publishingYear : `${publishingYear}-${currentYear}`}. Tous
-        droits réservés.
+        Copyright &copy; DevCom - {currentYear === publishingYear ? publishingYear : `${publishingYear}-${currentYear}`}
+        . Tous droits réservés.
       </Typography>
     </footer>
   );

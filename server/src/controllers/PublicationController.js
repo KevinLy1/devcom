@@ -10,9 +10,7 @@ class PublicationController {
     try {
       const result = await Publication.create(req.body);
       const id_publication = result.insertId;
-      return res
-        .status(201)
-        .json({ message: 'Publication ajoutée', id_publication: id_publication });
+      return res.status(201).json({ message: 'Publication ajoutée', id_publication: id_publication });
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Erreur de serveur interne' });
@@ -133,10 +131,7 @@ class PublicationController {
       if (!isNaN(idPublication)) {
         const publication = await Publication.findById(idPublication);
         if (publication) {
-          const checkCategoryExistence = await Publication.checkCategoryExistence(
-            idPublication,
-            req.body.id_category
-          );
+          const checkCategoryExistence = await Publication.checkCategoryExistence(idPublication, req.body.id_category);
           if (checkCategoryExistence)
             return res.status(401).json({
               message: `Catégorie déjà assignée à la publication #${idPublication}`
@@ -168,9 +163,7 @@ class PublicationController {
         if (publicationCategories) {
           res.status(200).json(publicationCategories);
         } else {
-          res
-            .status(404)
-            .json({ message: `Aucune catégorie pour la publication #${idPublication}` });
+          res.status(404).json({ message: `Aucune catégorie pour la publication #${idPublication}` });
         }
       } else {
         res.status(400).json({ message: 'Mauvaise requête' });
@@ -210,10 +203,7 @@ class PublicationController {
       if (!isNaN(idPublication)) {
         const publication = await Publication.findById(idPublication);
         if (publication) {
-          const checkReputation = await Publication.checkReputation(
-            req.body.id_user,
-            idPublication
-          );
+          const checkReputation = await Publication.checkReputation(req.body.id_user, idPublication);
           if (checkReputation)
             return res.status(401).json({
               message: `Réputation déjà existante sur la publication #${idPublication} par l'utilisateur #${req.body.id_user}`
@@ -245,9 +235,7 @@ class PublicationController {
         if (publicationReputations) {
           res.status(200).json(publicationReputations);
         } else {
-          res
-            .status(404)
-            .json({ message: `Aucune réputation pour la publication #${idPublication}` });
+          res.status(404).json({ message: `Aucune réputation pour la publication #${idPublication}` });
         }
       } else {
         res.status(400).json({ message: 'Mauvaise requête' });
@@ -268,21 +256,12 @@ class PublicationController {
         if (!existingPublication) {
           return res.status(404).json({ message: `Publication #${idPublication} non trouvée` });
         } else {
-          const checkReputation = await Publication.checkReputation(
-            req.body.id_user,
-            idPublication
-          );
+          const checkReputation = await Publication.checkReputation(req.body.id_user, idPublication);
           if (checkReputation) {
-            await Publication.updatePublicationReputation(
-              req.body.id_user,
-              idPublication,
-              req.body.reputation_value
-            );
+            await Publication.updatePublicationReputation(req.body.id_user, idPublication, req.body.reputation_value);
             return res.status(200).json({ message: 'Mise à jour réussie' });
           } else {
-            res
-              .status(404)
-              .json({ message: "La réputation n'existe pas et ne peut pas être mise à jour" });
+            res.status(404).json({ message: "La réputation n'existe pas et ne peut pas être mise à jour" });
           }
         }
       } else {
@@ -326,9 +305,7 @@ class PublicationController {
         if (publicationComments) {
           res.status(200).json(publicationComments);
         } else {
-          res
-            .status(404)
-            .json({ message: `Aucun commentaire pour la publication #${idPublication}` });
+          res.status(404).json({ message: `Aucun commentaire pour la publication #${idPublication}` });
         }
       } else {
         res.status(400).json({ message: 'Mauvaise requête' });

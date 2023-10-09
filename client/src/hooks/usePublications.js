@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react';
 import { apiUserById } from '../api/users';
 import { apiPublications } from '../api/publications';
-import {
-  apiPublicationCategories,
-  apiPublicationReputation,
-  apiPublicationComments
-} from '../api/publications';
+import { apiPublicationCategories, apiPublicationReputation, apiPublicationComments } from '../api/publications';
 
 const usePublications = () => {
   const [publications, setPublications] = useState([]);
@@ -124,9 +120,7 @@ export const useDiscussions = () => {
         const response = await apiPublications();
         if (response.ok) {
           const publicationsData = await response.json();
-          const discussions = publicationsData.filter(
-            (publication) => publication.type === 'discussion'
-          );
+          const discussions = publicationsData.filter((publication) => publication.type === 'discussion');
           setDiscussions(discussions);
         } else {
           const json = await response.json();

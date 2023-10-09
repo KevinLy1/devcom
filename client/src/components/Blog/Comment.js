@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import CommentReply from './CommentReply';
 import useCommentReplies from '../../hooks/useCommentReplies';
@@ -6,10 +7,17 @@ import { IconButton } from '@material-tailwind/react';
 import { TrashIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
 import { apiDeleteComment } from '../../api/comments';
 import moment from 'moment';
+import CommentReplyForm from '../Forms/CommentReplyForm';
 
 const Comment = (props) => {
   const { replies, replyAuthor } = useCommentReplies(props.idComment);
   const { userData } = useAuth();
+
+  const [showReplyForm, setShowReplyForm] = useState(false);
+
+  const toggleReplyForm = () => {
+    setShowReplyForm(!showReplyForm);
+  };
 
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -67,7 +75,8 @@ const Comment = (props) => {
         <div className="flex items-center mt-4 space-x-4">
           <button
             type="button"
-            className="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400">
+            className="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400"
+            onClick={toggleReplyForm}>
             <svg
               aria-hidden="true"
               className="mr-1 w-4 h-4"
@@ -83,6 +92,7 @@ const Comment = (props) => {
             </svg>
             Répondre
           </button>
+          {showReplyForm && <CommentReplyForm parent={props.idComment} />}
         </div>
       </div>
       {/* Affichage des réponses */}
@@ -91,6 +101,7 @@ const Comment = (props) => {
           <CommentReply
             key={reply.id_comment}
             idUser={reply.id_user}
+            idComment={reply.id_comment}
             author={replyAuthor[reply.id_user]?.username}
             authorAvatar={replyAuthor[reply.id_user]?.avatar}
             content={reply.content}

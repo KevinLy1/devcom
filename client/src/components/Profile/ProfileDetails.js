@@ -3,12 +3,7 @@ const ProfileDetails = (props) => {
     <div className="p-3 shadow-sm rounded-sm">
       <div className="flex items-center space-x-2 font-semibold leading-8">
         <span className="text-green-500">
-          <svg
-            className="h-5"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor">
+          <svg className="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -61,12 +56,7 @@ const ProfileDetails = (props) => {
       </div>
       <div className="flex items-center space-x-2 font-semibold leading-8">
         <span className="text-green-500">
-          <svg
-            className="h-5"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor">
+          <svg className="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
