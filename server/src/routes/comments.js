@@ -22,7 +22,7 @@ router.get('/:id', CommentController.getCommentById);
 router.get('/:id/replies', CommentController.getReplies);
 
 // UPDATE
-router.get('/:id', authentication, authorCommentAuthorization, trimmer, sanitizer, CommentController.updateComment);
+router.put('/:id', authentication, authorCommentAuthorization, trimmer, sanitizer, CommentController.updateComment);
 
 // DELETE
 router.delete('/:id', authentication, authorCommentAuthorization, CommentController.deleteComment);

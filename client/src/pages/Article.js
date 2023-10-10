@@ -59,7 +59,7 @@ const ArticlePage = () => {
             })}
           </>
         )}
-        {userData && <CommentForm />}
+        {userData && <CommentForm editMode={false} />}
       </section>
     </>
   );

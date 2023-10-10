@@ -1,11 +1,19 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import useAuth from '../../contexts/AuthContext';
 import { apiDeleteComment } from '../../api/comments';
 import { IconButton } from '@material-tailwind/react';
 import { TrashIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
+import CommentReplyForm from '../Forms/CommentReplyForm';
 
 const CommentReply = (props) => {
   const { userData } = useAuth();
+
+  const [showEditForm, setEditForm] = useState(false);
+
+  const toggleEditForm = () => {
+    setEditForm(!showEditForm);
+  };
 
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -41,7 +49,7 @@ const CommentReply = (props) => {
         {userData &&
           (userData.id_user === props.idUser ? (
             <div className="flex gap-4">
-              <IconButton color="amber">
+              <IconButton color="amber" onClick={toggleEditForm}>
                 <PencilSquareIcon strokeWidth={2.5} className="h-4 w-4" />
               </IconButton>
 
@@ -59,6 +67,7 @@ const CommentReply = (props) => {
           </time>
         </p>
       )}
+      {showEditForm && <CommentReplyForm editMode={true} currentReply={props.idComment} />}
     </div>
   );
 };

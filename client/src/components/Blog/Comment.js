@@ -7,6 +7,7 @@ import { IconButton } from '@material-tailwind/react';
 import { TrashIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
 import { apiDeleteComment } from '../../api/comments';
 import moment from 'moment';
+import CommentForm from '../Forms/CommentForm';
 import CommentReplyForm from '../Forms/CommentReplyForm';
 
 const Comment = (props) => {
@@ -17,6 +18,12 @@ const Comment = (props) => {
 
   const toggleReplyForm = () => {
     setShowReplyForm(!showReplyForm);
+  };
+
+  const [showEditForm, setEditForm] = useState(false);
+
+  const toggleEditForm = () => {
+    setEditForm(!showEditForm);
   };
 
   const handleDelete = async (e) => {
@@ -54,7 +61,7 @@ const Comment = (props) => {
           {userData &&
             (userData.id_user === props.idUser ? (
               <div className="flex gap-4">
-                <IconButton color="amber">
+                <IconButton color="amber" onClick={toggleEditForm}>
                   <PencilSquareIcon strokeWidth={2.5} className="h-4 w-4" />
                 </IconButton>
 
@@ -72,6 +79,7 @@ const Comment = (props) => {
             </time>
           </p>
         )}
+        {showEditForm && <CommentForm editMode={true} currentComment={props.idComment} />}
         <div className="flex items-center mt-4 space-x-4">
           <button
             type="button"
