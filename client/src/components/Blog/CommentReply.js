@@ -41,9 +41,7 @@ const CommentReply = (props) => {
             {props.author}
           </Link>
           <p className="text-sm text-gray-600 dark:text-gray-400">
-            <time dateTime="2022-02-12" title="February 12th, 2022">
-              {props.dateCreation}
-            </time>
+            <time>{props.dateCreation}</time>
           </p>
         </div>
         {userData &&
@@ -60,11 +58,9 @@ const CommentReply = (props) => {
           ) : null)}
       </div>
       <p>{props.content}</p>
-      {props.dateUpdate && (
-        <p className="text-sm text-gray-600 dark:text-gray-400">
-          <time dateTime="2022-02-08" title="February 8th, 2022">
-            Édité le {props.dateUpdate}
-          </time>
+      {props.dateUpdate !== null && (
+        <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+          <time>Édité le {props.dateUpdate}</time>
         </p>
       )}
       {showEditForm && <CommentReplyForm editMode={true} currentReply={props.idComment} />}

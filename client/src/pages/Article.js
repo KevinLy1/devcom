@@ -53,7 +53,7 @@ const ArticlePage = () => {
                   authorAvatar={commentAuthor[comment.id_user]?.avatar}
                   content={comment.content}
                   dateCreation={moment(comment.date_creation).format('LLLL')}
-                  dateUpdate={moment(comment.date_update).format('LLLL')}
+                  dateUpdate={comment.date_update ? moment(comment.date_update).format('LLLL') : null}
                 />
               );
             })}

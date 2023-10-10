@@ -73,10 +73,8 @@ const Comment = (props) => {
         </div>
         <p>{props.content}</p>
         {props.dateUpdate !== null && (
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            <time dateTime="2022-02-08" title="February 8th, 2022">
-              Édité le {props.dateUpdate}
-            </time>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+            <time>Édité le {props.dateUpdate}</time>
           </p>
         )}
         {showEditForm && <CommentForm editMode={true} currentComment={props.idComment} />}
@@ -114,7 +112,7 @@ const Comment = (props) => {
             authorAvatar={replyAuthor[reply.id_user]?.avatar}
             content={reply.content}
             dateCreation={moment(reply.date_creation).format('LLLL')}
-            dateUpdate={moment(reply.date_update).format('LLLL')}
+            dateUpdate={reply.date_update ? moment(reply.date_update).format('LLLL') : null}
           />
         ))}
     </>
