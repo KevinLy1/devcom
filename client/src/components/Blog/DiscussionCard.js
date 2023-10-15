@@ -101,7 +101,7 @@ const DiscussionCard = (props) => {
             ))}
           </div>
           <Link to={`/discussion/${props.idPublication}`} className="mb-3 text-xl font-bold">
-            #{props.idPublication} – {props.title}
+            {props.title}
           </Link>
           <div className="text-sm text-neutral-600">{props.description}</div>
           <span className="text-sm font-light dark:text-gray-400">

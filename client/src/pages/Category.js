@@ -70,7 +70,7 @@ const CategoryPage = () => {
       value: 'discussions',
       icon: UserCircleIcon,
       desc: (
-        <div className="flex flex-col gap-10 justify-center">
+        <div className="flex flex-col gap-10 justify-center dark:text-white">
           {discussions.length > 0 ? (
             discussions.map((discussion) => (
               <DiscussionCard
@@ -78,6 +78,7 @@ const CategoryPage = () => {
                 title={discussion.title}
                 categories={categoriesDiscussions[discussion.id_publication] || []}
                 reputation={reputationsDiscussions[discussion.id_publication] || []}
+                isFavorite={favorites.some((favorite) => favorite.id_publication === discussion.id_publication)}
                 comments={commentsDiscussions[discussion.id_publication] || []}
                 description={discussion.description}
                 image={discussion.image}
@@ -87,7 +88,6 @@ const CategoryPage = () => {
                 idPublication={discussion.id_publication}
                 isLiked={reputationsDiscussions[discussion.id_publication]?.reputation_value === 1 || false}
                 isDisliked={reputationsDiscussions[discussion.id_publication]?.reputation_value !== 1 || false}
-                // isFavourite={}
                 dateCreation={moment(discussion.date_creation).format('LLLL')}
                 dateUpdate={moment(discussion.date_update).format('LLLL')}
               />
