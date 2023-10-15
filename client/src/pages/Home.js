@@ -17,8 +17,18 @@ const HomePage = () => {
   const categories = useCategories();
   const publications = usePublications();
 
-  const { articles, users: articleUsers, reputations: articleReputations } = useLatestArticles();
-  const { discussions, users: discussionUsers, reputations: discussionReputations } = useLatestDiscussions();
+  const {
+    articles,
+    users: articleUsers,
+    reputations: articleReputations,
+    comments: articleComments
+  } = useLatestArticles();
+  const {
+    discussions,
+    users: discussionUsers,
+    reputations: discussionReputations,
+    comments: discussionComments
+  } = useLatestDiscussions();
   const favorites = useFavorites();
 
   return (
@@ -53,7 +63,7 @@ const HomePage = () => {
         </div>
       )}
 
-      {categories.length > 0 ? (
+      {categories.length > 0 && (
         <section className="mx-auto hidden lg:grid lg:gap-6 lg:grid-cols-4 lg:max-w-none auto-rows-fr mt-12">
           {categories.slice(0, 8).map((category) => (
             <CategoryCard
@@ -72,8 +82,6 @@ const HomePage = () => {
             />
           ))} */}
         </section>
-      ) : (
-        'Aucune catégorie'
       )}
 
       <section className="py-12 lg:py-16 relative">
@@ -91,6 +99,7 @@ const HomePage = () => {
                   title={article.title}
                   reputation={articleReputations[article.id_publication] || []}
                   isFavorite={favorites.some((favorite) => favorite.id_publication === article.id_publication)}
+                  comments={articleComments[article.id_publication] || []}
                   image={article.image}
                   description={article.description}
                   idUser={article.id_user}
@@ -101,7 +110,7 @@ const HomePage = () => {
               ))}
             </div>
           ) : (
-            'Aucun article'
+            <div className="mt-10">Aucun article pour le moment</div>
           )}
         </div>
       </section>
@@ -121,6 +130,7 @@ const HomePage = () => {
                   title={discussion.title}
                   reputation={discussionReputations[discussion.id_publication] || []}
                   isFavorite={favorites.some((favorite) => favorite.id_publication === discussion.id_publication)}
+                  comments={discussionComments[discussion.id_publication] || []}
                   image={discussion.image}
                   description={discussion.description}
                   idUser={discussion.id_user}
@@ -131,7 +141,7 @@ const HomePage = () => {
               ))}
             </div>
           ) : (
-            'Aucune discussion'
+            <div className="mt-10">Aucune discussion pour le moment</div>
           )}
         </div>
       </section>

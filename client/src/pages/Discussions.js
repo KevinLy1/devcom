@@ -1,118 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import useDocumentTitle from '../hooks/useDocumentTitle';
 import DiscussionCard from '../components/Blog/DiscussionCard';
 import { FaAngleDoubleLeft, FaAngleLeft, FaAngleRight, FaAngleDoubleRight } from 'react-icons/fa';
-import moment from 'moment';
-import 'moment/locale/fr';
-import { apiUserById } from '../api/users';
-import {
-  apiPublications,
-  apiPublicationCategories,
-  apiPublicationReputation,
-  apiPublicationComments
-} from '../api/publications';
 import { Input } from '@material-tailwind/react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
-import { notification } from 'antd';
+import { useDiscussions } from '../hooks/usePublications';
+import useFavorites from '../hooks/useFavorites';
+import moment from 'moment';
+import 'moment/locale/fr';
 
 const DiscussionsPage = () => {
   useDocumentTitle('Liste des discussions');
 
-  const [articles, setArticles] = useState([]);
-  const [users, setUsers] = useState({});
-  const [categories, setCategories] = useState({});
-  const [reputations, setReputations] = useState({});
-  const [comments, setComments] = useState({});
+  const { discussions, users, categories, reputations, comments } = useDiscussions();
+
+  const favorites = useFavorites();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState('newest');
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Récupérer les articles
-  useEffect(() => {
-    async function getPublications() {
-      try {
-        const response = await apiPublications();
-        if (response.ok) {
-          const data = await response.json();
-          setArticles(data);
-        } else {
-          notification.error({ message: 'Erreur lors de la récupération des articles.' });
-        }
-      } catch (error) {
-        // notification.error({
-        //   message: 'Erreur lors de la récupération des articles',
-        //   description: error
-        // });
-      }
-    }
-
-    getPublications();
-  }, []);
-
-  // Récupérer les informations des utilisateurs liés aux articles
-  useEffect(() => {
-    async function getArticlesData() {
-      try {
-        const usersData = {};
-        for (const article of articles) {
-          if (!usersData[article.id_user]) {
-            const response = await apiUserById(article.id_user);
-            const user = await response.json();
-            usersData[article.id_user] = user;
-          }
-        }
-        setUsers(usersData);
-
-        const categoriesData = {}; // Crée un objet pour stocker les données de catégories par id_publication
-        for (const article of articles) {
-          if (!categoriesData[article.id_publication]) {
-            const response = await apiPublicationCategories(article.id_publication);
-            const categories = await response.json();
-            setCategories((prevCategories) => ({
-              ...prevCategories,
-              [article.id_publication]: categories
-            }));
-          }
-        }
-
-        const reputationsData = {}; // Crée un objet pour stocker les données de catégories par id_publication
-        for (const article of articles) {
-          if (!reputationsData[article.id_publication]) {
-            const response = await apiPublicationReputation(article.id_publication);
-            const reputations = await response.json();
-            setReputations((prevReputations) => ({
-              ...prevReputations,
-              [article.id_publication]: reputations
-            }));
-          }
-        }
-
-        const commentsData = {}; // Crée un objet pour stocker les données de catégories par id_publication
-        for (const article of articles) {
-          if (!commentsData[article.id_publication]) {
-            const response = await apiPublicationComments(article.id_publication);
-            const comments = await response.json();
-            setComments((prevComments) => ({
-              ...prevComments,
-              [article.id_publication]: comments
-            }));
-          }
-        }
-      } catch (error) {
-        // notification.error({
-        //   message: 'Erreur lors de la récupération des informations des utilisateurs :',
-        //   description: error
-        // });
-      }
-    }
-
-    getArticlesData();
-  }, [articles]);
-
   // Trier les articles en fonction de l'option de tri sélectionnée
-  let sortedArticles = articles
-    .filter((item) => item.type === 'discussion')
+  let sortedDiscussions = discussions
     .filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase())) // Filtrer par titre
     .sort((a, b) => {
       if (sortBy === 'newest') {
@@ -127,7 +36,7 @@ const DiscussionsPage = () => {
 
   // Calculer le nombre total de pages
   const itemsPerPage = 9;
-  const totalPages = Math.ceil(sortedArticles.length / itemsPerPage);
+  const totalPages = Math.ceil(sortedDiscussions.length / itemsPerPage);
 
   // Générer la liste des numéros de page
   const pageNumbers = [];
@@ -138,7 +47,7 @@ const DiscussionsPage = () => {
   // Calculer les index des articles à afficher pour la page actuelle
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentArticles = sortedArticles.slice(indexOfFirstItem, indexOfLastItem);
+  const currentDiscussions = sortedDiscussions.slice(indexOfFirstItem, indexOfLastItem);
 
   // Fonction de pagination
   const paginate = (pageNumber) => {
@@ -151,7 +60,7 @@ const DiscussionsPage = () => {
     setCurrentPage(1); // Réinitialiser la page courante lorsque le terme de recherche change
   }, [searchTerm]);
 
-  if (currentArticles) {
+  if (currentDiscussions) {
     return (
       <>
         {/* Barre de tri */}
@@ -186,6 +95,7 @@ const DiscussionsPage = () => {
               icon={<MagnifyingGlassIcon className="h-5 w-5" />}
               label="Rechercher un article"
               value={searchTerm}
+              color={localStorage.theme === 'dark' ? 'white' : 'black'}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="peer w-full h-full bg-transparent text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] !pr-9 border-blue-gray-200 focus:border-gray-900"
             />
@@ -234,29 +144,26 @@ const DiscussionsPage = () => {
 
         {/* Liste d'articles */}
         {/* <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"> */}
-        <div className="flex flex-col gap-1 justify-center">
-          {currentArticles.map((article) => (
-            <>
-              <DiscussionCard
-                key={article.id_publication}
-                title={article.title}
-                categories={categories[article.id_publication] || []}
-                reputation={reputations[article.id_publication] || []}
-                comments={comments[article.id_publication] || []}
-                description={article.description}
-                image={article.image}
-                idUser={article.id_user}
-                author={users[article.id_user]?.username}
-                authorAvatar={users[article.id_user]?.avatar}
-                idPublication={article.id_publication}
-                isLiked={reputations[article.id_publication]?.reputation_value === 1 || false}
-                isDisliked={reputations[article.id_publication]?.reputation_value !== 1 || false}
-                // isFavourite={}
-                dateCreation={moment(article.date_creation).format('LLLL')}
-                dateUpdate={moment(article.date_update).format('LLLL')}
-              />
-              <hr />
-            </>
+        <div className="flex flex-col gap-10 justify-center">
+          {currentDiscussions.map((discussion) => (
+            <DiscussionCard
+              key={discussion.id_publication}
+              title={discussion.title}
+              categories={categories[discussion.id_publication] || []}
+              reputation={reputations[discussion.id_publication] || []}
+              isFavorite={favorites.some((favorite) => favorite.id_publication === discussion.id_publication)}
+              comments={comments[discussion.id_publication] || []}
+              description={discussion.description}
+              image={discussion.image}
+              idUser={discussion.id_user}
+              author={users[discussion.id_user]?.username}
+              authorAvatar={users[discussion.id_user]?.avatar}
+              idPublication={discussion.id_publication}
+              isLiked={reputations[discussion.id_publication]?.reputation_value === 1 || false}
+              isDisliked={reputations[discussion.id_publication]?.reputation_value !== 1 || false}
+              dateCreation={moment(discussion.date_creation).format('LLLL')}
+              dateUpdate={moment(discussion.date_update).format('LLLL')}
+            />
           ))}
         </div>
 
@@ -302,7 +209,7 @@ const DiscussionsPage = () => {
       </>
     );
   } else {
-    return <div>Aucun article</div>;
+    return <div>Aucune discussion</div>;
   }
 };
 

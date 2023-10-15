@@ -63,8 +63,11 @@ const CommentForm = ({ editMode, currentComment }) => {
   };
 
   return (
-    <form className="mb-6" onSubmit={handleSubmit}>
-      <div className="py-2 px-4 mb-4 rounded-lg rounded-t-lg border border-gray-200">
+    <form className="mt-6" onSubmit={handleSubmit}>
+      <div
+        className={`py-2 px-4 mb-4 rounded-lg rounded-t-lg border border-gray-200 dark:border-slate-900 bg-gray-300 ${
+          editMode ? ' dark:bg-slate-800' : ' dark:bg-slate-950'
+        }`}>
         <label htmlFor="content" className="block mb-1 font-medium">
           {editMode ? 'Modifier le commentaire' : 'Ajouter un commentaire'}
         </label>
@@ -79,7 +82,7 @@ const CommentForm = ({ editMode, currentComment }) => {
           required></textarea>
       </div>
       <div className="flex justify-center">
-        <button type="submit" className="px-4 py-2 rounded bg-slate-300 dark-bg-slate-950 focus-outline-none">
+        <button type="submit" className="px-4 py-2 rounded bg-slate-300 dark:bg-slate-900 focus-outline-none">
           {editMode ? 'Modifier' : 'Ajouter'}
         </button>
       </div>

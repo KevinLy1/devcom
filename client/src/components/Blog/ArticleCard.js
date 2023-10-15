@@ -1,20 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FaThumbsUp, FaThumbsDown, FaStar, FaShareAlt, FaClipboard, FaTag } from 'react-icons/fa';
+import { FiMessageCircle } from 'react-icons/fi';
 import {
-  Avatar,
   Card,
   CardHeader,
   CardBody,
   CardFooter,
-  Button,
+  Typography,
+  Avatar,
   Menu,
   MenuHandler,
+  Button,
   MenuList,
   MenuItem
 } from '@material-tailwind/react';
-import { FiMessageCircle } from 'react-icons/fi';
-import { FaThumbsUp, FaThumbsDown, FaBookmark, FaClipboard, FaEllipsisH } from 'react-icons/fa';
-import { useAuth } from '../../contexts/AuthContext';
 import {
   handleLike,
   handleDislike,
@@ -23,12 +23,13 @@ import {
   handleFavorite,
   handleCancelFavorite
 } from '../../actions/publicationActions';
+import useAuth from '../../contexts/AuthContext';
 import { notification } from 'antd';
 
 const ArticleCard = (props) => {
   const { userData } = useAuth();
 
-  const [articleLocalState, setArticleLocalState] = useState({
+  const [publicationLocalState, setPublicationLocalState] = useState({
     isLiked: false,
     isDisliked: false,
     isFavorite: false,
@@ -55,7 +56,7 @@ const ArticleCard = (props) => {
         isFavorite = props.isFavorite;
       }
     }
-    setArticleLocalState((prevState) => ({
+    setPublicationLocalState((prevState) => ({
       ...prevState,
       isLiked: isLiked,
       isDisliked: isDisliked,
@@ -75,89 +76,90 @@ const ArticleCard = (props) => {
       : [];
 
   return (
-    <Card className="w-full flex-col bg-white dark:bg-slate-950/90">
-      <CardHeader shadow={false} floated={false} className="m-0 w-full shrink-0 rounded-b-none hidden md:block h-44">
+    <Card className="max-w-[24rem] overflow-hidden flex flex-col dark:text-white">
+      <CardHeader floated={false} shadow={false} color="transparent" className="m-0 rounded-none h-64">
         <img
           src={props.image ? props.image : '/assets/img/default-publication.svg'}
           alt={props.title}
-          className="h-full w-full object-cover"
+          className="object-cover w-full h-full"
         />
       </CardHeader>
 
-      <CardBody>
-        <div className="flex items-center justify-between">
-          <span className="text-sm font-light dark:text-gray-400">
-            Publié le {props.dateCreation}
-            {props.dateUpdate && (
-              <>
-                <br />
-                Édité le {props.dateUpdate}
-              </>
-            )}
-          </span>
-          <div className="flex space-x-2">
-            {categories.map((category) => (
-              <Link key={category.id_category} to={`/category/${category.id_category}`}>
-                <div className="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-gray-800 dark:bg-slate-800 rounded cursor-pointer hover:bg-gray-500 dark:hover:bg-gray-700">
-                  {category.title}
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-        <Link
-          to={`/article/${props.idPublication}`}
-          className="text-2xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline">
-          #{props.idPublication} – {props.title}
+      <CardBody className="relative bg-gray-50 dark:bg-slate-950 flex-1 text-blue-gray-900 dark:text-white">
+        <Link to={`/user/${props.idUser}`} className="flex items-center gap-2">
+          <Avatar
+            size="sm"
+            variant="circular"
+            alt={props.author}
+            src={props.authorAvatar ? props.authorAvatar : '/assets/img/default-avatar.svg'}
+          />
+          {props.author}
         </Link>
-        <p className="mt-2 text-gray-600 dark:text-gray-300">{props.description}</p>
-        <div className="flex items-center justify-between mt-4">
-          <div className="flex items-center gap-2">
-            <Avatar src={props.authorAvatar} alt="avatar" />
-            <Link to={`/user/${props.idUser}`} className="font-bold text-gray-700 cursor-pointer dark:text-gray-200">
-              {props.author}
+        <div className="flex space-x-2 my-4">
+          {categories.map((category) => (
+            <Link key={category.id_category} to={`/category/${category.id_category}`}>
+              <div className="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-gray-800 dark:bg-slate-800 rounded cursor-pointer hover:bg-gray-500 dark:hover:bg-gray-700 flex items-center">
+                <FaTag className="mr-2" /> {category.title}
+              </div>
             </Link>
-          </div>
-          <Link to={`/article/${props.idPublication}`} className="inline-block">
-            <Button className="flex items-center gap-2">Lire la suite ⟶</Button>
-          </Link>
+          ))}
         </div>
+        <FaStar
+          className={`cursor-pointer absolute top-5 right-5 ${
+            publicationLocalState.isFavorite ? 'text-yellow-500' : ''
+          }`}
+          onClick={
+            publicationLocalState.isFavorite
+              ? () => handleCancelFavorite(userData, props, setPublicationLocalState)
+              : () => handleFavorite(userData, props, setPublicationLocalState)
+          }
+        />
+        <Link to={`/article/${props.idPublication}`}>
+          <Typography variant="h4">{props.title}</Typography>
+        </Link>
+        <Typography variant="lead" className="mt-3 font-normal">
+          {props.description}
+        </Typography>
       </CardBody>
-      <CardFooter className="mt-2 flex justify-between">
-        <div className="flex items-center gap-1 dark:text-white">
+
+      <CardFooter className="bg-gray-50 dark:bg-slate-950 flex flex-col gap-3">
+        <Typography className="font-normal">Publié le : {props.dateCreation}</Typography>
+        <Typography className="font-normal">Dernière édition le : {props.dateUpdate}</Typography>
+      </CardFooter>
+
+      <div className="flex items-center justify-between bg-gray-50 dark:bg-slate-950 px-10 pb-5">
+        <div className="flex items-center gap-2">
           <FaThumbsUp
-            className={`cursor-pointer ${articleLocalState.isLiked ? 'text-green-500' : ''}`}
+            className={`cursor-pointer ${publicationLocalState.isLiked ? 'text-green-500' : ''}`}
             onClick={
-              articleLocalState.isLiked
-                ? () => handleCancelLike(userData, props, setArticleLocalState)
-                : () => handleLike(userData, props, articleLocalState, setArticleLocalState)
+              publicationLocalState.isLiked
+                ? () => handleCancelLike(userData, props, setPublicationLocalState)
+                : () => handleLike(userData, props, publicationLocalState, setPublicationLocalState)
             }
           />
-          {articleLocalState.reputation}
+          {publicationLocalState.reputation}
           <FaThumbsDown
-            className={`cursor-pointer ${articleLocalState.isDisliked ? 'text-red-500' : ''}`}
+            className={`cursor-pointer ${publicationLocalState.isDisliked ? 'text-red-500' : ''}`}
             onClick={
-              articleLocalState.isDisliked
-                ? () => handleCancelDislike(userData, props, setArticleLocalState)
-                : () => handleDislike(userData, props, articleLocalState, setArticleLocalState)
-            }
-          />
-          <FaBookmark
-            className={`cursor-pointer ${articleLocalState.isFavorite ? 'text-yellow-500' : ''}`}
-            onClick={
-              articleLocalState.isFavorite
-                ? () => handleCancelFavorite(userData, props, setArticleLocalState)
-                : () => handleFavorite(userData, props, setArticleLocalState)
+              publicationLocalState.isDisliked
+                ? () => handleCancelDislike(userData, props, setPublicationLocalState)
+                : () => handleDislike(userData, props, publicationLocalState, setPublicationLocalState)
             }
           />
         </div>
+
+        <div className="flex items-center gap-1">
+          <FiMessageCircle className="text-gray-500 dark:text-gray-400" />
+          <span className="text-gray-500 dark:text-gray-400">{nbComments}</span>
+        </div>
+
         <Menu>
           <MenuHandler>
             <Button>
-              <FaEllipsisH />
+              <FaShareAlt />
             </Button>
           </MenuHandler>
-          <MenuList>
+          <MenuList className="bg-white dark:bg-slate-950 border-none">
             <MenuItem
               onClick={() => {
                 const link = `${process.env.REACT_APP_CLIENT_URL}/article/${props.idPublication}`;
@@ -171,11 +173,7 @@ const ArticleCard = (props) => {
             </MenuItem>
           </MenuList>
         </Menu>
-        <div className="flex items-center gap-1">
-          <FiMessageCircle className="text-gray-500 dark:text-gray-400" />
-          <span className="text-gray-500 dark:text-gray-400">{nbComments}</span>
-        </div>
-      </CardFooter>
+      </div>
     </Card>
   );
 };

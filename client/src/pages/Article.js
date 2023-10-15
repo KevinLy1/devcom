@@ -32,8 +32,8 @@ const ArticlePage = () => {
           author={articleAuthor[article.id_user]?.username}
           authorAvatar={articleAuthor[article.id_user]?.avatar}
           idPublication={article.id_publication}
-          dateCreation={moment(article.date_creation).format('LLLL')}
-          dateUpdate={moment(article.date_update).format('LLLL')}
+          dateCreation={moment(article.date_creation).format('LLL')}
+          dateUpdate={moment(article.date_update).format('LLL')}
         />
       </section>
       <section id="comments">
@@ -43,22 +43,25 @@ const ArticlePage = () => {
             <p className="my-10 font-semibold text-2xl">
               {totalComments} commentaire{totalComments !== 1 ? 's' : ''}
             </p>
-            {Object.values(comments).map((comment) => {
-              return (
-                <Comment
-                  key={comment.id_comment}
-                  idComment={comment.id_comment}
-                  idUser={comment.id_user}
-                  author={commentAuthor[comment.id_user]?.username}
-                  authorAvatar={commentAuthor[comment.id_user]?.avatar}
-                  content={comment.content}
-                  dateCreation={moment(comment.date_creation).format('LLLL')}
-                  dateUpdate={comment.date_update ? moment(comment.date_update).format('LLLL') : null}
-                />
-              );
-            })}
+            {Object.values(comments)
+              .reverse()
+              .map((comment) => {
+                return (
+                  <Comment
+                    key={comment.id_comment}
+                    idComment={comment.id_comment}
+                    idUser={comment.id_user}
+                    author={commentAuthor[comment.id_user]?.username}
+                    authorAvatar={commentAuthor[comment.id_user]?.avatar}
+                    content={comment.content}
+                    dateCreation={moment(comment.date_creation).format('LLL')}
+                    dateUpdate={comment.date_update ? moment(comment.date_update).format('LLL') : null}
+                  />
+                );
+              })}
           </>
         )}
+
         {userData && <CommentForm editMode={false} />}
       </section>
     </>

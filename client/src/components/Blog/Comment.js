@@ -74,10 +74,11 @@ const Comment = (props) => {
         <p>{props.content}</p>
         {props.dateUpdate !== null && (
           <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
-            <time>Édité le {props.dateUpdate}</time>
+            <time>Dernière édition : {props.dateUpdate}</time>
           </p>
         )}
         {showEditForm && <CommentForm editMode={true} currentComment={props.idComment} />}
+
         <div className="flex items-center mt-4 space-x-4">
           <button
             type="button"
@@ -98,8 +99,12 @@ const Comment = (props) => {
             </svg>
             Répondre
           </button>
-          {showReplyForm && <CommentReplyForm parent={props.idComment} />}
         </div>
+        {showReplyForm && (
+          <div>
+            <CommentReplyForm parent={props.idComment} />
+          </div>
+        )}
       </div>
       {/* Affichage des réponses */}
       {replies.length > 0 &&
@@ -111,8 +116,8 @@ const Comment = (props) => {
             author={replyAuthor[reply.id_user]?.username}
             authorAvatar={replyAuthor[reply.id_user]?.avatar}
             content={reply.content}
-            dateCreation={moment(reply.date_creation).format('LLLL')}
-            dateUpdate={reply.date_update ? moment(reply.date_update).format('LLLL') : null}
+            dateCreation={moment(reply.date_creation).format('LLL')}
+            dateUpdate={reply.date_update ? moment(reply.date_update).format('LLL') : null}
           />
         ))}
     </>

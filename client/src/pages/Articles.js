@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import useDocumentTitle from '../hooks/useDocumentTitle';
 import ArticleCard from '../components/Blog/ArticleCard';
 import { FaAngleDoubleLeft, FaAngleLeft, FaAngleRight, FaAngleDoubleRight } from 'react-icons/fa';
@@ -99,8 +99,8 @@ const ArticlesPage = () => {
               icon={<MagnifyingGlassIcon className="h-5 w-5" />}
               label="Rechercher un article"
               value={searchTerm}
+              color={localStorage.theme === 'dark' ? 'white' : 'black'}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="peer w-full h-full bg-transparent text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] !pr-9 border-blue-gray-200 focus:border-gray-900"
             />
           </div>
         </div>
@@ -146,26 +146,27 @@ const ArticlesPage = () => {
         </div>
 
         {/* Liste d'articles */}
-        {/* <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"> */}
-        <div className="flex flex-col gap-10 justify-center">
-          {currentArticles.map((article) => (
-            <ArticleCard
-              key={article.id_publication}
-              title={article.title}
-              categories={categories[article.id_publication] || []}
-              reputation={reputations[article.id_publication] || []}
-              isFavorite={favorites.some((favorite) => favorite.id_publication === article.id_publication)}
-              comments={comments[article.id_publication] || []}
-              description={article.description}
-              image={article.image}
-              idUser={article.id_user}
-              author={users[article.id_user]?.username}
-              authorAvatar={users[article.id_user]?.avatar}
-              idPublication={article.id_publication}
-              dateCreation={moment(article.date_creation).format('LLLL')}
-              dateUpdate={moment(article.date_update).format('LLLL')}
-            />
-          ))}
+        <div className="flex justify-center md:justify-around">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {currentArticles.map((article) => (
+              <ArticleCard
+                key={article.id_publication}
+                title={article.title}
+                categories={categories[article.id_publication] || []}
+                reputation={reputations[article.id_publication] || []}
+                isFavorite={favorites.some((favorite) => favorite.id_publication === article.id_publication)}
+                comments={comments[article.id_publication] || []}
+                description={article.description}
+                image={article.image}
+                idUser={article.id_user}
+                author={users[article.id_user]?.username}
+                authorAvatar={users[article.id_user]?.avatar}
+                idPublication={article.id_publication}
+                dateCreation={moment(article.date_creation).format('LLL')}
+                dateUpdate={moment(article.date_update).format('LLL')}
+              />
+            ))}
+          </div>
         </div>
 
         {/* Pagination en bas */}

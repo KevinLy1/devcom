@@ -70,23 +70,23 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // useEffect(() => {
-  //   verifyToken();
-  // }, []);
-
-  // Vérifier le jeton toutes les 10 minutes (si inactif)
   useEffect(() => {
     verifyToken();
-
-    const refreshInterval = setInterval(
-      () => {
-        verifyToken();
-      },
-      10 * 60 * 1000
-    );
-
-    return () => clearInterval(refreshInterval);
   }, []);
+
+  // // Vérifier le jeton toutes les 10 minutes (si inactif)
+  // useEffect(() => {
+  //   verifyToken();
+
+  //   const refreshInterval = setInterval(
+  //     () => {
+  //       verifyToken();
+  //     },
+  //     10 * 60 * 1000
+  //   );
+
+  //   return () => clearInterval(refreshInterval);
+  // }, []);
 
   return <AuthContext.Provider value={{ userData, login, logout }}>{children}</AuthContext.Provider>;
 };

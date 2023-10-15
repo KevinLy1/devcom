@@ -66,7 +66,10 @@ const CommentReplyForm = ({ parent, editMode, currentReply }) => {
 
   return (
     <form className="mb-6" onSubmit={handleSubmit}>
-      <div className="py-2 px-4 mb-4 rounded-lg rounded-t-lg border border-gray-200">
+      <div
+        className={`py-2 px-4 mb-4 rounded-lg rounded-t-lg border border-gray-200 dark:border-slate-900 bg-gray-300 ${
+          editMode ? ' dark:bg-slate-950' : ' dark:bg-slate-800'
+        }`}>
         <label htmlFor="content" className="block mb-1 font-medium">
           {editMode ? 'Modifier la réponse' : 'Répondre à ce commentaire'}
         </label>
