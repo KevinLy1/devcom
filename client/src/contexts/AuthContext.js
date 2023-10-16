@@ -56,9 +56,9 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = async (data) => {
+  const logout = async () => {
     try {
-      const response = await apiLogout(data);
+      const response = await apiLogout();
       if (response.ok) {
         await verifyToken();
         return true;

@@ -1,30 +1,31 @@
 import useUser from '../hooks/useUser';
-import ProfileCard from '../components/Profile/ProfileCard';
-import ProfileDetails from '../components/Profile/ProfileDetails';
+import Profile from '../components/Profile/Profile';
+import useDocumentTitle from '../hooks/useDocumentTitle';
 import moment from 'moment';
 import 'moment/locale/fr';
-import useDocumentTitle from '../hooks/useDocumentTitle';
 
 const UserPage = () => {
   const user = useUser();
 
-  useDocumentTitle(`${user.username}`);
+  useDocumentTitle(`Profil de ${user.username}`);
 
   return (
-    <div className="flex justify-around gap-3 sm:flex-wrap md:flex-nowrap">
-      <ProfileCard key={user.id_user} username={user.username} avatar={user.avatar} />
-      <ProfileDetails
+    <>
+      <h1 className="text-4xl text-center mb-10 font-bold">Profil de {user.username}</h1>
+      <Profile
+        username={user.username}
+        avatar={user.avatar}
         key={user.id_user}
         firstName={user.first_name}
         lastName={user.last_name}
         gender={user.gender}
         webUrl={user.web_url}
         email={user.email}
-        dateRegistration={moment(user.date_registration).format('LLLL')}
+        dateRegistration={moment(user.date_registration).format('L')}
         biography={user.biography}
         role={user.role === 'administrator' ? 'Administrateur' : 'Utilisateur'}
       />
-    </div>
+    </>
   );
 };
 

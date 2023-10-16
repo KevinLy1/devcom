@@ -1,54 +1,78 @@
-// import { Link } from 'react-router-dom';
-// import { Breadcrumbs } from '@material-tailwind/react';
-import ProfileCard from '../../components/Profile/ProfileCard';
-import ProfileDetails from '../../components/Profile/ProfileDetails';
-import { useAuth } from '../../contexts/AuthContext';
+import useProfile from '../../hooks/useProfile';
+import Profile from '../../components/Profile/Profile';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
-
 import moment from 'moment';
+import 'moment/locale/fr';
+import { Button } from '@material-tailwind/react';
+import { FaLock, FaPen, FaTrash } from 'react-icons/fa';
+import { apiDeleteUser } from '../../api/users';
+import { notification } from 'antd';
+import useAuth from '../../contexts/AuthContext';
 
 const ProfilePage = () => {
-  const { userData } = useAuth();
+  const user = useProfile();
+  const { logout } = useAuth();
 
   useDocumentTitle('Votre profil');
 
-  if (userData) {
+  const handleDelete = async (e) => {
+    e.preventDefault();
+
+    const confirmation = window.confirm('Êtes-vous sûr de vouloir supprimer votre compte ?');
+
+    if (confirmation) {
+      try {
+        const response = await apiDeleteUser(user.id_user);
+        if (response.ok) {
+          notification.success({
+            message: 'Votre compte a bien été supprimé'
+          });
+          await logout();
+        }
+      } catch {
+        //
+      }
+    }
+  };
+
+  if (user) {
     return (
       <>
-        {/* <Breadcrumbs separator=">" className="bg-gray-500 dark:bg-slate-900">
-          <Link to="/" className="opacity-60 dark:text-white">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4"
-              viewBox="0 0 20 20"
-              fill="currentColor">
-              <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-            </svg>
-          </Link>
-          <Link to="/dashboard" className="opacity-60 dark:text-white">
-            Tableau de bord
-          </Link>
-          <span className="dark:text-white">Profil</span>
-        </Breadcrumbs> */}
-
-        <div className="flex justify-around gap-3 sm:flex-wrap md:flex-nowrap">
-          <ProfileCard key={userData.id_user} username={userData.username} avatar={userData.avatar} />
-          <ProfileDetails
-            key={userData.id_user}
-            firstName={userData.first_name}
-            lastName={userData.last_name}
-            gender={userData.gender}
-            webUrl={userData.web_url}
-            email={userData.email}
-            dateRegistration={moment(userData.date_registration).format('LLLL')}
-            biography={userData.biography}
-            role={userData.role === 'administrator' ? 'Administrateur' : 'Utilisateur'}
-          />
+        <h1 className="text-4xl text-center mb-10 font-bold">Votre profil</h1>
+        <div className="flex items-center flex-wrap justify-center gap-3 mb-10">
+          <Button color="amber">
+            <div className="flex items-center gap-2">
+              <FaPen /> Éditer le profil
+            </div>
+          </Button>
+          <Button color="blue">
+            <div className="flex items-center gap-2">
+              <FaLock /> Modifier le mot de passe
+            </div>
+          </Button>
+          <Button color="red" onClick={handleDelete}>
+            <div className="flex items-center gap-2">
+              <FaTrash /> Supprimer le compte
+            </div>
+          </Button>
         </div>
+        <Profile
+          username={user.username}
+          avatar={user.avatar}
+          key={user.id_user}
+          firstName={user.first_name}
+          lastName={user.last_name}
+          gender={user.gender}
+          webUrl={user.web_url}
+          email={user.email}
+          dateRegistration={moment(user.date_registration).format('L')}
+          biography={user.biography}
+          role={user.role === 'administrator' ? 'Administrateur' : 'Utilisateur'}
+        />
       </>
     );
   } else {
-    return <p>Non connecté</p>;
+    return <p>Vous n'êtes pas connecté(e).</p>;
   }
 };
 

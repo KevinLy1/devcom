@@ -18,13 +18,17 @@ const CommentReply = (props) => {
   const handleDelete = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await apiDeleteComment(props.idComment);
-      if (response.ok) {
-        window.location.reload();
+    const confirmation = window.confirm('Êtes-vous sûr de vouloir supprimer votre commentaire ?');
+
+    if (confirmation) {
+      try {
+        const response = await apiDeleteComment(props.idComment);
+        if (response.ok) {
+          window.location.reload();
+        }
+      } catch {
+        //
       }
-    } catch {
-      //
     }
   };
 

@@ -133,7 +133,7 @@ const Header = () => {
                 </Button>
               </Link>
               <Button variant="gradient" size="sm" className="hidden lg:inline-block" onClick={handleLogout}>
-                <span>Déconnexion</span>
+                <span>Déconnexion ({userData.username})</span>
               </Button>
             </>
           )}
@@ -199,7 +199,7 @@ const Header = () => {
             </Link>
             <Link to="/logout">
               <Button variant="gradient" size="sm" fullWidth className="mb-2" onClick={handleLogout}>
-                <span>Déconnexion</span>
+                <span>Déconnexion ({userData.username})</span>
               </Button>
             </Link>
           </>

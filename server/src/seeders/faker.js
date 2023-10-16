@@ -29,8 +29,7 @@ const createUsers = () => {
 const createSkills = () => {
   for (let i = 0; i < nbEntities; i++) {
     Skill.create({
-      title: faker.word.sample(),
-      icon: faker.image.avatarGitHub()
+      title: faker.word.sample()
     });
   }
 };
@@ -38,8 +37,7 @@ const createSkills = () => {
 const createSocialNetworks = () => {
   for (let i = 0; i < nbEntities; i++) {
     SocialNetwork.create({
-      title: faker.word.sample(),
-      icon: faker.image.avatarGitHub()
+      title: faker.word.sample()
     });
   }
 };
