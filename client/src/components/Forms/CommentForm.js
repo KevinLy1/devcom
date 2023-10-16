@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { apiCommentById, apiCreateComment, apiUpdateComment } from '../../api/comments';
 import useAuth from '../../contexts/AuthContext';
 import moment from 'moment-timezone';
+import { notification } from 'antd';
 
 const CommentForm = ({ editMode, currentComment }) => {
   const { userData } = useAuth();
@@ -49,12 +50,20 @@ const CommentForm = ({ editMode, currentComment }) => {
         const response = await apiCreateComment(formDataWithDate);
         if (response.ok) {
           window.location.reload();
+        } else {
+          notification.error({
+            message: "Le commentaire n'a pas pu être ajouté."
+          });
         }
       } else {
         const formDataWithDate = { ...formData, date_update: currentDate };
         const response = await apiUpdateComment(currentComment, formDataWithDate);
         if (response.ok) {
           window.location.reload();
+        } else {
+          notification.error({
+            message: "Le commentaire n'a pas pu être édité."
+          });
         }
       }
     } catch {

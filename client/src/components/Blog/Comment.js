@@ -9,6 +9,7 @@ import { apiDeleteComment } from '../../api/comments';
 import moment from 'moment';
 import CommentForm from '../Forms/CommentForm';
 import CommentReplyForm from '../Forms/CommentReplyForm';
+import { notification } from 'antd';
 
 const Comment = (props) => {
   const { replies, replyAuthor } = useCommentReplies(props.idComment);
@@ -17,7 +18,13 @@ const Comment = (props) => {
   const [showReplyForm, setShowReplyForm] = useState(false);
 
   const toggleReplyForm = () => {
-    setShowReplyForm(!showReplyForm);
+    if (userData) {
+      setShowReplyForm(!showReplyForm);
+    } else {
+      notification.error({
+        message: 'Vous devez vous connecter pour pouvoir répondre.'
+      });
+    }
   };
 
   const [showEditForm, setEditForm] = useState(false);
@@ -117,7 +124,7 @@ const Comment = (props) => {
             key={reply.id_comment}
             idUser={reply.id_user}
             idComment={reply.id_comment}
-            author={replyAuthor[reply.id_user]?.username}
+            author={replyAuthor[reply.id_user]?.username || 'Utilisateur supprimé'}
             authorAvatar={replyAuthor[reply.id_user]?.avatar}
             content={reply.content}
             dateCreation={moment(reply.date_creation).format('LLL')}

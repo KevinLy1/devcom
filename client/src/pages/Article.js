@@ -29,11 +29,11 @@ const ArticlePage = () => {
           content={article.content}
           image={article.image}
           idUser={article.id_user}
-          author={articleAuthor[article.id_user]?.username}
+          author={articleAuthor[article.id_user]?.username || 'Utilisateur supprimé'}
           authorAvatar={articleAuthor[article.id_user]?.avatar}
           idPublication={article.id_publication}
           dateCreation={moment(article.date_creation).format('LLL')}
-          dateUpdate={moment(article.date_update).format('LLL')}
+          dateUpdate={article.date_update ? moment(article.date_update).format('LLL') : null}
         />
       </section>
       <section id="comments">
@@ -51,7 +51,7 @@ const ArticlePage = () => {
                     key={comment.id_comment}
                     idComment={comment.id_comment}
                     idUser={comment.id_user}
-                    author={commentAuthor[comment.id_user]?.username}
+                    author={commentAuthor[comment.id_user]?.username || 'Utilisateur supprimé'}
                     authorAvatar={commentAuthor[comment.id_user]?.avatar}
                     content={comment.content}
                     dateCreation={moment(comment.date_creation).format('LLL')}
