@@ -91,19 +91,19 @@ const DiscussionCard = (props) => {
           />
           <div className="flex items-center gap-2 flex-wrap mb-2">
             {categories.map((category) => (
-              <Link key={category.id_category} to={`/category/${category.id_category}`}>
+              <a key={category.id_category} href={`/category/${category.id_category}`}>
                 <button
                   key={category.id_category}
                   className="rounded-2xl border bg-neutral-100 px-3 py-1 text-xs font-semibold flex items-center">
                   <FaTag className="mr-2" /> {category.title}
                 </button>
-              </Link>
+              </a>
             ))}
           </div>
           <Link to={`/discussion/${props.idPublication}`} className="mb-3 text-xl font-bold">
             {props.title}
           </Link>
-          <div className="text-sm text-neutral-600">{props.description}</div>
+          <div className="text-sm text-neutral-600 mt-4">{props.description}</div>
           <span className="text-sm font-light dark:text-gray-400">
             {props.dateUpdate && (
               <>

@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { apiCreateUser } from '../../api/users';
 import { notification } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { apiUploadAvatar } from '../../api/users';
 import moment from 'moment-timezone';
 
 const RegistrationForm = () => {
@@ -11,21 +10,12 @@ const RegistrationForm = () => {
   const [formData, setFormData] = useState({});
   const [confirmPassword, setConfirmPassword] = useState(null);
 
-  const [avatarFile, setAvatarFile] = useState(null);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: value
     }));
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setAvatarFile(file);
-    }
   };
 
   const handleConfirmPassword = (e) => {
@@ -52,22 +42,6 @@ const RegistrationForm = () => {
     try {
       const response = await apiCreateUser(formDataWithDate);
       if (response.ok) {
-        if (avatarFile) {
-          // Si un avatar a été sélectionné, préparez l'envoi du fichier
-          const formDataWithAvatar = new FormData();
-          formDataWithAvatar.append('avatar', avatarFile);
-
-          const json = await response.json();
-          const avatarResponse = await apiUploadAvatar(json.id_user, formDataWithAvatar);
-
-          if (!avatarResponse.ok) {
-            notification.error({
-              placement: 'top',
-              message: "Erreur pendant le chargement de l'avatar",
-              description: json.message
-            });
-          }
-        }
         notification.success({
           placement: 'top',
           message: 'Inscription réussie'
@@ -234,15 +208,15 @@ const RegistrationForm = () => {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="avatar" className="block mb-1 font-medium">
-              Avatar
+            <label htmlFor="skills" className="block mb-1 font-medium">
+              Compétences
             </label>
-            <input
-              type="file"
-              id="avatar"
-              name="avatar"
-              accept=".jpg, .jpeg, .gif, .png"
-              onChange={handleFileChange}
+            <textarea
+              type="text"
+              id="skills"
+              name="skills"
+              value={formData.skills}
+              onChange={handleChange}
               className="w-full p-2 border dark:border-gray-900 rounded bg-slate-50 dark:bg-slate-900 dark:focus:bg-slate-800"
             />
           </div>

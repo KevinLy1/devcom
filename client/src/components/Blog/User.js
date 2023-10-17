@@ -1,4 +1,3 @@
-// import { List, ListItem, ListItemSuffix, Chip, Card } from '@material-tailwind/react';
 import { Link } from 'react-router-dom';
 import { FaFile, FaUser } from 'react-icons/fa';
 
@@ -74,6 +73,15 @@ const Profile = (props) => {
               <FaFile /> Biographie
             </div>
             <div className="px-4 py-2">{props.biography}</div>
+          </>
+        )}
+
+        {props.skills && (
+          <>
+            <div className="flex items-center gap-2 font-semibold text-2xl px-4 py-2 mt-10">
+              <FaFile /> Compétences
+            </div>
+            <div className="px-4 py-2">{props.skills}</div>
           </>
         )}
       </div>

@@ -23,6 +23,7 @@ export const apiCreateUser = async (data) => {
 export const apiUpdateUser = async (id, data) => {
   return await fetch(`${process.env.REACT_APP_API_URL}/users/${id}`, {
     method: 'PUT',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json'
     },

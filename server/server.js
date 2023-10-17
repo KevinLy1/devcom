@@ -32,16 +32,12 @@ app.use('/api/users', require('./src/routes/users'));
 app.use('/api/publications', require('./src/routes/publications'));
 app.use('/api/comments', require('./src/routes/comments'));
 app.use('/api/categories', require('./src/routes/categories'));
-app.use('/api/skills', require('./src/routes/skills'));
-app.use('/api/social-networks', require('./src/routes/socialNetworks'));
 
 // Routes admin
 app.use('/api/admin/users', require('./src/routes/admin/users'));
 app.use('/api/admin/publications', require('./src/routes/admin/publications'));
 app.use('/api/admin/comments', require('./src/routes/admin/comments'));
 app.use('/api/admin/categories', require('./src/routes/admin/categories'));
-app.use('/api/admin/skills', require('./src/routes/admin/skills'));
-app.use('/api/admin/social-networks', require('./src/routes/admin/socialNetworks'));
 
 // Démarrer le serveur
 if (process.env.NODE_ENV === 'production') {

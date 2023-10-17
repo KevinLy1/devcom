@@ -1,10 +1,8 @@
-import { Link } from 'react-router-dom';
-
 const CategoryCard = (props) => {
   return (
-    <Link
+    <a
       className="relative cursor-pointer hover:shadow-sm space-y-8 flex flex-col justify-between md:min-h-[178px]"
-      to={props.link}>
+      href={props.link}>
       <div className="flex before:rounded-lg before:block before:absolute before:-inset-[5px] before:top-[5px] before:left-2 relative sm:max-w-none h-full flex-col">
         <div className="flex flex-1 flex-col bg-white z-20 rounded-lg">
           <div className="flex flex-1 p-6 flex-col h-full space-y-4 dark:bg-slate-950">
@@ -23,7 +21,7 @@ const CategoryCard = (props) => {
           </div>
         </div>
       </div>
-    </Link>
+    </a>
   );
 };
 

@@ -1,7 +1,5 @@
 const { faker } = require('@faker-js/faker/locale/fr');
 const User = require('../models/User');
-const Skill = require('../models/Skill');
-const SocialNetwork = require('../models/SocialNetwork');
 const Publication = require('../models/Publication');
 const Comment = require('../models/Comment');
 const Category = require('../models/Category');
@@ -19,25 +17,10 @@ const createUsers = () => {
       last_name: faker.person.lastName(),
       avatar: faker.internet.avatar(),
       biography: faker.lorem.paragraph(),
+      skills: faker.lorem.words(4),
       web_url: faker.internet.url(),
       date_registration: faker.date.past(),
       role: faker.helpers.arrayElement(['administrator', 'user'])
-    });
-  }
-};
-
-const createSkills = () => {
-  for (let i = 0; i < nbEntities; i++) {
-    Skill.create({
-      title: faker.word.sample()
-    });
-  }
-};
-
-const createSocialNetworks = () => {
-  for (let i = 0; i < nbEntities; i++) {
-    SocialNetwork.create({
-      title: faker.word.sample()
     });
   }
 };
@@ -82,78 +65,31 @@ const createCommentReplies = () => {
   }
 };
 
-// const createComments = async () => {
-//   for (let i = 0; i < nbEntities; i++) {
-//     const idPublication = faker.number.int({ min: 1, max: nbEntities });
-
-//     // Créez le commentaire principal et récupérez son insertId
-//     const parentCommentResult = await Comment.create({
-//       date_creation: faker.date.past(),
-//       date_update: faker.date.recent(),
-//       id_publication: idPublication,
-//       id_user: faker.number.int({ min: 1, max: nbEntities }),
-//       content: faker.lorem.sentence()
-//     });
-
-//     const parentCommentId = parentCommentResult.insertId;
-
-//     // Créez trois commentaires enfants pour chaque commentaire principal
-//     for (let j = 0; j < 3; j++) {
-//       await Comment.create({
-//         date_creation: faker.date.past(),
-//         date_update: faker.date.recent(),
-//         id_publication: idPublication,
-//         id_user: faker.number.int({ min: 1, max: nbEntities }),
-//         content: faker.lorem.sentence(),
-//         parent_comment: parentCommentId // Utilisez l'insertId du commentaire principal comme parent
-//       });
-//     }
-//   }
-// };
-
 const createCategories = () => {
-  for (let i = 0; i < nbEntities; i++) {
-    Category.create({
-      title: faker.lorem.word()
-    });
-  }
-};
-
-const createUserSocialNetworks = () => {
-  const uniqueIds = new Set();
-
-  while (uniqueIds.size < nbEntities) {
-    const idUser = faker.number.int({ min: 1, max: nbEntities });
-    const idSocialNetwork = faker.number.int({ min: 1, max: nbEntities });
-
-    const uniqueId = `${idUser}-${idSocialNetwork}`;
-    if (!uniqueIds.has(uniqueId)) {
-      uniqueIds.add(uniqueId);
-      User.addSocialNetwork({
-        id_user: idUser,
-        id_social_network: idSocialNetwork,
-        link: faker.internet.url()
-      });
-    }
-  }
-};
-
-const createUserSkills = () => {
-  const uniqueIds = new Set();
-
-  while (uniqueIds.size < nbEntities) {
-    const idUser = faker.number.int({ min: 1, max: nbEntities });
-    const idSkill = faker.number.int({ min: 1, max: nbEntities });
-
-    const uniqueId = `${idUser}-${idSkill}`;
-    if (!uniqueIds.has(uniqueId)) {
-      uniqueIds.add(uniqueId);
-      User.addSkill({
-        id_user: idUser,
-        id_skill: idSkill
-      });
-    }
-  }
+  Category.create({
+    title: 'HTML'
+  });
+  Category.create({
+    title: 'CSS'
+  });
+  Category.create({
+    title: 'JavaScript'
+  });
+  Category.create({
+    title: 'PHP'
+  });
+  Category.create({
+    title: 'SQL'
+  });
+  Category.create({
+    title: 'React'
+  });
+  Category.create({
+    title: 'Node.js'
+  });
+  Category.create({
+    title: 'Autre'
+  });
 };
 
 const createUserFavoritePublications = () => {
@@ -178,7 +114,7 @@ const createPublicationCategories = () => {
   const uniqueIds = new Set();
 
   while (uniqueIds.size < nbEntities) {
-    const idCategory = faker.number.int({ min: 1, max: nbEntities });
+    const idCategory = faker.number.int({ min: 1, max: 8 });
     const idPublication = faker.number.int({ min: 1, max: nbEntities });
 
     const uniqueId = `${idCategory}-${idPublication}`;
@@ -213,13 +149,9 @@ const createPublicationReputation = () => {
 
 // Appeler les fonctions pour créer les entrées dans chaque table
 createUsers();
-createSkills();
-createSocialNetworks();
 createPublications();
 createComments();
 createCategories();
-createUserSocialNetworks();
-createUserSkills();
 createUserFavoritePublications();
 createPublicationCategories();
 createPublicationReputation();

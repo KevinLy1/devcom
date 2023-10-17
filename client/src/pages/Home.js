@@ -65,7 +65,7 @@ const HomePage = () => {
 
       {categories.length > 0 && (
         <section className="mx-auto hidden lg:grid lg:gap-6 lg:grid-cols-4 lg:max-w-none auto-rows-fr mt-12">
-          {categories.slice(0, 8).map((category) => (
+          {categories.map((category) => (
             <CategoryCard
               key={category.id_category}
               title={category.title}
@@ -73,14 +73,6 @@ const HomePage = () => {
               className="text-black dark:text-white"
             />
           ))}
-          {/* {categories.map((category) => (
-            <CategoryCard
-              key={category.id_category}
-              title={category.title}
-              link={`/category/${category.id_category}`}
-              className="text-black dark:text-white"
-            />
-          ))} */}
         </section>
       )}
 

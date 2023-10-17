@@ -75,11 +75,11 @@ const Article = (props) => {
         </Breadcrumbs>
         <aside className="flex flex-wrap gap-2 mt-5">
           {categories.map((category) => (
-            <Link key={category.id_category} to={`/category/${category.id_category}`}>
+            <a key={category.id_category} href={`/category/${category.id_category}`}>
               <div className="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-gray-800 dark:bg-slate-800 rounded cursor-pointer hover:bg-gray-500 dark:hover:bg-blue-900 flex items-center gap-2">
                 <FaTag /> {category.title}
               </div>
-            </Link>
+            </a>
           ))}
         </aside>
         <h1 className="text-3xl font-extrabold leading-tight lg:text-4xl">{props.title}</h1>
@@ -100,7 +100,7 @@ const Article = (props) => {
           </div>
         </address>
         <div className="flex justify-between mx-auto">
-          <article className="mx-auto w-full px-5 pt-5 pb-10 bg-white dark:bg-slate-800 rounded-xl text-justify">
+          <article className="mx-auto w-full px-5 pt-5 pb-10 bg-white dark:bg-slate-800 rounded-bl-2xl rounded-br-2xl text-justify">
             {props.image && (
               <div className="w-full h-52 max-h-52 mb-10">
                 <img src={props.image} alt={props.title} className="w-full h-full object-cover" />

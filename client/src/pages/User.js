@@ -1,5 +1,5 @@
 import useUser from '../hooks/useUser';
-import Profile from '../components/Profile/Profile';
+import User from '../components/Blog/User';
 import useDocumentTitle from '../hooks/useDocumentTitle';
 import moment from 'moment';
 import 'moment/locale/fr';
@@ -12,7 +12,7 @@ const UserPage = () => {
   return (
     <>
       <h1 className="text-4xl text-center mb-10 font-bold">Profil de {user.username}</h1>
-      <Profile
+      <User
         username={user.username}
         avatar={user.avatar}
         key={user.id_user}
@@ -23,6 +23,7 @@ const UserPage = () => {
         email={user.email}
         dateRegistration={moment(user.date_registration).format('L')}
         biography={user.biography}
+        skills={user.skills}
         role={user.role === 'administrator' ? 'Administrateur' : 'Utilisateur'}
       />
     </>

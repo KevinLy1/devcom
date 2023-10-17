@@ -19,7 +19,7 @@ const UserProfileController = require('../controllers/UserProfileController');
 router.post(
   '/',
   trimmer,
-  Validation.validateUser,
+  Validation.validateUserRegistration,
   sanitizer,
   hashPassword,
   UserController.createUser
@@ -36,7 +36,7 @@ router.put(
   authentication,
   userRoleAuthorization,
   trimmer,
-  Validation.validateUser,
+  Validation.validateUserUpdate,
   sanitizer,
   hashPassword,
   UserController.updateUser
@@ -46,23 +46,14 @@ router.put(
 router.delete('/:id', authentication, userAuthorization, UserController.deleteUser);
 router.delete('/:id/avatar', authentication, userAuthorization, UserController.deleteAvatar);
 
-// ******************************* CRUD User Profiles *****************************************
+// ******************************* CRUD User Favorite Publications *****************************************
 // CREATE
-router.post('/:id/skills/', authentication, userAuthorization, trimmer, sanitizer, UserProfileController.addUserSkill);
-router.post('/:id/social-networks/', authentication, userAuthorization, trimmer, sanitizer, UserProfileController.addUserSocialNetwork);
 router.post('/:id/favorite-publications/', authentication, userAuthorization, trimmer, sanitizer, UserProfileController.addUserFavoritePublication);
 
 // READ
-router.get('/:id/skills/', UserProfileController.getUserSkills);
-router.get('/:id/social-networks/', UserProfileController.getUserSocialNetworks);
 router.get('/:id/favorite-publications/', UserProfileController.getUserFavoritePublications);
 
-// UPDATE
-router.put('/:id/social-networks/', authentication, userAuthorization, UserProfileController.updateUserSocialNetwork);
-
 // DELETE
-router.delete('/:id/skills/', authentication, userAuthorization, UserProfileController.removeUserSkill);
-router.delete('/:id/social-networks/', authentication, userAuthorization, UserProfileController.removeUserSocialNetwork);
 router.delete('/:id/favorite-publications/', authentication, userAuthorization, UserProfileController.removeUserFavoritePublication);
 
 module.exports = router;
