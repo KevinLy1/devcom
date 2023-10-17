@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Breadcrumbs } from '@material-tailwind/react';
 import {
   handleLike,
   handleDislike,
@@ -62,17 +61,7 @@ const Article = (props) => {
   return (
     <>
       <div className="flex flex-col items-center gap-5">
-        <Breadcrumbs separator=">" className="bg-gray-500 dark:bg-slate-900">
-          <Link to="/" className="opacity-60 dark:text-white">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-              <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-            </svg>
-          </Link>
-          <Link to="/articles" className="opacity-60 dark:text-white">
-            Articles
-          </Link>
-          <span className="dark:text-white">{props.title}</span>
-        </Breadcrumbs>
+        <h1 className="text-3xl font-extrabold leading-tight lg:text-4xl">{props.title}</h1>
         {/* PETITS ÉCRANS */}
         <aside className="flex flex-wrap gap-2 mt-5 xl:hidden">
           {categories.map((category) => (
@@ -83,11 +72,14 @@ const Article = (props) => {
             </a>
           ))}
         </aside>
-        <h1 className="text-3xl font-extrabold leading-tight lg:text-4xl">{props.title}</h1>
         <p className="italic">{props.description}</p>
         <address className="flex items-center mb-6 not-italic">
           <div className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
-            <img className="mr-4 w-16 h-16 rounded-full" src={props.authorAvatar} alt={props.author} />
+            <img
+              className="mr-4 w-16 h-16 rounded-full"
+              src={props.authorAvatar ? props.authorAvatar : '/assets/img/default-avatar.svg'}
+              alt={props.author}
+            />
             <div>
               <Link to={`/user/${props.idUser}`} rel="author" className="text-xl font-bold">
                 {props.author}
@@ -106,7 +98,7 @@ const Article = (props) => {
         </address>
       </div>
       <div className="xl:flex xl:gap-5">
-        <div className="xl:flex xl:justify-between mx-auto max-w-screen-xl">
+        <div className="xl:flex-1 xl:flex xl:justify-between mx-auto max-w-screen-xl">
           <article className="mx-auto w-full px-5 py-10 bg-white dark:bg-slate-950 rounded-xl text-justify">
             {props.image && (
               <div className="w-full h-52 max-h-52 mb-10">

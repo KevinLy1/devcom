@@ -181,7 +181,7 @@ const ProfilePage = () => {
           onClose={closeFirstNameFormDrawer}
           overlay={false}
           className="dark:bg-slate-950">
-          <ChangeUserDataForm inputType="text" label="Prénom" field="first_name" />
+          <ChangeUserDataForm inputType="text" label="Prénom" field="first_name" currentValue={user.first_name} />
         </Drawer>
 
         <Drawer
@@ -190,7 +190,7 @@ const ProfilePage = () => {
           onClose={closeLastNameFormDrawer}
           overlay={false}
           className="dark:bg-slate-950">
-          <ChangeUserDataForm inputType="text" label="Nom de famille" field="last_name" />
+          <ChangeUserDataForm inputType="text" label="Nom de famille" field="last_name" currentValue={user.last_name} />
         </Drawer>
 
         <Drawer
@@ -208,7 +208,7 @@ const ProfilePage = () => {
           onClose={closeGenderFormDrawer}
           overlay={false}
           className="dark:bg-slate-950">
-          <ChangeUserDataForm label="Civilité" field="gender" />
+          <ChangeUserDataForm label="Civilité" field="gender" currentValue={user.gender} />
         </Drawer>
 
         <Drawer
@@ -217,7 +217,7 @@ const ProfilePage = () => {
           onClose={closeWebUrlFormDrawer}
           overlay={false}
           className="dark:bg-slate-950">
-          <ChangeUserDataForm inputType="text" label="Site Internet" field="web_url" />
+          <ChangeUserDataForm inputType="text" label="Site Internet" field="web_url" currentValue={user.web_url} />
         </Drawer>
 
         <Drawer
@@ -226,7 +226,12 @@ const ProfilePage = () => {
           onClose={closeBiographyFormDrawer}
           overlay={false}
           className="dark:bg-slate-950">
-          <ChangeUserDataForm inputType="text" label="Biographie (maximum 200 caractères)" field="biography" />
+          <ChangeUserDataForm
+            inputType="text"
+            label="Biographie (maximum 200 caractères)"
+            field="biography"
+            currentValue={user.biography}
+          />
         </Drawer>
 
         <Drawer
@@ -235,7 +240,7 @@ const ProfilePage = () => {
           onClose={closeSkillsFormDrawer}
           overlay={false}
           className="dark:bg-slate-950">
-          <ChangeUserDataForm inputType="text" label="Compétences" field="skills" />
+          <ChangeUserDataForm inputType="text" label="Compétences" field="skills" currentValue={user.skills} />
         </Drawer>
 
         <Drawer

@@ -69,11 +69,11 @@ const Header = () => {
             </MenuHandler>
             <MenuList className="bg-white dark:bg-slate-950 border-none">
               {categories.map((category) => (
-                <Link key={category.id_category} to={`/category/${category.id_category}`}>
+                <a key={category.id_category} href={`/category/${category.id_category}`}>
                   <MenuItem className="text-black dark:text-white hover:dark:bg-slate-900 hover:border-none">
                     {category.title}
                   </MenuItem>
-                </Link>
+                </a>
               ))}
             </MenuList>
           </Menu>

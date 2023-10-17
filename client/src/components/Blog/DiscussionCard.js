@@ -68,7 +68,7 @@ const DiscussionCard = (props) => {
       <div className="rounded-xl border p-5 shadow-md w-full bg-white dark:bg-slate-950/50">
         <div className="flex w-full items-center justify-between border-b pb-3 flex-wrap">
           <div className="flex items-center space-x-3">
-            <Avatar src={props.authorAvatar} alt="avatar" />
+            <Avatar src={props.authorAvatar ? props.authorAvatar : '/assets/img/default-avatar.svg'} alt="avatar" />
             <Link to={`/user/${props.idUser}`}>
               <div className="text-lg font-bold">{props.author}</div>
             </Link>

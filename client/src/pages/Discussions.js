@@ -28,8 +28,6 @@ const DiscussionsPage = () => {
         return b.date_creation.localeCompare(a.date_creation);
       } else if (sortBy === 'oldest') {
         return a.date_creation.localeCompare(b.date_creation);
-      } else if (sortBy === 'latestUpdate') {
-        return b.date_update.localeCompare(a.date_update);
       }
       return 0;
     });
@@ -81,19 +79,12 @@ const DiscussionsPage = () => {
                 }`}>
                 Plus ancien
               </button>
-              <button
-                onClick={() => setSortBy('latestUpdate')}
-                className={`px-2 py-1 ml-2 rounded-lg ${
-                  sortBy === 'latestUpdate' ? 'bg-black text-white dark:bg-blue-800' : 'bg-gray-300 dark:bg-slate-600'
-                }`}>
-                Dernière mise à jour
-              </button>
             </div>
           </div>
           <div className="flex justify-center gap-2">
             <Input
               icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-              label="Rechercher un article"
+              label="Rechercher une discussion"
               value={searchTerm}
               color={localStorage.theme === 'dark' ? 'white' : 'black'}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -144,7 +135,7 @@ const DiscussionsPage = () => {
 
         {/* Liste d'articles */}
         {/* <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"> */}
-        <div className="flex flex-col gap-10 justify-center">
+        <div className="flex flex-col gap-10 justify-center w-full">
           {currentDiscussions.map((discussion) => (
             <DiscussionCard
               key={discussion.id_publication}
@@ -162,7 +153,7 @@ const DiscussionsPage = () => {
               isLiked={reputations[discussion.id_publication]?.reputation_value === 1 || false}
               isDisliked={reputations[discussion.id_publication]?.reputation_value !== 1 || false}
               dateCreation={moment(discussion.date_creation).format('LLLL')}
-              dateUpdate={moment(discussion.date_update).format('LLLL')}
+              dateUpdate={discussion.date_update ? moment(discussion.date_update).format('LLL') : null}
             />
           ))}
         </div>

@@ -82,7 +82,7 @@ const HomePage = () => {
         </h2>
         <div className="flex justify-center md:justify-around">
           {articles.length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 mt-8 gap-5">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 mt-8 gap-5 w-full">
               {articles.map((article) => (
                 <BlogCard
                   key={article.id_publication}
@@ -113,7 +113,7 @@ const HomePage = () => {
         </h2>
         <div className="flex justify-center md:justify-around">
           {discussions.length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 mt-8 gap-5">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 mt-8 gap-5 w-full">
               {discussions.map((discussion) => (
                 <BlogCard
                   key={discussion.id_publication}

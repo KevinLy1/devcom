@@ -32,8 +32,6 @@ const ArticlesPage = () => {
         return b.date_creation.localeCompare(a.date_creation);
       } else if (sortBy === 'oldest') {
         return a.date_creation.localeCompare(b.date_creation);
-      } else if (sortBy === 'latestUpdate') {
-        return b.date_update.localeCompare(a.date_update);
       }
       return 0;
     });
@@ -84,13 +82,6 @@ const ArticlesPage = () => {
                   sortBy === 'oldest' ? 'bg-black text-white dark:bg-blue-800' : 'bg-gray-300 dark:bg-slate-600'
                 }`}>
                 Plus ancien
-              </button>
-              <button
-                onClick={() => setSortBy('latestUpdate')}
-                className={`px-2 py-1 ml-2 rounded-lg ${
-                  sortBy === 'latestUpdate' ? 'bg-black text-white dark:bg-blue-800' : 'bg-gray-300 dark:bg-slate-600'
-                }`}>
-                Dernière mise à jour
               </button>
             </div>
           </div>
@@ -147,7 +138,7 @@ const ArticlesPage = () => {
 
         {/* Liste d'articles */}
         <div className="flex justify-center md:justify-around">
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 w-full">
             {currentArticles.map((article) => (
               <ArticleCard
                 key={article.id_publication}
@@ -163,7 +154,7 @@ const ArticlesPage = () => {
                 authorAvatar={users[article.id_user]?.avatar}
                 idPublication={article.id_publication}
                 dateCreation={moment(article.date_creation).format('LLL')}
-                dateUpdate={moment(article.date_update).format('LLL')}
+                dateUpdate={article.date_update ? moment(article.date_update).format('LLL') : null}
               />
             ))}
           </div>

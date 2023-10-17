@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Breadcrumbs } from '@material-tailwind/react';
 import {
   handleLike,
   handleDislike,
@@ -62,17 +61,7 @@ const Article = (props) => {
   return (
     <>
       <div className="flex flex-col items-center gap-5">
-        <Breadcrumbs separator=">" className="bg-gray-500 dark:bg-slate-900">
-          <Link to="/" className="opacity-60 dark:text-white">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-              <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-            </svg>
-          </Link>
-          <Link to="/discussions" className="opacity-60 dark:text-white">
-            Discussions
-          </Link>
-          <span className="dark:text-white">{props.title}</span>
-        </Breadcrumbs>
+        <h1 className="text-3xl font-extrabold leading-tight lg:text-4xl">{props.title}</h1>
         <aside className="flex flex-wrap gap-2 mt-5">
           {categories.map((category) => (
             <a key={category.id_category} href={`/category/${category.id_category}`}>
@@ -82,13 +71,16 @@ const Article = (props) => {
             </a>
           ))}
         </aside>
-        <h1 className="text-3xl font-extrabold leading-tight lg:text-4xl">{props.title}</h1>
         <p className="italic mb-5">{props.description}</p>
       </div>
       <div className="flex flex-col">
         <address className="flex items-center p-2 not-italic bg-gray-500 dark:bg-slate-950 rounded-tl-2xl rounded-tr-2xl">
           <div className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
-            <img className="mr-4 w-16 h-16 rounded-full" src={props.authorAvatar} alt={props.author} />
+            <img
+              className="mr-4 w-16 h-16 rounded-full"
+              src={props.authorAvatar ? props.authorAvatar : '/assets/img/default-avatar.svg'}
+              alt={props.author}
+            />
             <div>
               <Link to={`/user/${props.idUser}`} rel="author" className="text-xl font-bold">
                 {props.author}
@@ -99,7 +91,7 @@ const Article = (props) => {
             </div>
           </div>
         </address>
-        <div className="flex justify-between mx-auto">
+        <div className="flex justify-between mx-auto w-full">
           <article className="mx-auto w-full px-5 pt-5 pb-10 bg-white dark:bg-slate-800 rounded-bl-2xl rounded-br-2xl text-justify">
             {props.image && (
               <div className="w-full h-52 max-h-52 mb-10">

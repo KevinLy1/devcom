@@ -124,7 +124,7 @@ const ArticleCard = (props) => {
 
       <CardFooter className="bg-gray-50 dark:bg-slate-950 flex flex-col gap-3">
         <Typography className="font-normal">Publié le : {props.dateCreation}</Typography>
-        <Typography className="font-normal">Dernière édition le : {props.dateUpdate}</Typography>
+        {props.dateUpdate && <Typography className="font-normal">Dernière édition le : {props.dateUpdate}</Typography>}
       </CardFooter>
 
       <div className="flex items-center justify-between bg-gray-50 dark:bg-slate-950 px-10 pb-5">

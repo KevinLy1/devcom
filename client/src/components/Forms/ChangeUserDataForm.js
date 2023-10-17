@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { apiUpdateUser } from '../../api/users';
 import { notification } from 'antd';
 import useAuth from '../../contexts/AuthContext';
 
-const ChangeUserDataForm = ({ inputType, label, field }) => {
+const ChangeUserDataForm = ({ inputType, label, field, currentValue }) => {
   const { userData } = useAuth();
 
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({ [field]: currentValue || '' });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -15,6 +15,15 @@ const ChangeUserDataForm = ({ inputType, label, field }) => {
       [name]: value
     }));
   };
+
+  useEffect(() => {
+    if (currentValue) {
+      setFormData((prevData) => ({
+        ...prevData,
+        [field]: currentValue
+      }));
+    }
+  }, [currentValue, field]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,7 +67,7 @@ const ChangeUserDataForm = ({ inputType, label, field }) => {
               <select
                 id={field}
                 name={field}
-                value={field}
+                value={formData[field]}
                 onChange={handleChange}
                 className="w-full p-2 border dark:border-gray-900 rounded bg-slate-50 dark:bg-slate-900 dark:focus:bg-slate-800">
                 <option value="">-</option>
@@ -76,7 +85,7 @@ const ChangeUserDataForm = ({ inputType, label, field }) => {
                 type={inputType}
                 id={field}
                 name={field}
-                value={formData.field}
+                value={formData[field]}
                 onChange={handleChange}
                 className="w-full p-2 border dark:border-gray-900 rounded bg-slate-50 dark:bg-slate-900 dark:focus:bg-slate-800"
               />
@@ -90,7 +99,7 @@ const ChangeUserDataForm = ({ inputType, label, field }) => {
                 type={inputType}
                 id={field}
                 name={field}
-                value={formData.field}
+                value={formData[field]}
                 onChange={handleChange}
                 className="w-full p-2 border dark:border-gray-900 rounded bg-slate-50 dark:bg-slate-900 dark:focus:bg-slate-800"
               />

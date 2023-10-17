@@ -1,15 +1,18 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+
+import UserRoute from './routes/UserRoute';
+import AdminRoute from './routes/AdminRoute';
+import GuestRoute from './routes/GuestRoute';
+
 import Layout from './components/Layout/Layout';
+
 import HomePage from './pages/Home';
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
 import ProfilePage from './pages/Dashboard/Profile';
 import AdminDashboardPage from './pages/Admin/Dashboard';
-import { AuthProvider } from './contexts/AuthContext';
-import UserRoute from './routes/UserRoute';
-import AdminRoute from './routes/AdminRoute';
-import GuestRoute from './routes/GuestRoute';
 import ArticlesPage from './pages/Articles';
 import ArticlePage from './pages/Article';
 import CategoryPage from './pages/Category';
@@ -20,8 +23,11 @@ import DashboardPage from './pages/Dashboard';
 import ScrollToTop from './hooks/ScrollToTop';
 import CookiesPage from './pages/Legal/Cookies';
 import PrivacyPolicyPage from './pages/Legal/PrivacyPolicy';
+import PublicationPage from './pages/Dashboard/Publication';
+import MyFavoritesPage from './pages/Dashboard/MyFavorites';
+import MyPublicationsPage from './pages/Dashboard/MyPublications';
 
-function App() {
+const App = () => {
   return (
     <AuthProvider>
       <BrowserRouter>
@@ -48,12 +54,24 @@ function App() {
             </Route>
 
             {/* User only routes */}
+            <Route exact path="/dashboard" element={<UserRoute />}>
+              <Route exact path="/dashboard" element={<DashboardPage />} />
+            </Route>
+
             <Route exact path="/profile" element={<UserRoute />}>
               <Route exact path="/profile" element={<ProfilePage />} />
             </Route>
 
-            <Route exact path="/dashboard" element={<UserRoute />}>
-              <Route exact path="/dashboard" element={<DashboardPage />} />
+            <Route exact path="/my-favorites" element={<UserRoute />}>
+              <Route exact path="/my-favorites" element={<MyFavoritesPage />} />
+            </Route>
+
+            <Route exact path="/my-publications" element={<UserRoute />}>
+              <Route exact path="/my-publications" element={<MyPublicationsPage />} />
+            </Route>
+
+            <Route exact path="/publication/new" element={<UserRoute />}>
+              <Route exact path="/publication/new" element={<PublicationPage />} />
             </Route>
 
             {/* Admin only routes */}
@@ -65,6 +83,6 @@ function App() {
       </BrowserRouter>
     </AuthProvider>
   );
-}
+};
 
 export default App;
