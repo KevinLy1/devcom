@@ -7,6 +7,8 @@ const DashboardPage = () => {
   return (
     <>
       Lien vers <Link to="/profile">profil</Link>
+      Lien vers <Link to="/">créer publi</Link>
+      Mes favoris
     </>
   );
 };

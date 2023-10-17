@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import useAuth from '../../contexts/AuthContext';
 import { apiDeleteComment } from '../../api/comments';
-import { IconButton } from '@material-tailwind/react';
+import { IconButton, Button } from '@material-tailwind/react';
 import { TrashIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
 import CommentReplyForm from '../Forms/CommentReplyForm';
 
@@ -48,18 +48,26 @@ const CommentReply = (props) => {
             <time>{props.dateCreation}</time>
           </p>
         </div>
-        {userData &&
-          (userData.id_user === props.idUser ? (
-            <div className="flex gap-4">
-              <IconButton color="amber" onClick={toggleEditForm}>
-                <PencilSquareIcon strokeWidth={2.5} className="h-4 w-4" />
-              </IconButton>
+        {userData && (
+          <div className="flex gap-4">
+            {userData.role === 'administrator' && (
+              <Link to={`/admin/comment/${props.idComment}`}>
+                <Button color="blue">Modérer</Button>
+              </Link>
+            )}
+            {userData.id_user === props.idUser && (
+              <>
+                <IconButton color="amber" onClick={toggleEditForm}>
+                  <PencilSquareIcon strokeWidth={2.5} className="h-4 w-4" />
+                </IconButton>
 
-              <IconButton color="red" onClick={handleDelete}>
-                <TrashIcon strokeWidth={2.5} className="h-4 w-4" />
-              </IconButton>
-            </div>
-          ) : null)}
+                <IconButton color="red" onClick={handleDelete}>
+                  <TrashIcon strokeWidth={2.5} className="h-4 w-4" />
+                </IconButton>
+              </>
+            )}
+          </div>
+        )}
       </div>
       <p>{props.content}</p>
       {props.dateUpdate !== null && (

@@ -18,6 +18,8 @@ import DiscussionPage from './pages/Discussion';
 import UserPage from './pages/User';
 import DashboardPage from './pages/Dashboard';
 import ScrollToTop from './hooks/ScrollToTop';
+import CookiesPage from './pages/Legal/Cookies';
+import PrivacyPolicyPage from './pages/Legal/PrivacyPolicy';
 
 function App() {
   return (
@@ -26,6 +28,7 @@ function App() {
         <Layout>
           <ScrollToTop />
           <Routes>
+            {/* Public routes */}
             <Route path="/" element={<HomePage />} />
             <Route path="/articles" element={<ArticlesPage />} />
             <Route path="/article/:id" element={<ArticlePage />} />
@@ -33,7 +36,8 @@ function App() {
             <Route path="/discussion/:id" element={<DiscussionPage />} />
             <Route path="/category/:id" element={<CategoryPage />} />
             <Route path="/user/:id" element={<UserPage />} />
-            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+            <Route path="/cookies" element={<CookiesPage />} />
 
             {/* Guest only routes */}
             <Route exact path="/register" element={<GuestRoute />}>
@@ -46,6 +50,10 @@ function App() {
             {/* User only routes */}
             <Route exact path="/profile" element={<UserRoute />}>
               <Route exact path="/profile" element={<ProfilePage />} />
+            </Route>
+
+            <Route exact path="/dashboard" element={<UserRoute />}>
+              <Route exact path="/dashboard" element={<DashboardPage />} />
             </Route>
 
             {/* Admin only routes */}
