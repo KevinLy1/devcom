@@ -74,7 +74,7 @@ const Article = (props) => {
         <p className="italic mb-5">{props.description}</p>
       </div>
       <div className="flex flex-col">
-        <address className="flex items-center p-2 not-italic bg-gray-500 dark:bg-slate-950 rounded-tl-2xl rounded-tr-2xl">
+        <address className="flex items-center p-2 not-italic bg-gray-300 dark:bg-slate-800 rounded-tl-2xl rounded-tr-2xl">
           <div className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
             <img
               className="mr-4 w-16 h-16 rounded-full"
@@ -92,7 +92,7 @@ const Article = (props) => {
           </div>
         </address>
         <div className="flex justify-between mx-auto w-full">
-          <article className="mx-auto w-full px-5 pt-5 pb-10 bg-white dark:bg-slate-800 rounded-bl-2xl rounded-br-2xl text-justify">
+          <article className="mx-auto w-full px-5 pt-5 pb-10 bg-white dark:bg-slate-950 rounded-bl-2xl rounded-br-2xl text-justify">
             {props.image && (
               <div className="w-full h-52 max-h-52 mb-10">
                 <img src={props.image} alt={props.title} className="w-full h-full object-cover" />

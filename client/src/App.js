@@ -1,13 +1,10 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
-
 import UserRoute from './routes/UserRoute';
 import AdminRoute from './routes/AdminRoute';
 import GuestRoute from './routes/GuestRoute';
-
 import Layout from './components/Layout/Layout';
-
 import HomePage from './pages/Home';
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
@@ -29,8 +26,10 @@ import MyPublicationsPage from './pages/Dashboard/MyPublications';
 import EditPublicationPage from './pages/Dashboard/EditPublication';
 import AdminCategoriesPage from './pages/Admin/Categories';
 import AdminPublicationsPage from './pages/Admin/Publications';
+import AdminEditPublicationPage from './pages/Admin/EditPublication';
 import AdminCommentsPage from './pages/Admin/Comments';
 import AdminUsersPage from './pages/Admin/Users';
+import UnauthorizedPage from './pages/Unauthorized';
 
 const App = () => {
   return (
@@ -49,47 +48,32 @@ const App = () => {
             <Route path="/user/:id" element={<UserPage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
             <Route path="/cookies" element={<CookiesPage />} />
+            <Route path="/unauthorized" element={<UnauthorizedPage />} />
 
             {/* Guest only routes */}
-            <Route exact path="/register" element={<GuestRoute />}>
+            <Route element={<GuestRoute />}>
               <Route exact path="/register" element={<RegisterPage />} />
-            </Route>
-            <Route exact path="/login" element={<GuestRoute />}>
               <Route exact path="/login" element={<LoginPage />} />
             </Route>
 
             {/* User only routes */}
-            <Route exact path="/dashboard" element={<UserRoute />}>
+            <Route element={<UserRoute />}>
               <Route exact path="/dashboard" element={<DashboardPage />} />
-            </Route>
-
-            <Route exact path="/profile" element={<UserRoute />}>
               <Route exact path="/profile" element={<ProfilePage />} />
-            </Route>
-
-            <Route exact path="/my-favorites" element={<UserRoute />}>
               <Route exact path="/my-favorites" element={<MyFavoritesPage />} />
-            </Route>
-
-            <Route exact path="/my-publications" element={<UserRoute />}>
               <Route exact path="/my-publications" element={<MyPublicationsPage />} />
-            </Route>
-
-            <Route exact path="/publication/new" element={<UserRoute />}>
               <Route exact path="/publication/new" element={<PublicationPage />} />
-            </Route>
-
-            <Route exact path="/publication/:id/edit" element={<UserRoute />}>
               <Route exact path="/publication/:id/edit" element={<EditPublicationPage />} />
             </Route>
 
             {/* Admin only routes */}
-            <Route exact path="/admin" element={<AdminRoute />}>
+            <Route element={<AdminRoute />}>
               <Route exact path="/admin" element={<AdminDashboardPage />} />
               <Route exact path="/admin/users" element={<AdminUsersPage />} />
               <Route exact path="/admin/categories" element={<AdminCategoriesPage />} />
               <Route exact path="/admin/publications" element={<AdminPublicationsPage />} />
               <Route exact path="/admin/comments" element={<AdminCommentsPage />} />
+              <Route exact path="/admin/publication/:id/edit/" element={<AdminEditPublicationPage />} />
             </Route>
           </Routes>
         </Layout>

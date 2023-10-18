@@ -13,16 +13,12 @@ const { adminAuthorization } = require('../../middlewares/authorization');
 const CommentController = require('../../controllers/CommentController');
 
 // Routes
-// *************************************** Comments ***************************************
-// CREATE
-router.post('/', authentication, adminAuthorization, trimmer, sanitizer, CommentController.createComment);
-
 // READ
 router.get('/', authentication, adminAuthorization, CommentController.getComments);
 router.get('/:id', authentication, adminAuthorization, CommentController.getCommentById);
 
 // UPDATE
-router.get('/:id', authentication, adminAuthorization, trimmer, sanitizer, CommentController.updateComment);
+router.put('/:id', authentication, adminAuthorization, trimmer, sanitizer, CommentController.updateComment);
 
 // DELETE
 router.delete('/:id', authentication, adminAuthorization, CommentController.deleteComment);

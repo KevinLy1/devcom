@@ -147,7 +147,7 @@ const DiscussionsPage = () => {
               description={discussion.description}
               image={discussion.image}
               idUser={discussion.id_user}
-              author={users[discussion.id_user]?.username}
+              author={users[discussion.id_user]?.username || 'Utilisateur supprimé'}
               authorAvatar={users[discussion.id_user]?.avatar}
               idPublication={discussion.id_publication}
               isLiked={reputations[discussion.id_publication]?.reputation_value === 1 || false}

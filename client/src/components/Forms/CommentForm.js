@@ -91,7 +91,7 @@ const CommentForm = ({ editMode, currentComment }) => {
           required></textarea>
       </div>
       <div className="flex justify-center">
-        <button type="submit" className="px-4 py-2 rounded bg-slate-300 dark:bg-slate-900 focus-outline-none">
+        <button type="submit" className="px-4 py-2 rounded bg-slate-300 dark:bg-slate-950 focus-outline-none">
           {editMode ? 'Modifier' : 'Ajouter'}
         </button>
       </div>

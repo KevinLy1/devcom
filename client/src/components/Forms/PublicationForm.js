@@ -235,7 +235,7 @@ const PublicationForm = ({ editMode, currentPublication }) => {
 
           <div className="flex justify-center">
             <button type="submit" className="px-4 py-2 rounded bg-slate-300 dark:bg-slate-900 focus:outline-none">
-              Publier
+              {!editMode ? 'Publier' : 'Enregistrer'}
             </button>
           </div>
         </form>

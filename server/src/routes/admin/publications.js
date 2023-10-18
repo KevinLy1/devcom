@@ -13,15 +13,12 @@ const { adminAuthorization } = require('../../middlewares/authorization');
 const PublicationController = require('../../controllers/PublicationController');
 
 // *************************************** Publications ***************************************
-// CREATE
-router.post('/', authentication, adminAuthorization, trimmer, sanitizer, PublicationController.createPublication);
-
 // READ
 router.get('/', authentication, adminAuthorization, PublicationController.getPublications);
 router.get('/:id', authentication, adminAuthorization, PublicationController.getPublicationById);
 
 // UPDATE
-router.get('/:id', authentication, adminAuthorization, trimmer, sanitizer, PublicationController.updatePublication);
+router.put('/:id', authentication, adminAuthorization, trimmer, sanitizer, PublicationController.updatePublication);
 
 // DELETE
 router.delete('/:id', authentication, adminAuthorization, PublicationController.deletePublication);
@@ -35,19 +32,5 @@ router.get('/:id/categories', authentication, adminAuthorization, PublicationCon
 
 // DELETE
 router.delete('/:id/categories', authentication, adminAuthorization, PublicationController.removePublicationCategory);
-
-// *************************************** Publication Reputation ***************************************
-// CREATE
-router.post('/:id/reputation', authentication, adminAuthorization, trimmer, sanitizer, PublicationController.addPublicationReputation);
-
-// READ
-router.get('/:id/reputation', authentication, adminAuthorization, PublicationController.getPublicationReputations);
-
-// DELETE
-router.delete('/:id/reputation', authentication, adminAuthorization, PublicationController.removePublicationReputation);
-
-// *************************************** Publication comments ***************************************
-// READ
-router.get('/:id/comments', authentication, adminAuthorization, PublicationController.getPublicationComments);
 
 module.exports = router;

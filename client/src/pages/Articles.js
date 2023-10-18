@@ -150,7 +150,7 @@ const ArticlesPage = () => {
                 description={article.description}
                 image={article.image}
                 idUser={article.id_user}
-                author={users[article.id_user]?.username}
+                author={users[article.id_user]?.username || 'Utilisateur supprimé'}
                 authorAvatar={users[article.id_user]?.avatar}
                 idPublication={article.id_publication}
                 dateCreation={moment(article.date_creation).format('LLL')}

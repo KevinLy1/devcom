@@ -7,7 +7,6 @@ const trimmer = require('../middlewares/trimmer');
 const sanitizer = require('../middlewares/sanitizer');
 const authentication = require('../middlewares/authentication');
 const { authorPublicationAuthorization } = require('../middlewares/authorization');
-// const validation
 
 // Contrôleur
 const PublicationController = require('../controllers/PublicationController');
