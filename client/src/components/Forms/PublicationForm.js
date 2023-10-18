@@ -57,7 +57,7 @@ const PublicationForm = ({ editMode, currentPublication }) => {
     const selectedValues = [];
     for (let i = 0; i < options.length; i++) {
       if (options[i].selected) {
-        selectedValues.push(options[i].value);
+        selectedValues.push(parseInt(options[i].value));
       }
     }
     setCategoriesFormData((prevFormData) => ({
@@ -110,8 +110,10 @@ const PublicationForm = ({ editMode, currentPublication }) => {
           navigate(`/${formData.type}/${newId}`);
           window.location.reload();
         } else {
+          const json = await response.json();
           notification.error({
-            message: "La publication n'a pas pu être ajoutée."
+            message: "La publication n'a pas pu être ajoutée.",
+            description: json.message
           });
         }
       } else {
@@ -121,8 +123,10 @@ const PublicationForm = ({ editMode, currentPublication }) => {
           navigate(`/${formData.type}/${currentPublication}`);
           window.location.reload();
         } else {
+          const json = await response.json();
           notification.error({
-            message: "La publication n'a pas pu être éditée."
+            message: "La publication n'a pas pu être éditée.",
+            description: json.message
           });
         }
       }
@@ -134,43 +138,49 @@ const PublicationForm = ({ editMode, currentPublication }) => {
   return (
     <div className="flex items-center justify-center">
       <div className="w-full max-w-6xl p-6 bg-white/90 dark:bg-slate-950/90 rounded-2xl shadow">
-        <h2 className="text-2xl font-semibold mb-6">Ajouter une publication</h2>
+        <h2 className="text-2xl font-semibold mb-6">
+          {!editMode ? 'Ajouter une publication' : 'Éditer la publication'}
+        </h2>
 
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="type" className="block mb-1 font-medium">
-              <span className="text-red-600">*</span> Type de publication
-            </label>
-            <select
-              id="type"
-              name="type"
-              value={formData.type}
-              onChange={handleChange}
-              className="w-full p-2 border dark:border-gray-900 rounded bg-slate-50 dark:bg-slate-900 dark:focus:bg-slate-800"
-              required>
-              <option value="article">Article</option>
-              <option value="discussion">Discussion</option>
-            </select>
-          </div>
+          {!editMode && (
+            <div className="mb-4">
+              <label htmlFor="type" className="block mb-1 font-medium">
+                <span className="text-red-600">*</span> Type de publication
+              </label>
+              <select
+                id="type"
+                name="type"
+                value={formData.type}
+                onChange={handleChange}
+                className="w-full p-2 border dark:border-gray-900 rounded bg-slate-50 dark:bg-slate-900 dark:focus:bg-slate-800"
+                required>
+                <option value="article">Article</option>
+                <option value="discussion">Discussion</option>
+              </select>
+            </div>
+          )}
 
-          <div className="mb-4">
-            <label htmlFor="categories" className="block mb-1 font-medium">
-              <span className="text-red-600">*</span> Catégorie(s)
-            </label>
-            <select
-              id="categories"
-              name="categories"
-              onChange={handleMultiSelectChange}
-              className="w-full p-2 border dark:border-gray-900 rounded bg-slate-50 dark:bg-slate-900 dark:focus:bg-slate-800"
-              multiple
-              required>
-              {categories.map((category) => (
-                <option key={category.id_category} value={category.id_category}>
-                  {category.title}
-                </option>
-              ))}
-            </select>
-          </div>
+          {!editMode && (
+            <div className="mb-4">
+              <label htmlFor="categories" className="block mb-1 font-medium">
+                <span className="text-red-600">*</span> Catégorie(s)
+              </label>
+              <select
+                id="categories"
+                name="categories"
+                onChange={handleMultiSelectChange}
+                className="w-full p-2 border dark:border-gray-900 rounded bg-slate-50 dark:bg-slate-900 dark:focus:bg-slate-800"
+                multiple
+                required>
+                {categories.map((category) => (
+                  <option key={category.id_category} value={category.id_category}>
+                    {category.title}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
           <div className="mb-4">
             <label htmlFor="title" className="block mb-1 font-medium">

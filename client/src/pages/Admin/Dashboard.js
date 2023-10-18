@@ -1,64 +1,27 @@
-import React from 'react';
-import { Tabs, TabsHeader, TabsBody, Tab, TabPanel } from '@material-tailwind/react';
-import { Square3Stack3DIcon, UserCircleIcon, Cog6ToothIcon } from '@heroicons/react/24/solid';
-import UsersTable from '../../components/Admin/UsersTable';
+import { Link } from 'react-router-dom';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
+import { Button } from '@material-tailwind/react';
 
 const AdminDashboardPage = () => {
-  const data = [
-    {
-      label: 'Liste des utilisateurs',
-      value: 'users',
-      icon: Square3Stack3DIcon,
-      desc: <UsersTable />
-    },
-    {
-      label: 'Liste des articles',
-      value: 'articles',
-      icon: UserCircleIcon,
-      desc: `Because it's about motivating the doers. Because I'm here
-          to follow my dreams and inspire other people to follow their dreams, too.`
-    },
-    {
-      label: 'Liste des discussions',
-      value: 'discussions',
-      icon: Cog6ToothIcon,
-      desc: `We're not always in the position that we want to be at.
-          We're constantly growing. We're constantly making mistakes. We're
-          constantly trying to express ourselves and actualize our dreams.`
-    },
-    {
-      label: 'Liste des commentaires',
-      value: 'comments',
-      icon: Cog6ToothIcon,
-      desc: `We're not always in the position that we want to be at.
-          We're constantly growing. We're constantly making mistakes. We're
-          constantly trying to express ourselves and actualize our dreams.`
-    }
-  ];
-
   useDocumentTitle('Administration');
 
   return (
-    <Tabs value="dashboard">
-      <TabsHeader>
-        {data.map(({ label, value, icon }) => (
-          <Tab key={value} value={value}>
-            <div className="flex items-center gap-2">
-              {React.createElement(icon, { className: 'w-5 h-5' })}
-              {label}
-            </div>
-          </Tab>
-        ))}
-      </TabsHeader>
-      <TabsBody>
-        {data.map(({ value, desc }) => (
-          <TabPanel key={value} value={value}>
-            {desc}
-          </TabPanel>
-        ))}
-      </TabsBody>
-    </Tabs>
+    <div className="flex flex-col gap-3">
+      <h1 className="text-2xl font-bold">Bienvenue sur le tableau de bord administrateur !</h1>
+      <p>Diverses actions peuvent être effectuées à partir du tableau de bord :</p>
+      <Link to="/admin/users">
+        <Button className="w-full">Gestion des utilisateurs</Button>
+      </Link>
+      <Link to="/admin/categories">
+        <Button className="w-full">Gestion des catégories</Button>
+      </Link>
+      <Link to="/admin/publications">
+        <Button className="w-full">Gestion des publications</Button>
+      </Link>
+      <Link to="/admin/comments">
+        <Button className="w-full">Gestion des commentaires</Button>
+      </Link>
+    </div>
   );
 };
 

@@ -26,6 +26,11 @@ import PrivacyPolicyPage from './pages/Legal/PrivacyPolicy';
 import PublicationPage from './pages/Dashboard/Publication';
 import MyFavoritesPage from './pages/Dashboard/MyFavorites';
 import MyPublicationsPage from './pages/Dashboard/MyPublications';
+import EditPublicationPage from './pages/Dashboard/EditPublication';
+import AdminCategoriesPage from './pages/Admin/Categories';
+import AdminPublicationsPage from './pages/Admin/Publications';
+import AdminCommentsPage from './pages/Admin/Comments';
+import AdminUsersPage from './pages/Admin/Users';
 
 const App = () => {
   return (
@@ -74,9 +79,17 @@ const App = () => {
               <Route exact path="/publication/new" element={<PublicationPage />} />
             </Route>
 
+            <Route exact path="/publication/:id/edit" element={<UserRoute />}>
+              <Route exact path="/publication/:id/edit" element={<EditPublicationPage />} />
+            </Route>
+
             {/* Admin only routes */}
             <Route exact path="/admin" element={<AdminRoute />}>
               <Route exact path="/admin" element={<AdminDashboardPage />} />
+              <Route exact path="/admin/users" element={<AdminUsersPage />} />
+              <Route exact path="/admin/categories" element={<AdminCategoriesPage />} />
+              <Route exact path="/admin/publications" element={<AdminPublicationsPage />} />
+              <Route exact path="/admin/comments" element={<AdminCommentsPage />} />
             </Route>
           </Routes>
         </Layout>

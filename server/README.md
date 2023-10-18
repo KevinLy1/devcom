@@ -35,8 +35,8 @@ BCRYPT_SALT_ROUNDS = 10
 # JWT
 JWT_SECRET_KEY = SECRET_KEY # Utiliser "yarn crypto" pour générer une clé secrète et remplacer SECRET_KEY
 REFRESH_JWT_SECRET_KEY = SECRET_KEY_2 # Utiliser encore "yarn crypto" pour générer une autre clé secrète et remplacer SECRET_KEY_2
-JWT_EXPIRATION = 900 # 900 secondes (15 minutes)
+JWT_EXPIRATION = 3600 # 3600 secondes (60 minutes)
 REFRESH_JWT_EXPIRATION = 86400 # 86400 secondes (1 jour)
-JWT_COOKIE_EXPIRATION = 900000 # 900000 millisecondes (15 minutes)
+JWT_COOKIE_EXPIRATION = 3600000 # 3600000 millisecondes (60 minutes)
 REFRESH_JWT_COOKIE_EXPIRATION = 86400000 # 86400000 millisecondes (1 jour)
 ```

@@ -4,16 +4,22 @@ import { apiLogin, apiDecodeJWT, apiLogout, apiRefreshJWT } from '../api/auth';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState(() => {
+    const storedUser = sessionStorage.getItem('userData');
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
 
   const login = async (data) => {
     try {
       const response = await apiLogin(data);
+
       if (response.ok) {
         await verifyToken();
+
         return true;
       } else {
         const json = await response.json();
+
         return json.message;
       }
     } catch {
@@ -34,6 +40,7 @@ export const AuthProvider = ({ children }) => {
         if (userData) {
           setUserData(null);
           await apiLogout();
+          sessionStorage.removeItem('userData');
         }
       }
     } catch {
@@ -49,10 +56,12 @@ export const AuthProvider = ({ children }) => {
       } else {
         console.error("Échec du rafraîchissement du jeton d'accès");
         setUserData(null);
+        sessionStorage.removeItem('userData');
       }
     } catch {
       console.error("Erreur pendant le rafraîchissement du jeton d'accès");
       setUserData(null);
+      sessionStorage.removeItem('userData');
     }
   };
 
@@ -74,19 +83,10 @@ export const AuthProvider = ({ children }) => {
     verifyToken();
   }, []);
 
-  // // Vérifier le jeton toutes les 10 minutes (si inactif)
-  // useEffect(() => {
-  //   verifyToken();
-
-  //   const refreshInterval = setInterval(
-  //     () => {
-  //       verifyToken();
-  //     },
-  //     10 * 60 * 1000
-  //   );
-
-  //   return () => clearInterval(refreshInterval);
-  // }, []);
+  useEffect(() => {
+    const storedUserData = JSON.stringify(userData);
+    sessionStorage.setItem('userData', storedUserData);
+  }, [userData]);
 
   return <AuthContext.Provider value={{ userData, login, logout }}>{children}</AuthContext.Provider>;
 };

@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import usePublications from '../../hooks/usePublications';
 import { Link } from 'react-router-dom';
 import useAuth from '../../contexts/AuthContext';
-import { IconButton } from '@material-tailwind/react';
+import { IconButton, Button } from '@material-tailwind/react';
 import { FaBook, FaPen, FaTrash } from 'react-icons/fa';
 import { apiDeletePublication } from '../../api/publications';
+import { notification } from 'antd';
 
 const MyPublicationsPage = () => {
   const { userData } = useAuth();
@@ -20,10 +21,16 @@ const MyPublicationsPage = () => {
       try {
         const response = await apiDeletePublication(idPublication);
         if (response.ok) {
-          window.location.reload();
+          setMyPublications(myPublications.filter((publication) => publication.id_publication !== idPublication));
+          notification.success({
+            message: 'La publication a bien été supprimée.'
+          });
         }
-      } catch {
-        //
+      } catch (error) {
+        notification.error({
+          message: "Une erreur s'est produite pendant la suppression",
+          description: error
+        });
       }
     }
   };
@@ -38,14 +45,17 @@ const MyPublicationsPage = () => {
   return (
     <>
       <h1 className="text-center text-3xl mb-5 font-bold">Mes publications</h1>
-      <div className="min-w-full overflow-hidden border border-gray-300 dark:border-gray-700 rounded-lg">
+      <Link to="/publication/new">
+        <Button className="mb-4">Créer une nouvelle publication</Button>
+      </Link>
+      <div className="min-w-full overflow-hidden border border-gray-300 dark:border-slate-700 rounded-lg">
         <table className="min-w-full leading-normal">
           <thead>
             <tr>
               <th className="px-5 py-3 border-b-2 dark:border-slate-950 bg-gray-100 dark:bg-slate-950 text-left text-xs font-semibold text-gray-600 dark:text-gray-100 uppercase tracking-wider">
                 Publication
               </th>
-              <th className="px-5 py-3 border-b-2 dark:border-slate-950 bg-gray-100 dark:bg-slate-950 text-left text-xs font-semibold text-gray-600 dark:text-gray-100 uppercase tracking-wider">
+              <th className="hidden sm:table-cell px-5 py-3 border-b-2 dark:border-slate-950 bg-gray-100 dark:bg-slate-950 text-left text-xs font-semibold text-gray-600 dark:text-gray-100 uppercase tracking-wider">
                 Type
               </th>
               <th className="px-5 py-3 border-b-2 dark:border-slate-950 bg-gray-100 dark:bg-slate-950 text-left text-xs font-semibold text-gray-600 dark:text-gray-100 uppercase tracking-wider">
@@ -61,26 +71,26 @@ const MyPublicationsPage = () => {
                 <td className="px-5 py-5 border-b border-gray-200 dark:border-slate-700 text-sm">
                   <Link className="whitespace-no-wrap" to={`/${publication.type}/${publication.id_publication}`}>
                     {publication.title}
-                    <br />
-                    <span className="italic">{publication.description}</span>
                   </Link>
+                  <br />
+                  <span className="italic">{publication.description}</span>
                 </td>
-                <td className="px-5 py-5 border-b border-gray-200 dark:border-slate-700 text-sm">
+                <td className="hidden sm:table-cell px-5 py-5 border-b border-gray-200 dark:border-slate-700 text-sm">
                   <p className="text-gray-900 dark:text-gray-100 whitespace-no-wrap">{publication.type}</p>
                 </td>
                 <td className="px-5 py-5 border-b border-gray-200 dark:border-slate-700 text-sm">
                   <div className="flex flex-wrap items-center gap-3">
                     <Link to={`/${publication.type}/${publication.id_publication}`}>
-                      <IconButton>
+                      <IconButton color="blue">
                         <FaBook />
                       </IconButton>
                     </Link>
                     <Link to={`/publication/${publication.id_publication}/edit`}>
-                      <IconButton>
+                      <IconButton color="amber">
                         <FaPen />
                       </IconButton>
                     </Link>
-                    <IconButton onClick={(e) => handleDelete(e, publication.id_publication)}>
+                    <IconButton color="red" onClick={(e) => handleDelete(e, publication.id_publication)}>
                       <FaTrash />
                     </IconButton>
                   </div>

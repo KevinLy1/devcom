@@ -33,7 +33,7 @@ const MyFavoritesPage = () => {
           <thead>
             <tr>
               <th className="px-5 py-3 border-b-2 dark:border-slate-950 bg-gray-100 dark:bg-slate-950 text-left text-xs font-semibold text-gray-600 dark:text-gray-100 uppercase tracking-wider">
-                Titre de la publication
+                Publication
               </th>
               <th className="px-5 py-3 border-b-2 dark:border-slate-950 bg-gray-100 dark:bg-slate-950 text-left text-xs font-semibold text-gray-600 dark:text-gray-100 uppercase tracking-wider">
                 Type
@@ -49,6 +49,8 @@ const MyFavoritesPage = () => {
                   <Link className="whitespace-no-wrap" to={`/${favorite.type}/${favorite.id_publication}`}>
                     {favorite.title}
                   </Link>
+                  <br />
+                  <span className="italic">{favorite.description}</span>
                 </td>
                 <td className="px-5 py-5 border-b border-gray-200 dark:border-slate-700 text-sm">
                   <p className="text-gray-900 dark:text-gray-100 whitespace-no-wrap">{favorite.type}</p>
