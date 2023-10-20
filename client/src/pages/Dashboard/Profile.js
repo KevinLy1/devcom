@@ -74,7 +74,7 @@ const ProfilePage = () => {
   if (user) {
     return (
       <>
-        <h1 className="text-4xl text-center mb-10 font-bold">Votre profil ({user.username})</h1>
+        <h2 className="text-4xl text-center mb-10 font-bold">Votre profil ({user.username})</h2>
         <div className="flex items-center flex-wrap justify-center gap-3 mb-10">
           <Button color="blue" onClick={openChangePasswordFormDrawer}>
             <div className="flex items-center gap-2">

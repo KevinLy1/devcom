@@ -7,7 +7,7 @@ const AdminDashboardPage = () => {
 
   return (
     <div className="flex flex-col gap-3">
-      <h1 className="text-2xl font-bold">Bienvenue sur le tableau de bord administrateur !</h1>
+      <h2 className="text-2xl font-bold">Bienvenue sur le tableau de bord administrateur !</h2>
       <p>Diverses actions peuvent être effectuées à partir du tableau de bord :</p>
       <Link to="/admin/users">
         <Button className="w-full">Gestion des utilisateurs</Button>

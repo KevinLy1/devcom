@@ -138,7 +138,7 @@ const ArticlesPage = () => {
 
         {/* Liste d'articles */}
         <div className="flex justify-center md:justify-around">
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 w-full">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {currentArticles.map((article) => (
               <ArticleCard
                 key={article.id_publication}

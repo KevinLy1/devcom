@@ -77,7 +77,7 @@ const ArticleCard = (props) => {
 
   return (
     <Card className="max-w-[24rem] overflow-hidden flex flex-col dark:text-white">
-      <CardHeader floated={false} shadow={false} color="transparent" className="m-0 rounded-none h-64">
+      <CardHeader floated={false} shadow={false} color="transparent" className="m-0 rounded-none h-64 hidden sm:block">
         <img
           src={props.image ? props.image : '/assets/img/default-publication.svg'}
           alt={props.title}

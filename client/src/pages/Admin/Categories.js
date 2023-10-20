@@ -1,33 +1,37 @@
 import { useState, useEffect } from 'react';
-import usePublications from '../../hooks/usePublications';
+import useCategories from '../../hooks/useCategories';
 import { Link } from 'react-router-dom';
-import useAuth from '../../contexts/AuthContext';
 import { IconButton, Button } from '@material-tailwind/react';
-import { FaBook, FaPen, FaTrash } from 'react-icons/fa';
-import { apiDeletePublication } from '../../api/publications';
+import { FaPen, FaTrash } from 'react-icons/fa';
+import { apiAdminDeleteCategory } from '../../api/admin';
 import { notification } from 'antd';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 
 const AdminCategoriesPage = () => {
-  const { userData } = useAuth();
-  const allPublications = usePublications();
-  const [myPublications, setMyPublications] = useState([]);
+  useDocumentTitle('Gestion des catégories');
 
-  const handleDelete = async (e, idPublication) => {
+  const allCategories = useCategories();
+  const [categories, setCategories] = useState([]);
+
+  const handleDelete = async (e, idCategory) => {
     e.preventDefault();
 
-    const confirmation = window.confirm('Êtes-vous sûr de vouloir supprimer votre publication ?');
+    const confirmation = window.confirm('Êtes-vous sûr de vouloir supprimer cette catégorie ?');
 
     if (confirmation) {
       try {
-        const response = await apiDeletePublication(idPublication);
+        const response = await apiAdminDeleteCategory(idCategory);
         if (response.ok) {
-          setMyPublications(myPublications.filter((publication) => publication.id_publication !== idPublication));
           notification.success({
-            message: 'La publication a bien été supprimée.'
+            placement: 'top',
+            message: 'La catégorie a bien été supprimée.'
           });
+          const updatedCategories = allCategories.filter((category) => category.id_category !== idCategory);
+          setCategories(updatedCategories);
         }
       } catch (error) {
         notification.error({
+          placement: 'top',
           message: "Une erreur s'est produite pendant la suppression",
           description: error
         });
@@ -36,27 +40,30 @@ const AdminCategoriesPage = () => {
   };
 
   useEffect(() => {
-    if (allPublications.length > 0) {
-      const filteredPublications = allPublications.filter((publication) => publication.id_user === userData.id_user);
-      setMyPublications(filteredPublications);
+    if (allCategories.length > 0) {
+      setCategories(allCategories);
     }
-  }, [allPublications, userData]);
+  }, [allCategories]);
 
   return (
     <>
-      <h1 className="text-center text-3xl mb-5 font-bold">Mes publications</h1>
-      <Link to="/publication/new">
-        <Button className="mb-4">Créer une nouvelle publication</Button>
-      </Link>
+      <h2 className="text-center text-3xl mb-5 font-bold">Gestion des catégories</h2>
+
+      <div className="mb-3">
+        <Link to="/admin/category/new">
+          <Button>Créer une nouvelle catégorie</Button>
+        </Link>
+      </div>
+
       <div className="min-w-full overflow-hidden border border-gray-300 dark:border-slate-700 rounded-lg">
         <table className="min-w-full leading-normal">
           <thead>
             <tr>
-              <th className="px-5 py-3 border-b-2 dark:border-slate-950 bg-gray-100 dark:bg-slate-950 text-left text-xs font-semibold text-gray-600 dark:text-gray-100 uppercase tracking-wider">
-                Publication
-              </th>
               <th className="hidden sm:table-cell px-5 py-3 border-b-2 dark:border-slate-950 bg-gray-100 dark:bg-slate-950 text-left text-xs font-semibold text-gray-600 dark:text-gray-100 uppercase tracking-wider">
-                Type
+                ID
+              </th>
+              <th className="px-5 py-3 border-b-2 dark:border-slate-950 bg-gray-100 dark:bg-slate-950 text-left text-xs font-semibold text-gray-600 dark:text-gray-100 uppercase tracking-wider">
+                Titre
               </th>
               <th className="px-5 py-3 border-b-2 dark:border-slate-950 bg-gray-100 dark:bg-slate-950 text-left text-xs font-semibold text-gray-600 dark:text-gray-100 uppercase tracking-wider">
                 Actions
@@ -64,33 +71,26 @@ const AdminCategoriesPage = () => {
             </tr>
           </thead>
           <tbody>
-            {myPublications.map((publication, index) => (
+            {categories.map((category, index) => (
               <tr
                 key={index}
                 className={index % 2 === 0 ? 'bg-gray-50 dark:bg-slate-900' : 'bg-white dark:bg-slate-950'}>
-                <td className="px-5 py-5 border-b border-gray-200 dark:border-slate-700 text-sm">
-                  <Link className="whitespace-no-wrap" to={`/${publication.type}/${publication.id_publication}`}>
-                    {publication.title}
-                  </Link>
-                  <br />
-                  <span className="italic">{publication.description}</span>
-                </td>
                 <td className="hidden sm:table-cell px-5 py-5 border-b border-gray-200 dark:border-slate-700 text-sm">
-                  <p className="text-gray-900 dark:text-gray-100 whitespace-no-wrap">{publication.type}</p>
+                  {category.id_category}
+                </td>
+                <td className="px-5 py-5 border-b border-gray-200 dark:border-slate-700 text-sm">
+                  <Link className="whitespace-no-wrap" to={`/user/${category.id_category}`}>
+                    {category.title}
+                  </Link>
                 </td>
                 <td className="px-5 py-5 border-b border-gray-200 dark:border-slate-700 text-sm">
                   <div className="flex flex-wrap items-center gap-3">
-                    <Link to={`/${publication.type}/${publication.id_publication}`}>
-                      <IconButton color="blue">
-                        <FaBook />
-                      </IconButton>
-                    </Link>
-                    <Link to={`/publication/${publication.id_publication}/edit`}>
+                    <Link to={`/admin/category/${category.id_category}/edit`}>
                       <IconButton color="amber">
                         <FaPen />
                       </IconButton>
                     </Link>
-                    <IconButton color="red" onClick={(e) => handleDelete(e, publication.id_publication)}>
+                    <IconButton color="red" onClick={(e) => handleDelete(e, category.id_category)}>
                       <FaTrash />
                     </IconButton>
                   </div>

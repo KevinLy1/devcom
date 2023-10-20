@@ -24,7 +24,6 @@ router.post(
   hashPassword,
   UserController.createUser
 );
-router.post('/:id/avatar', authentication, userAuthorization, trimmer, sanitizer, UserController.uploadAvatar);
 
 // READ
 router.get('/', UserController.getUsers);
@@ -44,7 +43,6 @@ router.put(
 
 // DELETE
 router.delete('/:id', authentication, userAuthorization, UserController.deleteUser);
-router.delete('/:id/avatar', authentication, userAuthorization, UserController.deleteAvatar);
 
 // ******************************* CRUD User Favorite Publications *****************************************
 // CREATE

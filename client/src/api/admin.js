@@ -1,3 +1,36 @@
+// ************************************************ CRUD Users ************************************************
+export const apiAdminUsers = async () => {
+  return await fetch(`${process.env.REACT_APP_API_URL}/admin/users`, {
+    method: 'GET',
+    credentials: 'include'
+  });
+};
+
+export const apiAdminUserById = async (id) => {
+  return await fetch(`${process.env.REACT_APP_API_URL}/admin/users/${id}`, {
+    method: 'GET',
+    credentials: 'include'
+  });
+};
+
+export const apiAdminUpdateUser = async (id, data) => {
+  return await fetch(`${process.env.REACT_APP_API_URL}/admin/users/${id}`, {
+    method: 'PUT',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  });
+};
+
+export const apiAdminDeleteUser = async (id) => {
+  return await fetch(`${process.env.REACT_APP_API_URL}/admin/users/${id}`, {
+    method: 'DELETE',
+    credentials: 'include'
+  });
+};
+
 // ************************************************ CRUD Categories ************************************************
 export const apiAdminCategories = async () => {
   return await fetch(`${process.env.REACT_APP_API_URL}/admin/categories`, {

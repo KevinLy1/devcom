@@ -99,9 +99,9 @@ const Header = () => {
     ">
       <div className="flex items-center justify-between text-blue-gray-900 dark:text-white">
         <Link to="/" className="mr-4 cursor-pointer py-1.5 font-medium">
-          <span className="text-4xl">DEV</span>
-          <span className="text-3xl">.COM</span>
-          <span>munity</span>
+          <span className="text-2xl xsm:text-4xl">DEV</span>
+          <span className="text-2xl xsm:text-3xl">.COM</span>
+          <span className="text-xl xsm:text-2xl">munity</span>
         </Link>
         <div className="mr-4 hidden lg:block">{navList}</div>
         <div className="flex items-center gap-4">

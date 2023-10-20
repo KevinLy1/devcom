@@ -35,6 +35,8 @@ export const AuthProvider = ({ children }) => {
         const decodedData = await response.json();
         setUserData(decodedData);
       } else if (response.status === 401) {
+        setUserData(null);
+        sessionStorage.removeItem('userData');
         await refreshToken();
       } else {
         if (userData) {
@@ -80,7 +82,10 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    verifyToken();
+    const interval = setInterval(() => {
+      verifyToken();
+    }, 360000); // 360000 millisecondes = 5 minutes
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {

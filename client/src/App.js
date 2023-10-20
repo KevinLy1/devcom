@@ -26,10 +26,15 @@ import MyPublicationsPage from './pages/Dashboard/MyPublications';
 import EditPublicationPage from './pages/Dashboard/EditPublication';
 import AdminCategoriesPage from './pages/Admin/Categories';
 import AdminPublicationsPage from './pages/Admin/Publications';
-import AdminEditPublicationPage from './pages/Admin/EditPublication';
+import AdminPublicationPage from './pages/Admin/Publication';
+// import AdminEditCategoriesPage from './pages/Admin/EditCategory';
+// import AdminNewCategoryPage from './pages/Admin/NewCategory';
 import AdminCommentsPage from './pages/Admin/Comments';
+import AdminCommentPage from './pages/Admin/Comment';
 import AdminUsersPage from './pages/Admin/Users';
+import AdminUserPage from './pages/Admin/User';
 import UnauthorizedPage from './pages/Unauthorized';
+import AdminCategoryPage from './pages/Admin/Category';
 
 const App = () => {
   return (
@@ -69,11 +74,19 @@ const App = () => {
             {/* Admin only routes */}
             <Route element={<AdminRoute />}>
               <Route exact path="/admin" element={<AdminDashboardPage />} />
+
               <Route exact path="/admin/users" element={<AdminUsersPage />} />
+              <Route exact path="/admin/user/:id/edit" element={<AdminUserPage />} />
+
               <Route exact path="/admin/categories" element={<AdminCategoriesPage />} />
+              <Route exact path="/admin/category/new" element={<AdminCategoryPage />} />
+              <Route exact path="/admin/category/:id/edit" element={<AdminCategoryPage />} />
+
               <Route exact path="/admin/publications" element={<AdminPublicationsPage />} />
+              <Route exact path="/admin/publication/:id/edit/" element={<AdminPublicationPage />} />
+
               <Route exact path="/admin/comments" element={<AdminCommentsPage />} />
-              <Route exact path="/admin/publication/:id/edit/" element={<AdminEditPublicationPage />} />
+              <Route exact path="/admin/comment/:id/edit" element={<AdminCommentPage />} />
             </Route>
           </Routes>
         </Layout>

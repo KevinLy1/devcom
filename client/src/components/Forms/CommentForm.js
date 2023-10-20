@@ -52,6 +52,7 @@ const CommentForm = ({ editMode, currentComment }) => {
           window.location.reload();
         } else {
           notification.error({
+            placement: 'top',
             message: "Le commentaire n'a pas pu être ajouté."
           });
         }
@@ -62,6 +63,7 @@ const CommentForm = ({ editMode, currentComment }) => {
           window.location.reload();
         } else {
           notification.error({
+            placement: 'top',
             message: "Le commentaire n'a pas pu être édité."
           });
         }

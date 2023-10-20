@@ -44,7 +44,7 @@ const MyPublicationsPage = () => {
 
   return (
     <>
-      <h1 className="text-center text-3xl mb-5 font-bold">Mes publications</h1>
+      <h2 className="text-center text-3xl mb-5 font-bold">Mes publications</h2>
       <Link to="/publication/new">
         <Button className="mb-4">Créer une nouvelle publication</Button>
       </Link>

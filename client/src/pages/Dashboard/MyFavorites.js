@@ -27,7 +27,7 @@ const MyFavoritesPage = () => {
 
   return (
     <div className="overflow-x-auto">
-      <h1 className="text-center text-3xl mb-5 font-bold">Mes publications favorites</h1>
+      <h2 className="text-center text-3xl mb-5 font-bold">Mes publications favorites</h2>
       <div className="min-w-full overflow-hidden border border-gray-300 dark:border-gray-700 rounded-lg">
         <table className="min-w-full leading-normal">
           <thead>

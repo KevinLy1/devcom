@@ -3,7 +3,7 @@ import React from 'react';
 const PrivacyPolicyPage = () => {
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-3">Politique de confidentialité</h1>
+      <h2 className="text-3xl font-bold mb-3">Politique de confidentialité</h2>
       <p className="mb-3">
         La protection de vos données personnelles est d'une importance capitale pour nous. Cette politique de
         confidentialité vise à vous informer sur la manière dont nous collectons, utilisons et protégeons vos

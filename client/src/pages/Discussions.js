@@ -145,7 +145,6 @@ const DiscussionsPage = () => {
               isFavorite={favorites.some((favorite) => favorite.id_publication === discussion.id_publication)}
               comments={comments[discussion.id_publication] || []}
               description={discussion.description}
-              image={discussion.image}
               idUser={discussion.id_user}
               author={users[discussion.id_user]?.username || 'Utilisateur supprimé'}
               authorAvatar={users[discussion.id_user]?.avatar}

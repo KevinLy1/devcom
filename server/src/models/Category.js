@@ -39,9 +39,7 @@ class Category {
 
   async remove(id) {
     return await EntityRepository.deleteEntity(categoriesTable, {
-      where: {
-        id_category: id
-      }
+      id_category: id
     });
   }
 

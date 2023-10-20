@@ -11,7 +11,7 @@ const UserPage = () => {
 
   return (
     <>
-      <h1 className="text-4xl text-center mb-10 font-bold">Profil de {user.username}</h1>
+      <h2 className="text-4xl text-center mb-10 font-bold">Profil de {user.username}</h2>
       <User
         username={user.username}
         avatar={user.avatar}

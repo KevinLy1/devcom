@@ -8,25 +8,13 @@ const sanitizer = require('../../middlewares/sanitizer');
 const hashPassword = require('../../middlewares/hashPassword');
 const authentication = require('../../middlewares/authentication');
 const { adminAuthorization } = require('../../middlewares/authorization');
-// const { validateUser } = require('../middlewares/validations/userValidation');
+const Validation = require('../../middlewares/validation');
 
 // Contrôleur
 const UserController = require('../../controllers/UserController');
 const UserProfileController = require('../../controllers/UserProfileController');
 
 // ******************************* CRUD Users *****************************************
-// CREATE
-router.post(
-'/',
-authentication,
-adminAuthorization,
-trimmer,
-// validateUser,
-sanitizer,
-hashPassword,
-UserController.createUser
-);
-
 // READ
 router.get('/', authentication, adminAuthorization, UserController.getUsers);
 router.get('/:id', authentication, adminAuthorization, UserController.getUserById);
@@ -37,7 +25,7 @@ router.put(
   authentication,
   adminAuthorization,
   trimmer,
-  // validateUser,
+  Validation.validateUserUpdate,
   sanitizer,
   hashPassword,
   UserController.updateUser

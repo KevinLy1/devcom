@@ -1,3 +1,8 @@
+export const apiComments = async () => {
+  return await fetch(`${process.env.REACT_APP_API_URL}/comments`, {
+    method: 'GET'
+  });
+};
 export const apiCommentById = async (id) => {
   return await fetch(`${process.env.REACT_APP_API_URL}/comments/${id}`, {
     method: 'GET'

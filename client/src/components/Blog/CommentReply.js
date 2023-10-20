@@ -51,7 +51,7 @@ const CommentReply = (props) => {
         {userData && (
           <div className="flex gap-4">
             {userData.role === 'administrator' && (
-              <Link to={`/admin/comment/${props.idComment}`}>
+              <Link to={`/admin/comment/${props.idComment}/edit`}>
                 <Button color="blue">Modérer</Button>
               </Link>
             )}

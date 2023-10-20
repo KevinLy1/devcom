@@ -77,12 +77,12 @@ const HomePage = () => {
       )}
 
       <section className="py-12 lg:py-16 relative">
-        <h2 className="text-4xl leading-10 lg:text-5xl font-semibold tracking-tighter text-eclipse lg:leading-12">
+        <h2 className="text-4xl leading-10 lg:text-5xl font-semibold tracking-tighter text-eclipse lg:leading-12 mb-5">
           Les 6 derniers articles
         </h2>
         <div className="flex justify-center md:justify-around">
           {articles.length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 mt-8 gap-5 w-full">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
               {articles.map((article) => (
                 <BlogCard
                   key={article.id_publication}
@@ -95,7 +95,7 @@ const HomePage = () => {
                   image={article.image}
                   description={article.description}
                   idUser={article.id_user}
-                  author={articleUsers[article.id_user]?.username}
+                  author={articleUsers[article.id_user]?.username || 'Utilisateur supprimé'}
                   authorAvatar={articleUsers[article.id_user]?.avatar}
                   dateCreation={moment(article.date_creation).format('L')}
                 />
@@ -108,12 +108,12 @@ const HomePage = () => {
       </section>
 
       <section className="py-12 lg:py-16 relative">
-        <h2 className="text-4xl leading-10 lg:text-5xl font-semibold tracking-tighter text-eclipse lg:leading-12">
+        <h2 className="text-4xl leading-10 lg:text-5xl font-semibold tracking-tighter text-eclipse lg:leading-12 mb-5">
           Les 6 dernières discussions
         </h2>
         <div className="flex justify-center md:justify-around">
           {discussions.length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 mt-8 gap-5 w-full">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
               {discussions.map((discussion) => (
                 <BlogCard
                   key={discussion.id_publication}
@@ -126,7 +126,7 @@ const HomePage = () => {
                   image={discussion.image}
                   description={discussion.description}
                   idUser={discussion.id_user}
-                  author={discussionUsers[discussion.id_user]?.username}
+                  author={discussionUsers[discussion.id_user]?.username || 'Utilisateur supprimé'}
                   authorAvatar={discussionUsers[discussion.id_user]?.avatar}
                   dateCreation={moment(discussion.date_creation).format('L')}
                 />
