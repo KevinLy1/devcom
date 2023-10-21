@@ -91,7 +91,11 @@ const ArticleCard = (props) => {
             size="sm"
             variant="circular"
             alt={props.author}
-            src={props.authorAvatar ? props.authorAvatar : '/assets/img/default-avatar.svg'}
+            src={
+              props.authorAvatar
+                ? `${process.env.REACT_APP_SERVER_UPLOADS_URL}/${props.authorAvatar}`
+                : '/assets/img/default-avatar.svg'
+            }
           />
           {props.author}
         </Link>

@@ -38,24 +38,6 @@ export const apiDeleteUser = async (id) => {
   });
 };
 
-export async function apiUploadAvatar(id, data) {
-  return await fetch(`${process.env.REACT_APP_API_URL}/users/${id}/avatar`, {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    },
-    body: data
-  });
-}
-
-export async function apiDeleteAvatar(id) {
-  return await fetch(`${process.env.REACT_APP_API_URL}/users/${id}/avatar`, {
-    method: 'DELETE',
-    credentials: 'include'
-  });
-}
-
 export const apiFavoritePublications = async (id) => {
   return await fetch(`${process.env.REACT_APP_API_URL}/users/${id}/favorite-publications`, {
     method: 'GET',

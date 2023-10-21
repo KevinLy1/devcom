@@ -6,7 +6,11 @@ const Profile = (props) => {
     <div className="grid md:grid-cols-3 sm:grid-cols-1 gap-4">
       <div className="md:col-span-1">
         <img
-          src={props.avatar ? props.avatar : '/assets/img/default-avatar.svg'}
+          src={
+            props.avatar
+              ? `${process.env.REACT_APP_SERVER_UPLOADS_URL}/${props.avatar}`
+              : '/assets/img/default-avatar.svg'
+          }
           alt={props.username}
           className="rounded-full w-full h-auto"
         />

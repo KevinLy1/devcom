@@ -1,16 +1,18 @@
-// /* eslint-disable prettier/prettier */
-// // Router()
-// const router = require('express').Router();
+/* eslint-disable prettier/prettier */
+// Router()
+const router = require('express').Router();
 
-// // Middlewares
-// const trimmer = require('../middlewares/trimmer');
-// const sanitizer = require('../middlewares/sanitizer');
-// const authentication = require('../middlewares/authentication');
-// const { userAuthorization } = require('../middlewares/authorization');
+// Middlewares
+const authentication = require('../middlewares/authentication');
 
-// // Contrôleur
-// const ImageController = require('../controllers/ImageController');
+// Contrôleur
+const { ImageController, upload } = require('../controllers/ImageController');
 
-// // ******************************* CRUD User Avatars *****************************************
-// router.post('/avatar', authentication, userAuthorization, trimmer, sanitizer, ImageController.uploadAvatar);
-// router.delete('/avatar', authentication, userAuthorization, ImageController.deleteAvatar);
+// ******************************* CRUD Images *****************************************
+// CREATE
+router.post('/', authentication, upload.single('image'), ImageController.uploadImage);
+
+// DELETE
+router.delete('/:imageName', authentication, ImageController.deleteImage);
+
+module.exports = router;

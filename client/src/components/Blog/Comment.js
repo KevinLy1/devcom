@@ -43,6 +43,10 @@ const Comment = (props) => {
         const response = await apiDeleteComment(props.idComment);
         if (response.ok) {
           window.location.reload();
+        } else {
+          notification.error({
+            message: 'Erreur lors de la suppression du commentaire'
+          });
         }
       } catch {
         //
@@ -58,7 +62,11 @@ const Comment = (props) => {
             <Link to={`/user/${props.idUser}`} className="inline-flex items-center mr-3 text-sm">
               <img
                 className="mr-2 w-6 h-6 rounded-full"
-                src={props.authorAvatar ? props.authorAvatar : '/assets/img/default-avatar.svg'}
+                src={
+                  props.authorAvatar
+                    ? `${process.env.REACT_APP_SERVER_UPLOADS_URL}/${props.authorAvatar}`
+                    : '/assets/img/default-avatar.svg'
+                }
                 alt={props.author}
               />
               {props.author}

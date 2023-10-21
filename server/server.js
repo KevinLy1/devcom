@@ -32,7 +32,7 @@ app.use('/api/users', require('./src/routes/users'));
 app.use('/api/publications', require('./src/routes/publications'));
 app.use('/api/comments', require('./src/routes/comments'));
 app.use('/api/categories', require('./src/routes/categories'));
-// app.use('/api/images', require('./src/routes/images'));
+app.use('/api/images', require('./src/routes/images'));
 
 // Routes admin
 app.use('/api/admin/users', require('./src/routes/admin/users'));

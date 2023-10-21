@@ -51,7 +51,14 @@ const CommentReplyForm = ({ parent, editMode, currentReply }) => {
 
         const response = await apiCreateComment(formDataWithDate);
         if (response.ok) {
-          window.location.reload();
+          notification.success({
+            placement: 'top',
+            message: 'Commentaire ajouté'
+          });
+
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
         } else {
           notification.error({
             message: "Le commentaire n'a pas pu être ajouté."
@@ -61,7 +68,14 @@ const CommentReplyForm = ({ parent, editMode, currentReply }) => {
         const formDataWithDate = { ...formData, date_update: currentDate };
         const response = await apiUpdateComment(currentReply, formDataWithDate);
         if (response.ok) {
-          window.location.reload();
+          notification.success({
+            placement: 'top',
+            message: 'Commentaire mis à jour'
+          });
+
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
         } else {
           notification.error({
             message: "Le commentaire n'a pas pu être édité."

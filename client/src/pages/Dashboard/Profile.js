@@ -7,17 +7,23 @@ import moment from 'moment';
 import 'moment/locale/fr';
 import { Button, Drawer } from '@material-tailwind/react';
 import { FaLock, FaPen, FaTrash } from 'react-icons/fa';
-import { apiDeleteUser } from '../../api/users';
+import { apiDeleteUser, apiUpdateUser } from '../../api/users';
+import { apiDeleteImage } from '../../api/images';
 import { notification } from 'antd';
 import useAuth from '../../contexts/AuthContext';
 import ChangePasswordForm from '../../components/Forms/ChangePasswordForm';
 import ChangeUserDataForm from '../../components/Forms/ChangeUserDataForm';
+import ChangeAvatarForm from '../../components/Forms/ChangeAvatarForm';
 
 const ProfilePage = () => {
   const user = useProfile();
   const { logout } = useAuth();
 
   useDocumentTitle(`Profil (${user.username})`);
+
+  const [openChangeAvatarForm, setOpenChangeAvatarForm] = useState(false);
+  const openChangeAvatarFormDrawer = () => setOpenChangeAvatarForm(true);
+  const closeChangeAvatarFormDrawer = () => setOpenChangeAvatarForm(false);
 
   const [openChangePasswordForm, setOpenChangePasswordForm] = useState(false);
   const openChangePasswordFormDrawer = () => setOpenChangePasswordForm(true);
@@ -71,6 +77,32 @@ const ProfilePage = () => {
     }
   };
 
+  const handleDeleteAvatar = async (e) => {
+    e.preventDefault();
+
+    const confirmation = window.confirm('Êtes-vous sûr de vouloir supprimer votre avatar actuel ?');
+
+    if (confirmation) {
+      try {
+        const response = await apiDeleteImage(user.avatar);
+        if (response.ok) {
+          await apiUpdateUser(user.id_user, {
+            avatar: null
+          });
+          notification.success({
+            message: 'Votre avatar a bien été supprimé'
+          });
+
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        }
+      } catch {
+        //
+      }
+    }
+  };
+
   if (user) {
     return (
       <>
@@ -88,12 +120,26 @@ const ProfilePage = () => {
           </Button>
         </div>
         <div className="grid md:grid-cols-3 sm:grid-cols-1 gap-4">
-          <div className="md:col-span-1">
+          <div className="md:col-span-1 relative">
             <img
-              src={user.avatar ? user.avatar : '/assets/img/default-avatar.svg'}
+              src={
+                user.avatar
+                  ? `${process.env.REACT_APP_SERVER_UPLOADS_URL}/${user.avatar}`
+                  : '/assets/img/default-avatar.svg'
+              }
               alt={user.username}
               className="rounded-full w-full h-auto"
             />
+            <div className="absolute top-5 right-5 flex gap-2">
+              <button onClick={openChangeAvatarFormDrawer} className="bg-amber-400 text-black p-1 rounded">
+                <FaPen />
+              </button>
+              {user.avatar && (
+                <button onClick={handleDeleteAvatar} className="bg-red-400 text-black p-1 rounded">
+                  <FaTrash />
+                </button>
+              )}
+            </div>
           </div>
 
           <div className="md:col-span-2">
@@ -177,6 +223,24 @@ const ProfilePage = () => {
 
         <Drawer
           placement="right"
+          open={openChangeAvatarForm}
+          onClose={closeChangeAvatarFormDrawer}
+          overlay={false}
+          className="dark:bg-slate-950">
+          <ChangeAvatarForm />
+        </Drawer>
+
+        <Drawer
+          placement="right"
+          open={openChangePasswordForm}
+          onClose={closeChangePasswordFormDrawer}
+          overlay={false}
+          className="dark:bg-slate-950">
+          <ChangePasswordForm />
+        </Drawer>
+
+        <Drawer
+          placement="right"
           open={openFirstNameForm}
           onClose={closeFirstNameFormDrawer}
           overlay={false}
@@ -241,15 +305,6 @@ const ProfilePage = () => {
           overlay={false}
           className="dark:bg-slate-950">
           <ChangeUserDataForm inputType="text" label="Compétences" field="skills" currentValue={user.skills} />
-        </Drawer>
-
-        <Drawer
-          placement="right"
-          open={openChangePasswordForm}
-          onClose={closeChangePasswordFormDrawer}
-          overlay={false}
-          className="dark:bg-slate-950">
-          <ChangePasswordForm />
         </Drawer>
       </>
     );

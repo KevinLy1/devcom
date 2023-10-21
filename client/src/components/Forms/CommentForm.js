@@ -49,7 +49,14 @@ const CommentForm = ({ editMode, currentComment }) => {
         const formDataWithDate = { ...formData, date_creation: currentDate };
         const response = await apiCreateComment(formDataWithDate);
         if (response.ok) {
-          window.location.reload();
+          notification.success({
+            placement: 'top',
+            message: 'Commentaire ajouté'
+          });
+
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
         } else {
           notification.error({
             placement: 'top',
@@ -60,7 +67,14 @@ const CommentForm = ({ editMode, currentComment }) => {
         const formDataWithDate = { ...formData, date_update: currentDate };
         const response = await apiUpdateComment(currentComment, formDataWithDate);
         if (response.ok) {
-          window.location.reload();
+          notification.success({
+            placement: 'top',
+            message: 'Commentaire mis à jour'
+          });
+
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
         } else {
           notification.error({
             placement: 'top',

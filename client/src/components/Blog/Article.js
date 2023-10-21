@@ -77,7 +77,11 @@ const Article = (props) => {
           <div className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
             <img
               className="mr-4 w-16 h-16 rounded-full"
-              src={props.authorAvatar ? props.authorAvatar : '/assets/img/default-avatar.svg'}
+              src={
+                props.authorAvatar
+                  ? `${process.env.REACT_APP_SERVER_UPLOADS_URL}/${props.authorAvatar}`
+                  : '/assets/img/default-avatar.svg'
+              }
               alt={props.author}
             />
             <div>

@@ -58,4 +58,7 @@ typings/
 .env
 
 # exclude local certificates
-certs/
+certs/*
+
+# exclude uploads content
+uploads/*
