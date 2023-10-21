@@ -5,6 +5,7 @@ import {
   apiUpdatePublication,
   apiAddPublicationCategory
 } from '../../api/publications';
+import { apiDeleteImage, apiUploadImage } from '../../api/images';
 import useAuth from '../../contexts/AuthContext';
 import moment from 'moment-timezone';
 import { notification } from 'antd';
@@ -75,6 +76,12 @@ const PublicationForm = ({ editMode, currentPublication }) => {
     }
   };
 
+  const [deleteImage, setDeleteImage] = useState(false);
+
+  const handleCheckboxChange = (e) => {
+    setDeleteImage(e.target.checked);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -104,7 +111,25 @@ const PublicationForm = ({ editMode, currentPublication }) => {
 
           // Troisième étape : image
           if (imageFile) {
-            //
+            const form = new FormData();
+            form.append('image', imageFile);
+
+            const upload = await apiUploadImage(form);
+            if (upload.ok) {
+              const data = await upload.json();
+
+              await apiUpdatePublication(newId, {
+                image: data.imageName
+              });
+            } else {
+              const error = await upload.json();
+
+              notification.error({
+                placement: 'top',
+                message: "Erreur pendant le chargement de l'image",
+                description: error.message
+              });
+            }
           }
 
           navigate(`/${formData.type}/${newId}`);
@@ -118,8 +143,43 @@ const PublicationForm = ({ editMode, currentPublication }) => {
         }
       } else {
         const formDataWithDate = { ...formData, date_update: currentDate };
+
         const response = await apiUpdatePublication(currentPublication, formDataWithDate);
         if (response.ok) {
+          if (imageFile) {
+            const form = new FormData();
+            form.append('image', imageFile);
+
+            if (formData.image) await apiDeleteImage(formData.image);
+
+            const upload = await apiUploadImage(form);
+            if (upload.ok) {
+              const data = await upload.json();
+
+              await apiUpdatePublication(currentPublication, {
+                image: data.imageName
+              });
+            } else {
+              const error = await upload.json();
+
+              notification.error({
+                placement: 'top',
+                message: "Erreur pendant le chargement de l'image",
+                description: error.message
+              });
+            }
+          } else if (deleteImage) {
+            try {
+              const response = await apiDeleteImage(formData.image);
+              if (response.ok) {
+                await apiUpdatePublication(currentPublication, {
+                  image: null
+                });
+              }
+            } catch (error) {
+              //
+            }
+          }
           navigate(`/${formData.type}/${currentPublication}`);
           window.location.reload();
         } else {
@@ -232,6 +292,15 @@ const PublicationForm = ({ editMode, currentPublication }) => {
             </label>
             <input type="file" id="image" name="image" accept=".jpg, .jpeg, .gif, .png" onChange={handleFileChange} />
           </div>
+
+          {editMode && (
+            <div className="mb-4">
+              <label>
+                <input type="checkbox" checked={deleteImage} onChange={handleCheckboxChange} />
+                Supprimer l'image
+              </label>
+            </div>
+          )}
 
           <div className="flex justify-center">
             <button type="submit" className="px-4 py-2 rounded bg-slate-300 dark:bg-slate-900 focus:outline-none">

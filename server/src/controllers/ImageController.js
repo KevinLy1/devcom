@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 class ImageController {
-  uploadImage(req, res) {
+  async uploadImage(req, res) {
     try {
       const imageName = req.file.filename;
       res.status(201).send({ imageName });

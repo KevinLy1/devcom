@@ -27,8 +27,6 @@ import EditPublicationPage from './pages/Dashboard/EditPublication';
 import AdminCategoriesPage from './pages/Admin/Categories';
 import AdminPublicationsPage from './pages/Admin/Publications';
 import AdminPublicationPage from './pages/Admin/Publication';
-// import AdminEditCategoriesPage from './pages/Admin/EditCategory';
-// import AdminNewCategoryPage from './pages/Admin/NewCategory';
 import AdminCommentsPage from './pages/Admin/Comments';
 import AdminCommentPage from './pages/Admin/Comment';
 import AdminUsersPage from './pages/Admin/Users';

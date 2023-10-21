@@ -1,6 +1,5 @@
 import React from 'react';
 import { Tabs, TabsHeader, TabsBody, Tab, TabPanel } from '@material-tailwind/react';
-import { Square3Stack3DIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 import { useCategory, useArticles, useDiscussions } from '../hooks/useCategory';
 import ArticleCard from '../components/Blog/ArticleCard';
 import DiscussionCard from '../components/Blog/DiscussionCard';
@@ -35,10 +34,9 @@ const CategoryPage = () => {
     {
       label: 'Articles',
       value: 'articles',
-      icon: Square3Stack3DIcon,
       desc: (
         <div className="flex justify-center md:justify-around">
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 w-full">
             {articles.length > 0 ? (
               articles
                 .slice()
@@ -71,9 +69,8 @@ const CategoryPage = () => {
     {
       label: 'Discussions',
       value: 'discussions',
-      icon: UserCircleIcon,
       desc: (
-        <div className="flex flex-col gap-10 justify-center dark:text-white">
+        <div className="flex flex-col gap-10 justify-center dark:text-white w-full">
           {discussions.length > 0 ? (
             discussions
               .slice()
@@ -111,12 +108,9 @@ const CategoryPage = () => {
       <h1 className="text-2xl text-center mb-10">Parcourir la catégorie : {category.title}</h1>
       <Tabs value="articles">
         <TabsHeader>
-          {data.map(({ label, value, icon }) => (
+          {data.map(({ label, value }) => (
             <Tab key={value} value={value}>
-              <div className="flex items-center gap-2">
-                {React.createElement(icon, { className: 'w-5 h-5' })}
-                {label}
-              </div>
+              <div className="flex items-center gap-2">{label}</div>
             </Tab>
           ))}
         </TabsHeader>

@@ -106,7 +106,11 @@ const Article = (props) => {
           <article className="mx-auto w-full px-5 py-10 bg-white dark:bg-slate-950 rounded-xl text-justify">
             {props.image && (
               <div className="w-full h-52 max-h-52 mb-10">
-                <img src={props.image} alt={props.title} className="w-full h-full object-cover" />
+                <img
+                  src={props.image ? `${process.env.REACT_APP_SERVER_UPLOADS_URL}/${props.image}` : ''}
+                  alt={props.title}
+                  className="w-full h-full object-cover"
+                />
               </div>
             )}
             <div>{props.content}</div>

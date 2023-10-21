@@ -99,21 +99,21 @@ const Header = () => {
     ">
       <div className="flex items-center justify-between text-blue-gray-900 dark:text-white">
         <Link to="/" className="mr-4 cursor-pointer py-1.5 font-medium">
-          <span className="text-2xl xsm:text-4xl">DEV</span>
-          <span className="text-2xl xsm:text-3xl">.COM</span>
-          <span className="text-xl xsm:text-2xl">munity</span>
+          <span className="text-2xl sm:text-4xl">DEV</span>
+          <span className="text-2xl sm:text-3xl">.COM</span>
+          <span className="text-xl sm:text-2xl">munity</span>
         </Link>
-        <div className="mr-4 hidden lg:block">{navList}</div>
+        <div className="mr-4 hidden xl:block">{navList}</div>
         <div className="flex items-center gap-4">
           {!userData ? (
             <>
               <Link to="/register">
-                <Button variant="gradient" size="sm" className="hidden lg:inline-block">
+                <Button variant="gradient" size="sm" className="hidden xl:inline-block">
                   <span>Inscription</span>
                 </Button>
               </Link>
               <Link to="/login">
-                <Button variant="gradient" size="sm" className="hidden lg:inline-block">
+                <Button variant="gradient" size="sm" className="hidden xl:inline-block">
                   <span>Connexion</span>
                 </Button>
               </Link>
@@ -122,17 +122,17 @@ const Header = () => {
             <>
               {userData.role === 'administrator' && (
                 <Link to="/admin">
-                  <Button variant="gradient" size="sm" className="hidden lg:inline-block">
+                  <Button variant="gradient" size="sm" className="hidden xl:inline-block">
                     <span>Administration</span>
                   </Button>
                 </Link>
               )}
               <Link to="/dashboard">
-                <Button variant="gradient" size="sm" className="hidden lg:inline-block">
+                <Button variant="gradient" size="sm" className="hidden xl:inline-block">
                   <span>Tableau de bord</span>
                 </Button>
               </Link>
-              <Button variant="gradient" size="sm" className="hidden lg:inline-block" onClick={handleLogout}>
+              <Button variant="gradient" size="sm" className="hidden xl:inline-block" onClick={handleLogout}>
                 <span>Déconnexion ({userData.username})</span>
               </Button>
             </>
@@ -142,7 +142,7 @@ const Header = () => {
           </span>
           <IconButton
             variant="text"
-            className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
+            className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent xl:hidden"
             ripple={false}
             onClick={() => setOpenNav(!openNav)}>
             {openNav ? (

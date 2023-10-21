@@ -71,7 +71,11 @@ const BlogCard = (props) => {
     <Card className="max-w-[24rem] overflow-hidden flex flex-col dark:text-white">
       <CardHeader floated={false} shadow={false} color="transparent" className="m-0 rounded-none h-64">
         <img
-          src={props.image ? props.image : '/assets/img/default-publication.svg'}
+          src={
+            props.image
+              ? `${process.env.REACT_APP_SERVER_UPLOADS_URL}/${props.image}`
+              : '/assets/img/default-publication.svg'
+          }
           alt={props.title}
           className="object-cover w-full h-full"
         />

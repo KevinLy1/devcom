@@ -2,6 +2,8 @@ Créer un fichier .env avec les informations de connexion à la base de données
 
 Pour générer un certificat SSL en local, utiliser "mkcert" dans le dossier "certs" (à créer à la racine du server)
 
+Il faudra également créer un dossier "uploads" à la racine du dossier "server" afin que l'upload d'images puisse se faire.
+
 Exemple :
 ```shell
 # Environnement
