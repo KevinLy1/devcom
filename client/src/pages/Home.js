@@ -8,7 +8,7 @@ import useUsers from '../hooks/useUsers';
 import usePublications from '../hooks/usePublications';
 import useFavorites from '../hooks/useFavorites';
 import moment from 'moment';
-import 'moment/locale/fr';
+import validator from 'validator';
 
 const HomePage = () => {
   useDocumentTitle('Accueil');
@@ -88,12 +88,12 @@ const HomePage = () => {
                   key={article.id_publication}
                   type="article"
                   idPublication={article.id_publication}
-                  title={article.title}
+                  title={article.title ? validator.unescape(article.title) : ''}
                   reputation={articleReputations[article.id_publication] || []}
                   isFavorite={favorites.some((favorite) => favorite.id_publication === article.id_publication)}
                   comments={articleComments[article.id_publication] || []}
                   image={article.image}
-                  description={article.description}
+                  description={article.description ? validator.unescape(article.description) : ''}
                   idUser={article.id_user}
                   author={articleUsers[article.id_user]?.username || 'Utilisateur supprimé'}
                   authorAvatar={articleUsers[article.id_user]?.avatar}
@@ -119,12 +119,12 @@ const HomePage = () => {
                   key={discussion.id_publication}
                   type="discussion"
                   idPublication={discussion.id_publication}
-                  title={discussion.title}
+                  title={discussion.title ? validator.unescape(discussion.title) : ''}
                   reputation={discussionReputations[discussion.id_publication] || []}
                   isFavorite={favorites.some((favorite) => favorite.id_publication === discussion.id_publication)}
                   comments={discussionComments[discussion.id_publication] || []}
                   image={discussion.image}
-                  description={discussion.description}
+                  description={discussion.description ? validator.unescape(discussion.description) : ''}
                   idUser={discussion.id_user}
                   author={discussionUsers[discussion.id_user]?.username || 'Utilisateur supprimé'}
                   authorAvatar={discussionUsers[discussion.id_user]?.avatar}

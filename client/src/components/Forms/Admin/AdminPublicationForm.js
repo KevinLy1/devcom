@@ -3,6 +3,7 @@ import { apiAdminPublicationById, apiAdminUpdatePublication } from '../../../api
 import moment from 'moment-timezone';
 import { notification } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import validator from 'validator';
 
 const AdminPublicationForm = ({ currentPublication }) => {
   const navigate = useNavigate();
@@ -16,9 +17,10 @@ const AdminPublicationForm = ({ currentPublication }) => {
         .then((data) => {
           setFormData((prevData) => ({
             ...prevData,
-            title: data.title,
-            description: data.description,
-            content: data.content
+            type: data.type,
+            title: data.title ? validator.unescape(data.title) : '',
+            description: data.description ? validator.unescape(data.description) : '',
+            content: data.content ? validator.unescape(data.content) : ''
           }));
         })
         .catch((error) => {

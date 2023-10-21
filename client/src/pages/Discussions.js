@@ -7,7 +7,7 @@ import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useDiscussions } from '../hooks/usePublications';
 import useFavorites from '../hooks/useFavorites';
 import moment from 'moment';
-import 'moment/locale/fr';
+import validator from 'validator';
 
 const DiscussionsPage = () => {
   useDocumentTitle('Liste des discussions');
@@ -20,9 +20,8 @@ const DiscussionsPage = () => {
   const [sortBy, setSortBy] = useState('newest');
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Trier les articles en fonction de l'option de tri sélectionnée
   let sortedDiscussions = discussions
-    .filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase())) // Filtrer par titre
+    .filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()))
     .sort((a, b) => {
       if (sortBy === 'newest') {
         return b.date_creation.localeCompare(a.date_creation);
@@ -32,17 +31,14 @@ const DiscussionsPage = () => {
       return 0;
     });
 
-  // Calculer le nombre total de pages
   const itemsPerPage = 9;
   const totalPages = Math.ceil(sortedDiscussions.length / itemsPerPage);
 
-  // Générer la liste des numéros de page
   const pageNumbers = [];
   for (let i = 1; i <= totalPages; i++) {
     pageNumbers.push(i);
   }
 
-  // Calculer les index des articles à afficher pour la page actuelle
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentDiscussions = sortedDiscussions.slice(indexOfFirstItem, indexOfLastItem);
@@ -55,7 +51,7 @@ const DiscussionsPage = () => {
   };
 
   useEffect(() => {
-    setCurrentPage(1); // Réinitialiser la page courante lorsque le terme de recherche change
+    setCurrentPage(1);
   }, [searchTerm]);
 
   if (currentDiscussions) {
@@ -134,17 +130,16 @@ const DiscussionsPage = () => {
         </div>
 
         {/* Liste d'articles */}
-        {/* <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"> */}
         <div className="flex flex-col gap-10 justify-center w-full">
           {currentDiscussions.map((discussion) => (
             <DiscussionCard
               key={discussion.id_publication}
-              title={discussion.title}
+              title={discussion.title ? validator.unescape(discussion.title) : ''}
               categories={categories[discussion.id_publication] || []}
               reputation={reputations[discussion.id_publication] || []}
               isFavorite={favorites.some((favorite) => favorite.id_publication === discussion.id_publication)}
               comments={comments[discussion.id_publication] || []}
-              description={discussion.description}
+              description={discussion.description ? validator.unescape(discussion.description) : ''}
               idUser={discussion.id_user}
               author={users[discussion.id_user]?.username || 'Utilisateur supprimé'}
               authorAvatar={users[discussion.id_user]?.avatar}

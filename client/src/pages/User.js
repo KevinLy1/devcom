@@ -2,7 +2,7 @@ import useUser from '../hooks/useUser';
 import User from '../components/Blog/User';
 import useDocumentTitle from '../hooks/useDocumentTitle';
 import moment from 'moment';
-import 'moment/locale/fr';
+import validator from 'validator';
 
 const UserPage = () => {
   const user = useUser();
@@ -13,17 +13,17 @@ const UserPage = () => {
     <>
       <h2 className="text-4xl text-center mb-10 font-bold">Profil de {user.username}</h2>
       <User
-        username={user.username}
+        username={user.username ? validator.unescape(user.username) : ''}
         avatar={user.avatar}
         key={user.id_user}
-        firstName={user.first_name}
-        lastName={user.last_name}
+        firstName={user.first_name ? validator.unescape(user.first_name) : ''}
+        lastName={user.last_name ? validator.unescape(user.last_name) : ''}
         gender={user.gender}
-        webUrl={user.web_url}
+        webUrl={user.web_url ? validator.unescape(user.web_url) : ''}
         email={user.email}
         dateRegistration={moment(user.date_registration).format('L')}
-        biography={user.biography}
-        skills={user.skills}
+        biography={user.biography ? validator.unescape(user.biography) : ''}
+        skills={user.skills ? validator.unescape(user.skills) : ''}
         role={user.role === 'administrator' ? 'Administrateur' : 'Utilisateur'}
       />
     </>

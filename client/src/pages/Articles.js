@@ -7,7 +7,7 @@ import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useArticles } from '../hooks/usePublications';
 import useFavorites from '../hooks/useFavorites';
 import moment from 'moment';
-import 'moment/locale/fr';
+import validator from 'validator';
 
 const ArticlesPage = () => {
   useDocumentTitle('Liste des articles');
@@ -15,18 +15,13 @@ const ArticlesPage = () => {
   const { articles, users, categories, reputations, comments } = useArticles();
 
   const favorites = useFavorites();
-
-  // État pour stocker la page actuelle
   const [currentPage, setCurrentPage] = useState(1);
-
-  // État pour stocker l'option de tri
   const [sortBy, setSortBy] = useState('newest');
 
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Trier les articles en fonction de l'option de tri sélectionnée
   let sortedArticles = articles
-    .filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase())) // Filtrer par titre
+    .filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()))
     .sort((a, b) => {
       if (sortBy === 'newest') {
         return b.date_creation.localeCompare(a.date_creation);
@@ -36,17 +31,14 @@ const ArticlesPage = () => {
       return 0;
     });
 
-  // Calculer le nombre total de pages
   const itemsPerPage = 9;
   const totalPages = Math.ceil(sortedArticles.length / itemsPerPage);
 
-  // Générer la liste des numéros de page
   const pageNumbers = [];
   for (let i = 1; i <= totalPages; i++) {
     pageNumbers.push(i);
   }
 
-  // Calculer les index des articles à afficher pour la page actuelle
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentArticles = sortedArticles.slice(indexOfFirstItem, indexOfLastItem);
@@ -59,7 +51,7 @@ const ArticlesPage = () => {
   };
 
   useEffect(() => {
-    setCurrentPage(1); // Réinitialiser la page courante lorsque le terme de recherche change
+    setCurrentPage(1);
   }, [searchTerm]);
 
   if (currentArticles) {
@@ -142,12 +134,12 @@ const ArticlesPage = () => {
             {currentArticles.map((article) => (
               <ArticleCard
                 key={article.id_publication}
-                title={article.title}
+                title={article.title ? validator.unescape(article.title) : ''}
                 categories={categories[article.id_publication] || []}
                 reputation={reputations[article.id_publication] || []}
                 isFavorite={favorites.some((favorite) => favorite.id_publication === article.id_publication)}
                 comments={comments[article.id_publication] || []}
-                description={article.description}
+                description={article.description ? validator.unescape(article.description) : ''}
                 image={article.image}
                 idUser={article.id_user}
                 author={users[article.id_user]?.username || 'Utilisateur supprimé'}

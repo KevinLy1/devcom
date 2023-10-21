@@ -6,6 +6,7 @@ import { IconButton, Button } from '@material-tailwind/react';
 import { FaBook, FaPen, FaTrash } from 'react-icons/fa';
 import { apiDeletePublication } from '../../api/publications';
 import { notification } from 'antd';
+import validator from 'validator';
 
 const MyPublicationsPage = () => {
   const { userData } = useAuth();
@@ -70,10 +71,12 @@ const MyPublicationsPage = () => {
                 className={index % 2 === 0 ? 'bg-gray-50 dark:bg-slate-900' : 'bg-white dark:bg-slate-950'}>
                 <td className="px-5 py-5 border-b border-gray-200 dark:border-slate-700 text-sm">
                   <Link className="whitespace-no-wrap" to={`/${publication.type}/${publication.id_publication}`}>
-                    {publication.title}
+                    {publication.title ? validator.unescape(publication.title) : ''}
                   </Link>
                   <br />
-                  <span className="italic">{publication.description}</span>
+                  <span className="italic">
+                    {publication.description ? validator.unescape(publication.description) : ''}
+                  </span>
                 </td>
                 <td className="hidden sm:table-cell px-5 py-5 border-b border-gray-200 dark:border-slate-700 text-sm">
                   <p className="text-gray-900 dark:text-gray-100 whitespace-no-wrap">{publication.type}</p>

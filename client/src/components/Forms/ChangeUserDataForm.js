@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { apiUpdateUser } from '../../api/users';
 import { notification } from 'antd';
 import useAuth from '../../contexts/AuthContext';
+import validator from 'validator';
 
 const ChangeUserDataForm = ({ inputType, label, field, currentValue }) => {
   const { userData } = useAuth();
@@ -20,7 +21,7 @@ const ChangeUserDataForm = ({ inputType, label, field, currentValue }) => {
     if (currentValue) {
       setFormData((prevData) => ({
         ...prevData,
-        [field]: currentValue
+        [field]: currentValue ? validator.unescape(currentValue) : ''
       }));
     }
   }, [currentValue, field]);

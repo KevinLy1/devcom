@@ -11,6 +11,7 @@ import moment from 'moment-timezone';
 import { notification } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import useCategories from '../../hooks/useCategories';
+import validator from 'validator';
 
 const PublicationForm = ({ editMode, currentPublication }) => {
   const { userData } = useAuth();
@@ -32,10 +33,10 @@ const PublicationForm = ({ editMode, currentPublication }) => {
         .then((data) => {
           setFormData((prevData) => ({
             ...prevData,
-            title: data.title,
+            title: data.title ? validator.unescape(data.title) : '',
             type: data.type,
-            description: data.description,
-            content: data.content,
+            description: data.description ? validator.unescape(data.description) : '',
+            content: data.content ? validator.unescape(data.content) : '',
             image: data.image
           }));
         })

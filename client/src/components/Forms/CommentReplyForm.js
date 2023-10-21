@@ -4,6 +4,7 @@ import { apiCommentById, apiCreateComment, apiUpdateComment } from '../../api/co
 import useAuth from '../../contexts/AuthContext';
 import moment from 'moment-timezone';
 import { notification } from 'antd';
+import validator from 'validator';
 
 const CommentReplyForm = ({ parent, editMode, currentReply }) => {
   const { userData } = useAuth();
@@ -23,7 +24,7 @@ const CommentReplyForm = ({ parent, editMode, currentReply }) => {
         .then((data) => {
           setFormData((prevData) => ({
             ...prevData,
-            content: data.content
+            content: data.content ? validator.unescape(data.content) : ''
           }));
         })
         .catch((error) => {

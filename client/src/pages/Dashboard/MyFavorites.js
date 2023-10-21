@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import useFavorites from '../../hooks/useFavorites';
 import { Link } from 'react-router-dom';
 import { apiPublicationById } from '../../api/publications';
+import validator from 'validator';
 
 const MyFavoritesPage = () => {
   const favorites = useFavorites();
@@ -47,10 +48,10 @@ const MyFavoritesPage = () => {
                 className={index % 2 === 0 ? 'bg-gray-50 dark:bg-slate-900' : 'bg-white dark:bg-slate-950'}>
                 <td className="px-5 py-5 border-b border-gray-200 dark:border-slate-700 text-sm">
                   <Link className="whitespace-no-wrap" to={`/${favorite.type}/${favorite.id_publication}`}>
-                    {favorite.title}
+                    {favorite.title ? validator.unescape(favorite.title) : ''}
                   </Link>
                   <br />
-                  <span className="italic">{favorite.description}</span>
+                  <span className="italic">{favorite.description ? validator.unescape(favorite.description) : ''}</span>
                 </td>
                 <td className="px-5 py-5 border-b border-gray-200 dark:border-slate-700 text-sm">
                   <p className="text-gray-900 dark:text-gray-100 whitespace-no-wrap">{favorite.type}</p>

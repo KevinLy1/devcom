@@ -6,6 +6,7 @@ import { FaBook, FaPen, FaTrash } from 'react-icons/fa';
 import { apiAdminDeletePublication } from '../../api/admin';
 import { notification } from 'antd';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
+import validator from 'validator';
 
 const AdminPublicationsPage = () => {
   useDocumentTitle('Gestion des publications');
@@ -70,10 +71,12 @@ const AdminPublicationsPage = () => {
                 className={index % 2 === 0 ? 'bg-gray-50 dark:bg-slate-900' : 'bg-white dark:bg-slate-950'}>
                 <td className="px-5 py-5 border-b border-gray-200 dark:border-slate-700 text-sm">
                   <Link className="whitespace-no-wrap" to={`/${publication.type}/${publication.id_publication}`}>
-                    {publication.title}
+                    {publication.title ? validator.unescape(publication.title) : ''}
                   </Link>
                   <br />
-                  <span className="italic">{publication.description}</span>
+                  <span className="italic">
+                    {publication.description ? validator.unescape(publication.description) : ''}
+                  </span>
                 </td>
                 <td className="hidden sm:table-cell px-5 py-5 border-b border-gray-200 dark:border-slate-700 text-sm">
                   <p className="text-gray-900 dark:text-gray-100 whitespace-no-wrap">{publication.type}</p>

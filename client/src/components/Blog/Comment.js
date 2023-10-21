@@ -10,6 +10,7 @@ import moment from 'moment';
 import CommentForm from '../Forms/CommentForm';
 import CommentReplyForm from '../Forms/CommentReplyForm';
 import { notification } from 'antd';
+import validator from 'validator';
 
 const Comment = (props) => {
   const { replies, replyAuthor } = useCommentReplies(props.idComment);
@@ -142,7 +143,7 @@ const Comment = (props) => {
             idComment={reply.id_comment}
             author={replyAuthor[reply.id_user]?.username || 'Utilisateur supprimé'}
             authorAvatar={replyAuthor[reply.id_user]?.avatar}
-            content={reply.content}
+            content={reply.content ? validator.unescape(reply.content) : ''}
             dateCreation={moment(reply.date_creation).format('LLL')}
             dateUpdate={reply.date_update ? moment(reply.date_update).format('LLL') : null}
           />

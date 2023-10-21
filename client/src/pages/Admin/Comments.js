@@ -6,6 +6,7 @@ import { FaPen, FaTrash } from 'react-icons/fa';
 import { apiAdminDeleteComment } from '../../api/admin';
 import { notification } from 'antd';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
+import validator from 'validator';
 
 const AdminCommentsPage = () => {
   useDocumentTitle('Gestion des commentaires');
@@ -72,7 +73,9 @@ const AdminCommentsPage = () => {
                 <td className="hidden sm:table-cell px-5 py-5 border-b border-gray-200 dark:border-slate-700 text-sm">
                   {comment.id_comment}
                 </td>
-                <td className="px-5 py-5 border-b border-gray-200 dark:border-slate-700 text-sm">{comment.content}</td>
+                <td className="px-5 py-5 border-b border-gray-200 dark:border-slate-700 text-sm">
+                  {comment.content ? validator.unescape(comment.content) : ''}
+                </td>
                 <td className="px-5 py-5 border-b border-gray-200 dark:border-slate-700 text-sm">
                   <div className="flex flex-wrap items-center gap-3">
                     <Link to={`/admin/comment/${comment.id_comment}/edit`}>

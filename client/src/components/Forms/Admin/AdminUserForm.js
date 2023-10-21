@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { apiAdminUserById, apiAdminUpdateUser } from '../../../api/admin';
 import { notification } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import validator from 'validator';
 
 const AdminUserForm = ({ currentUser }) => {
   const navigate = useNavigate();
@@ -20,11 +21,11 @@ const AdminUserForm = ({ currentUser }) => {
         setFormData((prevData) => ({
           ...prevData,
           gender: data.gender,
-          first_name: data.first_name,
-          last_name: data.last_name,
-          biography: data.biography,
-          skills: data.skills,
-          web_url: data.web_url,
+          first_name: data.first_name ? validator.unescape(data.first_name) : '',
+          last_name: data.last_name ? validator.unescape(data.last_name) : '',
+          biography: data.biography ? validator.unescape(data.biography) : '',
+          skills: data.skills ? validator.unescape(data.skills) : '',
+          web_url: data.web_url ? validator.unescape(data.web_url) : '',
           role: data.role
         }));
       })

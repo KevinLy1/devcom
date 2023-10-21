@@ -6,6 +6,7 @@ import { FaBook, FaPen, FaTrash } from 'react-icons/fa';
 import { apiAdminDeleteUser } from '../../api/admin';
 import { notification } from 'antd';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
+import validator from 'validator';
 
 const AdminUsersPage = () => {
   useDocumentTitle('Gestion des utilisateurs');
@@ -79,7 +80,7 @@ const AdminUsersPage = () => {
                 </td>
                 <td className="px-5 py-5 border-b border-gray-200 dark:border-slate-700 text-sm">
                   <Link className="whitespace-no-wrap" to={`/user/${user.id_user}`}>
-                    {user.username}
+                    {user.username ? validator.unescape(user.username) : ''}
                   </Link>
                 </td>
                 <td className="hidden sm:table-cell px-5 py-5 border-b border-gray-200 dark:border-slate-700 text-sm">

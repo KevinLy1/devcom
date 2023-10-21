@@ -6,6 +6,7 @@ import CommentForm from '../components/Forms/CommentForm';
 import useAuth from '../contexts/AuthContext';
 import useFavorites from '../hooks/useFavorites';
 import moment from 'moment';
+import validator from 'validator';
 
 const DiscussionPage = () => {
   const { discussion, discussionAuthor, categories, comments, reputations, commentAuthor, totalComments } =
@@ -22,12 +23,12 @@ const DiscussionPage = () => {
       <section>
         <Discussion
           key={discussion.id_publication}
-          title={discussion.title}
+          title={discussion.title ? validator.unescape(discussion.title) : ''}
           categories={categories[discussion.id_publication] || []}
           reputation={reputations[discussion.id_publication] || []}
           isFavorite={favorites.some((favorite) => favorite.id_publication === discussion.id_publication)}
-          description={discussion.description}
-          content={discussion.content}
+          description={discussion.description ? validator.unescape(discussion.description) : ''}
+          content={discussion.content ? validator.unescape(discussion.content) : ''}
           image={discussion.image}
           idUser={discussion.id_user}
           author={discussionAuthor[discussion.id_user]?.username || 'Utilisateur supprimé'}
@@ -51,7 +52,7 @@ const DiscussionPage = () => {
                   idUser={comment.id_user}
                   author={commentAuthor[comment.id_user]?.username || 'Utilisateur supprimé'}
                   authorAvatar={commentAuthor[comment.id_user]?.avatar}
-                  content={comment.content}
+                  content={comment.content ? validator.unescape(comment.content) : ''}
                   dateCreation={moment(comment.date_creation).format('LLL')}
                   dateUpdate={comment.date_update ? moment(comment.date_update).format('LLL') : null}
                 />

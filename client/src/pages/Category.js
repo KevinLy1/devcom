@@ -6,7 +6,7 @@ import DiscussionCard from '../components/Blog/DiscussionCard';
 import useDocumentTitle from '../hooks/useDocumentTitle';
 import useFavorites from '../hooks/useFavorites';
 import moment from 'moment';
-import 'moment/locale/fr';
+import validator from 'validator';
 
 const CategoryPage = () => {
   const category = useCategory();
@@ -78,12 +78,12 @@ const CategoryPage = () => {
               .map((discussion) => (
                 <DiscussionCard
                   key={discussion.id_publication}
-                  title={discussion.title}
+                  title={discussion.title ? validator.unescape(discussion.title) : ''}
                   categories={categoriesDiscussions[discussion.id_publication] || []}
                   reputation={reputationsDiscussions[discussion.id_publication] || []}
                   isFavorite={favorites.some((favorite) => favorite.id_publication === discussion.id_publication)}
                   comments={commentsDiscussions[discussion.id_publication] || []}
-                  description={discussion.description}
+                  description={discussion.description ? validator.unescape(discussion.description) : ''}
                   image={discussion.image}
                   idUser={discussion.id_user}
                   author={usersDiscussions[discussion.id_user]?.username}

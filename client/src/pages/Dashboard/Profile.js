@@ -14,6 +14,7 @@ import useAuth from '../../contexts/AuthContext';
 import ChangePasswordForm from '../../components/Forms/ChangePasswordForm';
 import ChangeUserDataForm from '../../components/Forms/ChangeUserDataForm';
 import ChangeAvatarForm from '../../components/Forms/ChangeAvatarForm';
+import validator from 'validator';
 
 const ProfilePage = () => {
   const user = useProfile();
@@ -106,7 +107,9 @@ const ProfilePage = () => {
   if (user) {
     return (
       <>
-        <h2 className="text-4xl text-center mb-10 font-bold">Votre profil ({user.username})</h2>
+        <h2 className="text-4xl text-center mb-10 font-bold">
+          Votre profil ({user.username ? validator.unescape(user.username) : ''})
+        </h2>
         <div className="flex items-center flex-wrap justify-center gap-3 mb-10">
           <Button color="blue" onClick={openChangePasswordFormDrawer}>
             <div className="flex items-center gap-2">
@@ -152,14 +155,18 @@ const ProfilePage = () => {
                   <div className="px-4 py-2 font-semibold flex items-center gap-2">
                     Prénom <FaPen className="cursor-pointer" onClick={openFirstNameFormDrawer} />
                   </div>
-                  <div className="px-4 py-2">{user.first_name ? user.first_name : 'Non renseigné'}</div>
+                  <div className="px-4 py-2">
+                    {user.first_name ? validator.unescape(user.first_name) : 'Non renseigné'}
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-2">
                   <div className="px-4 py-2 font-semibold flex items-center gap-2">
                     Nom <FaPen className="cursor-pointer" onClick={openLastNameFormDrawer} />
                   </div>
-                  <div className="px-4 py-2">{user.last_name ? user.last_name : 'Non renseigné'}</div>
+                  <div className="px-4 py-2">
+                    {user.last_name ? validator.unescape(user.last_name) : 'Non renseigné'}
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-2">
@@ -184,7 +191,7 @@ const ProfilePage = () => {
                     Site internet <FaPen className="cursor-pointer" onClick={openWebUrlFormDrawer} />
                   </div>
                   <div className="px-4 py-2">
-                    {user.web_url ? <Link to={user.web_url}>{user.web_url}</Link> : 'Non renseigné'}
+                    {user.web_url ? <Link to={user.web_url}>{validator.unescape(user.web_url)}</Link> : 'Non renseigné'}
                   </div>
                 </div>
 
@@ -212,12 +219,12 @@ const ProfilePage = () => {
             <div className="flex items-center gap-2 font-semibold text-2xl px-4 py-2 mt-10">
               <FaFile /> Biographie <FaPen className="cursor-pointer" onClick={openBiographyFormDrawer} />
             </div>
-            <div className="px-4 py-2">{user.biography ? user.biography : 'Non renseignée'}</div>
+            <div className="px-4 py-2">{user.biography ? validator.unescape(user.biography) : 'Non renseignée'}</div>
 
             <div className="flex items-center gap-2 font-semibold text-2xl px-4 py-2 mt-10">
               <FaFile /> Compétences <FaPen className="cursor-pointer" onClick={openSkillsFormDrawer} />
             </div>
-            <div className="px-4 py-2">{user.skills ? user.skills : 'Non renseignées'}</div>
+            <div className="px-4 py-2">{user.skills ? validator.unescape(user.skills) : 'Non renseignées'}</div>
           </div>
         </div>
 

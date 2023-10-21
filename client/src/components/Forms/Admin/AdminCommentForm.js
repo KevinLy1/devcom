@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { apiAdminCommentById, apiAdminUpdateComment, apiAdminDeleteComment } from '../../../api/admin';
 import moment from 'moment-timezone';
 import { notification } from 'antd';
+import validator from 'validator';
 
 const AdminCommentForm = ({ currentComment }) => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const AdminCommentForm = ({ currentComment }) => {
       .then((data) => {
         setFormData((prevData) => ({
           ...prevData,
-          content: data.content
+          content: data.content ? validator.unescape(data.content) : ''
         }));
       })
       .catch((error) => {
