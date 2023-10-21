@@ -10,6 +10,7 @@ import {
 } from '../../actions/publicationActions';
 import { FaThumbsUp, FaThumbsDown, FaStar, FaTag } from 'react-icons/fa';
 import useAuth from '../../contexts/AuthContext';
+import nl2br from '../../utils/nl2br';
 
 const Article = (props) => {
   const { userData } = useAuth();
@@ -113,7 +114,7 @@ const Article = (props) => {
                 />
               </div>
             )}
-            <div>{props.content}</div>
+            <div>{nl2br(props.content)}</div>
             <div className="xl:hidden">
               <div className="flex flex-col mt-10 bg-linen rounded-lg p-4 space-y-4">
                 <button

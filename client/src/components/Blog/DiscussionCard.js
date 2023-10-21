@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Avatar, Button, Menu, MenuHandler, MenuList, MenuItem } from '@material-tailwind/react';
-import { FaThumbsUp, FaThumbsDown, FaClipboard, FaShareAlt, FaStar, FaTag } from 'react-icons/fa';
+import { FaThumbsUp, FaThumbsDown, FaLink, FaShareAlt, FaStar, FaTag } from 'react-icons/fa';
 import { useAuth } from '../../contexts/AuthContext';
 import {
   handleLike,
@@ -173,7 +173,7 @@ const DiscussionCard = (props) => {
                     description: link
                   });
                 }}>
-                Copier le lien <FaClipboard className="inline-block" />
+                <FaLink className="inline-block" /> Copier le lien
               </MenuItem>
             </MenuList>
           </Menu>

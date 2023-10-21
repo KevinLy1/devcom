@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaThumbsUp, FaThumbsDown, FaStar, FaShareAlt, FaClipboard, FaTag } from 'react-icons/fa';
+import { FaThumbsUp, FaThumbsDown, FaStar, FaShareAlt, FaLink, FaTag } from 'react-icons/fa';
 import { FiMessageCircle } from 'react-icons/fi';
 import {
   Card,
@@ -177,7 +177,7 @@ const ArticleCard = (props) => {
                   description: link
                 });
               }}>
-              Copier le lien <FaClipboard className="inline-block" />
+              <FaLink className="inline-block" /> Copier le lien
             </MenuItem>
           </MenuList>
         </Menu>
