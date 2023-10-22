@@ -78,7 +78,7 @@ const HomePage = () => {
 
       <section className="py-12 lg:py-16 relative">
         <h2 className="text-4xl leading-10 lg:text-5xl font-semibold tracking-tighter text-eclipse lg:leading-12 mb-5">
-          Les 6 derniers articles
+          Les six derniers articles
         </h2>
         <div className="flex justify-center md:justify-around">
           {articles.length > 0 ? (
@@ -109,7 +109,7 @@ const HomePage = () => {
 
       <section className="py-12 lg:py-16 relative">
         <h2 className="text-4xl leading-10 lg:text-5xl font-semibold tracking-tighter text-eclipse lg:leading-12 mb-5">
-          Les 6 dernières discussions
+          Les six dernières discussions
         </h2>
         <div className="flex justify-center md:justify-around">
           {discussions.length > 0 ? (

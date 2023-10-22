@@ -21,11 +21,13 @@ export const handleDislike = async (userData, props, publicationLocalState, setP
           reputation: prevState.reputation - 2
         }));
         notification.success({
+          placement: 'top',
           message: `Dislike de la publication ${props.idPublication}`
         });
       } else {
         const error = await response.json();
         notification.error({
+          placement: 'top',
           message: 'Erreur lors du dislike',
           description: error.message
         });
@@ -42,11 +44,13 @@ export const handleDislike = async (userData, props, publicationLocalState, setP
           reputation: prevState.reputation - 1
         }));
         notification.success({
+          placement: 'top',
           message: `Dislike de la publication ${props.idPublication}`
         });
       } else {
         const error = await response.json();
         notification.error({
+          placement: 'top',
           message: 'Erreur lors du dislike',
           description: error.message
         });
@@ -54,6 +58,7 @@ export const handleDislike = async (userData, props, publicationLocalState, setP
     }
   } else {
     notification.error({
+      placement: 'top',
       message: "Action impossible, vous n'êtes pas connecté(e)"
     });
   }
@@ -74,11 +79,13 @@ export const handleLike = async (userData, props, publicationLocalState, setPubl
           reputation: prevState.reputation + 2
         }));
         notification.success({
+          placement: 'top',
           message: `Like de la publication ${props.idPublication}`
         });
       } else {
         const error = await response.json();
         notification.error({
+          placement: 'top',
           message: 'Erreur lors du like',
           description: error.message
         });
@@ -95,11 +102,13 @@ export const handleLike = async (userData, props, publicationLocalState, setPubl
           reputation: prevState.reputation + 1
         }));
         notification.success({
+          placement: 'top',
           message: `Like de la publication ${props.idPublication}`
         });
       } else {
         const error = await response.json();
         notification.error({
+          placement: 'top',
           message: 'Erreur lors du like',
           description: error.message
         });
@@ -107,6 +116,7 @@ export const handleLike = async (userData, props, publicationLocalState, setPubl
     }
   } else {
     notification.error({
+      placement: 'top',
       message: "Action impossible, vous n'êtes pas connecté(e)"
     });
   }
@@ -124,17 +134,20 @@ export const handleCancelDislike = async (userData, props, setPublicationLocalSt
         reputation: prevState.reputation + 1
       }));
       notification.success({
+        placement: 'top',
         message: `Dislike de la publication ${props.idPublication} annulé`
       });
     } else {
       const error = await response.json();
       notification.error({
+        placement: 'top',
         message: "Erreur lors de l'annulation du dislike",
         description: error.message
       });
     }
   } else {
     notification.error({
+      placement: 'top',
       message: "Action impossible, vous n'êtes pas connecté(e)"
     });
   }
@@ -152,17 +165,20 @@ export const handleCancelLike = async (userData, props, setPublicationLocalState
         reputation: prevState.reputation - 1
       }));
       notification.success({
+        placement: 'top',
         message: `Like de la publication ${props.idPublication} annulé`
       });
     } else {
       const error = await response.json();
       notification.error({
+        placement: 'top',
         message: "Erreur lors de l'annulation du like",
         description: error.message
       });
     }
   } else {
     notification.error({
+      placement: 'top',
       message: "Action impossible, vous n'êtes pas connecté(e)"
     });
   }
@@ -179,17 +195,20 @@ export const handleFavorite = async (userData, props, setPublicationLocalState) 
         isFavorite: true
       }));
       notification.success({
+        placement: 'top',
         message: `Publication ${props.idPublication} ajoutée aux favoris`
       });
     } else {
       const error = await response.json();
       notification.error({
+        placement: 'top',
         message: "Erreur lors de l'ajout du favori",
         description: error.message
       });
     }
   } else {
     notification.error({
+      placement: 'top',
       message: "Action impossible, vous n'êtes pas connecté(e)"
     });
   }
@@ -206,17 +225,20 @@ export const handleCancelFavorite = async (userData, props, setPublicationLocalS
         isFavorite: false
       }));
       notification.success({
+        placement: 'top',
         message: `Publication ${props.idPublication} supprimée des favoris`
       });
     } else {
       const error = await response.json();
       notification.error({
+        placement: 'top',
         message: 'Erreur lors de la suppression du favori',
         description: error.message
       });
     }
   } else {
     notification.error({
+      placement: 'top',
       message: "Action impossible, vous n'êtes pas connecté(e)"
     });
   }

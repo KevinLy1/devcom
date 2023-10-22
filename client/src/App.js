@@ -23,7 +23,6 @@ import PrivacyPolicyPage from './pages/Legal/PrivacyPolicy';
 import PublicationPage from './pages/Dashboard/Publication';
 import MyFavoritesPage from './pages/Dashboard/MyFavorites';
 import MyPublicationsPage from './pages/Dashboard/MyPublications';
-import EditPublicationPage from './pages/Dashboard/EditPublication';
 import AdminCategoriesPage from './pages/Admin/Categories';
 import AdminPublicationsPage from './pages/Admin/Publications';
 import AdminPublicationPage from './pages/Admin/Publication';
@@ -66,7 +65,7 @@ const App = () => {
               <Route exact path="/my-favorites" element={<MyFavoritesPage />} />
               <Route exact path="/my-publications" element={<MyPublicationsPage />} />
               <Route exact path="/publication/new" element={<PublicationPage />} />
-              <Route exact path="/publication/:id/edit" element={<EditPublicationPage />} />
+              <Route exact path="/publication/:id/edit" element={<PublicationPage />} />
             </Route>
 
             {/* Admin only routes */}

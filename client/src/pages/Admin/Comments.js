@@ -27,8 +27,10 @@ const AdminCommentsPage = () => {
             placement: 'top',
             message: 'La commentaire a bien été supprimé.'
           });
-          const updatedComments = allComments.filter((comment) => comment.id_comment !== idComment);
-          setComments(updatedComments);
+
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
         }
       } catch (error) {
         notification.error({

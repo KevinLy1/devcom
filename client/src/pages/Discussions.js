@@ -43,7 +43,6 @@ const DiscussionsPage = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentDiscussions = sortedDiscussions.slice(indexOfFirstItem, indexOfLastItem);
 
-  // Fonction de pagination
   const paginate = (pageNumber) => {
     if (pageNumber >= 1 && pageNumber <= totalPages) {
       setCurrentPage(pageNumber);
@@ -80,7 +79,7 @@ const DiscussionsPage = () => {
           <div className="flex justify-center gap-2">
             <Input
               icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-              label="Rechercher une discussion"
+              label="Rechercher par titre"
               value={searchTerm}
               color={localStorage.theme === 'dark' ? 'white' : 'black'}
               onChange={(e) => setSearchTerm(e.target.value)}

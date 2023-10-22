@@ -71,7 +71,6 @@ const ChangeUserDataForm = ({ inputType, label, field, currentValue }) => {
                 value={formData[field]}
                 onChange={handleChange}
                 className="w-full p-2 border dark:border-gray-900 rounded bg-slate-50 dark:bg-slate-900 dark:focus:bg-slate-800">
-                <option value="">-</option>
                 <option value="M">Homme</option>
                 <option value="F">Femme</option>
                 <option value="O">Autre</option>

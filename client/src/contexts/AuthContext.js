@@ -5,7 +5,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [userData, setUserData] = useState(() => {
-    const storedUser = sessionStorage.getItem('userData');
+    const storedUser = localStorage.getItem('userData');
     return storedUser ? JSON.parse(storedUser) : null;
   });
 
@@ -36,13 +36,13 @@ export const AuthProvider = ({ children }) => {
         setUserData(decodedData);
       } else if (response.status === 401) {
         setUserData(null);
-        sessionStorage.removeItem('userData');
+        localStorage.removeItem('userData');
         await refreshToken();
       } else {
         if (userData) {
           setUserData(null);
           await apiLogout();
-          sessionStorage.removeItem('userData');
+          localStorage.removeItem('userData');
         }
       }
     } catch {
@@ -58,12 +58,12 @@ export const AuthProvider = ({ children }) => {
       } else {
         console.error("Échec du rafraîchissement du jeton d'accès");
         setUserData(null);
-        sessionStorage.removeItem('userData');
+        localStorage.removeItem('userData');
       }
     } catch {
       console.error("Erreur pendant le rafraîchissement du jeton d'accès");
       setUserData(null);
-      sessionStorage.removeItem('userData');
+      localStorage.removeItem('userData');
     }
   };
 
@@ -90,7 +90,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const storedUserData = JSON.stringify(userData);
-    sessionStorage.setItem('userData', storedUserData);
+    localStorage.setItem('userData', storedUserData);
   }, [userData]);
 
   return <AuthContext.Provider value={{ userData, login, logout }}>{children}</AuthContext.Provider>;

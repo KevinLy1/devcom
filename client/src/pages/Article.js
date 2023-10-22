@@ -38,7 +38,7 @@ const ArticlePage = () => {
         />
       </section>
       <section id="comments">
-        {comments.length === 0 && 'Pas encore de commentaires'}
+        {comments.length === 0 && <p className="my-10 font-semibold text-2xl">Pas encore de commentaires</p>}
         {comments.length > 0 && (
           <>
             <p className="my-10 font-semibold text-2xl">

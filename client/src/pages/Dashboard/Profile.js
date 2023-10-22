@@ -270,7 +270,7 @@ const ProfilePage = () => {
           onClose={closeEmailFormDrawer}
           overlay={false}
           className="dark:bg-slate-950">
-          <ChangeUserDataForm inputType="email" label="Adresse e-mail" field="email" />
+          <ChangeUserDataForm inputType="email" label="Adresse e-mail" field="email" currentValue={user.email} />
         </Drawer>
 
         <Drawer
