@@ -40,7 +40,7 @@ const CommentReply = (props) => {
   return (
     <div className="p-6 mb-6 ml-6 lg:ml-12 text-base bg-white rounded-lg dark:bg-slate-800">
       <div className="flex justify-between items-center mb-2">
-        <div className="flex items-center">
+        <div className="flex items-center flex-wrap">
           <Link to={`/user/${props.idUser}`} className="inline-flex items-center mr-3 text-sm">
             <img
               className="mr-2 w-6 h-6 rounded-full"
@@ -53,14 +53,14 @@ const CommentReply = (props) => {
             />
             {props.author}
           </Link>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
+          <p className="text-sm text-gray-600 dark:text-gray-400 hidden sm:block">
             <time>{props.dateCreation}</time>
           </p>
         </div>
         {userData && (
           <div className="flex gap-4">
             {userData.role === 'administrator' && (
-              <Link to={`/admin/comment/${props.idComment}/edit`}>
+              <Link className="hidden sm:block" to={`/admin/comment/${props.idComment}/edit`}>
                 <Button color="blue">Modérer</Button>
               </Link>
             )}

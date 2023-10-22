@@ -72,16 +72,14 @@ const Comment = (props) => {
               />
               {props.author}
             </Link>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              <time dateTime="2022-02-08" title="February 8th, 2022">
-                {props.dateCreation}
-              </time>
+            <p className="text-sm text-gray-600 dark:text-gray-400 hidden sm:block">
+              <time>{props.dateCreation}</time>
             </p>
           </div>
           {userData && (
             <div className="flex gap-4">
               {userData.role === 'administrator' && (
-                <Link to={`/admin/comment/${props.idComment}/edit`}>
+                <Link className="hidden sm:block" to={`/admin/comment/${props.idComment}/edit`}>
                   <Button color="blue">Modérer</Button>
                 </Link>
               )}
