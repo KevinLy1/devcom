@@ -7,9 +7,12 @@ import { apiAdminDeleteUser } from '../../api/admin';
 import { notification } from 'antd';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
 import validator from 'validator';
+import useAuth from '../../contexts/AuthContext';
 
 const AdminUsersPage = () => {
   useDocumentTitle('Gestion des utilisateurs');
+
+  const { userData } = useAuth();
 
   const allUsers = useUsers();
   const [users, setUsers] = useState([]);
@@ -17,24 +20,31 @@ const AdminUsersPage = () => {
   const handleDelete = async (e, idUser) => {
     e.preventDefault();
 
-    const confirmation = window.confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');
+    if (idUser === userData.id_user) {
+      notification.error({
+        placement: 'top',
+        message: "Vous ne pouvez pas supprimer votre compte depuis le tableau de bord d'administration"
+      });
+    } else {
+      const confirmation = window.confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');
 
-    if (confirmation) {
-      try {
-        const response = await apiAdminDeleteUser(idUser);
-        if (response.ok) {
-          notification.success({
+      if (confirmation) {
+        try {
+          const response = await apiAdminDeleteUser(idUser);
+          if (response.ok) {
+            notification.success({
+              placement: 'top',
+              message: "L'utilisateur a bien été supprimé."
+            });
+            const updatedUsers = allUsers.filter((user) => user.id_user !== idUser);
+            setUsers(updatedUsers);
+          }
+        } catch {
+          notification.error({
             placement: 'top',
-            message: "L'utilisateur a bien été supprimé."
+            message: "Une erreur s'est produite pendant la suppression"
           });
-          const updatedUsers = allUsers.filter((user) => user.id_user !== idUser);
-          setUsers(updatedUsers);
         }
-      } catch {
-        notification.error({
-          placement: 'top',
-          message: "Une erreur s'est produite pendant la suppression"
-        });
       }
     }
   };

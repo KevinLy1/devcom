@@ -1,14 +1,26 @@
 import { useEffect, useState } from 'react';
-import { apiAdminPublicationById, apiAdminUpdatePublication } from '../../../api/admin';
+import {
+  apiAdminPublicationById,
+  apiAdminUpdatePublication,
+  apiAdminPublicationCategories,
+  apiAdminRemovePublicationCategory,
+  apiAdminAddPublicationCategory
+} from '../../../api/admin';
+import { apiUploadImage, apiDeleteImage } from '../../../api/images';
 import moment from 'moment-timezone';
 import { notification } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import useCategories from '../../../hooks/useCategories';
 import validator from 'validator';
 
 const AdminPublicationForm = ({ currentPublication }) => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({});
+
+  const categories = useCategories();
+  const [categoriesFormData, setCategoriesFormData] = useState({});
+  const [existingCategories, setExistingCategories] = useState({});
 
   useEffect(() => {
     if (currentPublication) {
@@ -20,11 +32,29 @@ const AdminPublicationForm = ({ currentPublication }) => {
             type: data.type,
             title: data.title ? validator.unescape(data.title) : '',
             description: data.description ? validator.unescape(data.description) : '',
-            content: data.content ? validator.unescape(data.content) : ''
+            content: data.content ? validator.unescape(data.content) : '',
+            image: data.image
           }));
         })
         .catch(() => {
           console.error('Erreur interne');
+        });
+
+      apiAdminPublicationCategories(currentPublication)
+        .then((response) => response.json())
+        .then((data) => {
+          const selectedValues = [];
+          for (let i = 0; i < data.length; i++) {
+            selectedValues.push(data[i].id_category);
+          }
+          setCategoriesFormData((prevData) => ({
+            ...prevData,
+            id_category: selectedValues
+          }));
+          setExistingCategories((prevData) => ({
+            ...prevData,
+            id_category: selectedValues
+          }));
         });
     }
   }, [currentPublication]);
@@ -37,6 +67,36 @@ const AdminPublicationForm = ({ currentPublication }) => {
     }));
   };
 
+  const handleMultiSelectChange = (e) => {
+    const options = e.target.options;
+    const selectedValues = [];
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].selected) {
+        selectedValues.push(parseInt(options[i].value));
+      }
+    }
+
+    setCategoriesFormData((prevFormData) => ({
+      ...prevFormData,
+      id_category: selectedValues
+    }));
+  };
+
+  const [imageFile, setImageFile] = useState(null);
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageFile(file);
+    }
+  };
+
+  const [deleteImage, setDeleteImage] = useState(false);
+
+  const handleCheckboxChange = (e) => {
+    setDeleteImage(e.target.checked);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -46,6 +106,55 @@ const AdminPublicationForm = ({ currentPublication }) => {
       const formDataWithDate = { ...formData, date_update: currentDate };
       const response = await apiAdminUpdatePublication(currentPublication, formDataWithDate);
       if (response.ok) {
+        if (categoriesFormData) {
+          try {
+            // Supprimer les catégories existantes
+            for (const categoryId of existingCategories.id_category) {
+              await apiAdminRemovePublicationCategory(currentPublication, { id_category: categoryId });
+            }
+            // Ajouter les nouvelles catégories à la publication
+            for (const categoryId of categoriesFormData.id_category) {
+              await apiAdminAddPublicationCategory(currentPublication, { id_category: categoryId });
+            }
+          } catch (error) {
+            console.error(`Erreur lors de la mise à jour des catégories : ${error}`);
+          }
+        }
+
+        if (imageFile) {
+          const form = new FormData();
+          form.append('image', imageFile);
+
+          if (formData.image) await apiDeleteImage(formData.image);
+
+          const upload = await apiUploadImage(form);
+          if (upload.ok) {
+            const data = await upload.json();
+
+            await apiAdminUpdatePublication(currentPublication, {
+              image: data.imageName
+            });
+          } else {
+            const error = await upload.json();
+
+            notification.error({
+              placement: 'top',
+              message: "Erreur pendant le chargement de l'image",
+              description: error.message
+            });
+          }
+        } else if (deleteImage) {
+          try {
+            const response = await apiDeleteImage(formData.image);
+            if (response.ok) {
+              await apiAdminUpdatePublication(currentPublication, {
+                image: null
+              });
+            }
+          } catch (error) {
+            console.error('Erreur interne');
+          }
+        }
         navigate(`/${formData.type}/${currentPublication}`);
         window.location.reload();
       } else {
@@ -66,6 +175,26 @@ const AdminPublicationForm = ({ currentPublication }) => {
         <h2 className="text-2xl font-semibold mb-6">Éditer la publication</h2>
 
         <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label htmlFor="categories" className="block mb-1 font-medium">
+              <span className="text-red-600">*</span> Catégorie(s)
+            </label>
+            <select
+              id="categories"
+              name="categories"
+              onChange={handleMultiSelectChange}
+              value={categoriesFormData.id_category}
+              className="w-full p-2 border dark:border-gray-900 rounded bg-slate-50 dark:bg-slate-900 dark:focus:bg-slate-800"
+              multiple
+              required>
+              {categories.map((category) => (
+                <option key={category.id_category} value={category.id_category}>
+                  {category.title}
+                </option>
+              ))}
+            </select>
+          </div>
+
           <div className="mb-4">
             <label htmlFor="title" className="block mb-1 font-medium">
               <span className="text-red-600">*</span> Titre
@@ -108,6 +237,20 @@ const AdminPublicationForm = ({ currentPublication }) => {
               className="w-full p-2 border dark:border-gray-900 rounded bg-slate-50 dark:bg-slate-900 dark:focus:bg-slate-800"
               required
             />
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="image" className="block mb-1 font-medium">
+              Image
+            </label>
+            <input type="file" id="image" name="image" accept=".jpg, .jpeg, .gif, .png" onChange={handleFileChange} />
+          </div>
+
+          <div className="mb-4">
+            <label>
+              <input type="checkbox" checked={deleteImage} onChange={handleCheckboxChange} />
+              Supprimer l'image
+            </label>
           </div>
 
           <div className="flex justify-center">

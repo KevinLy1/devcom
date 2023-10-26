@@ -34,6 +34,10 @@ const ChangePasswordForm = () => {
             message: 'Mise à jour du mot de passe réussie',
             description: response.json().message
           });
+
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
         } else {
           const json = await response.json();
           notification.error({

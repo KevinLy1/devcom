@@ -24,6 +24,7 @@ const AdminPublicationsPage = () => {
         const response = await apiAdminDeletePublication(idPublication);
         if (response.ok) {
           notification.success({
+            placement: 'top',
             message: 'La publication a bien été supprimée.'
           });
           const updatedPublications = allPublications.filter(

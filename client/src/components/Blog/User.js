@@ -37,7 +37,15 @@ const Profile = (props) => {
             {props.gender && (
               <div className="grid grid-cols-2">
                 <div className="px-4 py-2 font-semibold">Civilité</div>
-                <div className="px-4 py-2">{props.gender}</div>
+                <div className="px-4 py-2">
+                  {props.gender === 'M'
+                    ? 'Homme'
+                    : props.gender === 'F'
+                    ? 'Femme'
+                    : props.gender === 'O'
+                    ? 'Autre'
+                    : ''}
+                </div>
               </div>
             )}
             {props.webUrl && (

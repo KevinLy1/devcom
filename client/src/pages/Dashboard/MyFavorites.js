@@ -3,8 +3,11 @@ import useFavorites from '../../hooks/useFavorites';
 import { Link } from 'react-router-dom';
 import { apiPublicationById } from '../../api/publications';
 import validator from 'validator';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 
 const MyFavoritesPage = () => {
+  useDocumentTitle('Mes favoris');
+
   const favorites = useFavorites();
   const [favoritesData, setFavoritesData] = useState([]);
 

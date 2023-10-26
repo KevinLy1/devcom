@@ -4,6 +4,8 @@ class Validation {
   constructor() {
     this.validateUserRegistration = this.validateUserRegistration.bind(this);
     this.validateUserUpdate = this.validateUserUpdate.bind(this);
+    this.validatePublication = this.validatePublication.bind(this);
+    this.validateComment = this.validateComment.bind(this);
   }
 
   async validateUserRegistration(req, res, next) {
@@ -94,10 +96,14 @@ class Validation {
       }
 
       // Valider le mot de passe
-      if (password && !validator.isStrongPassword(password)) {
-        throw new Error(
-          'Le mot de passe doit comporter au minimum 8 caractères, dont 1 majuscule, 1 minuscule, 1 chiffre et 1 symbole'
-        );
+      if (password) {
+        if (!validator.isStrongPassword(password)) {
+          throw new Error(
+            'Le mot de passe doit comporter au minimum 8 caractères, dont 1 majuscule, 1 minuscule, 1 chiffre et 1 symbole'
+          );
+        }
+      } else if (password === '') {
+        throw new Error('Le mot de passe ne peut pas être vide');
       }
 
       // Valider l'adresse e-mail
@@ -105,7 +111,7 @@ class Validation {
         if (!validator.isEmail(email)) {
           throw new Error("L'adresse e-mail doit être au bon format (ex : exemple@domaine.com)");
         }
-      } else {
+      } else if (email === '') {
         throw new Error("L'adresse e-mail ne peut pas être vide");
       }
 
@@ -146,6 +152,41 @@ class Validation {
         throw new Error('La biographie ne doit pas dépasser 200 caractères');
       }
 
+      next();
+    } catch (error) {
+      return res.status(400).json({ message: error.message });
+    }
+  }
+
+  async validatePublication(req, res, next) {
+    try {
+      const title = req.body.title;
+      const content = req.body.content;
+
+      // Valider le titre
+      if (title === '') {
+        throw new Error('Le titre ne peut pas être vide');
+      }
+
+      // Valider le contenu
+      if (content === '') {
+        throw new Error('Le contenu ne peut pas être vide');
+      }
+
+      next();
+    } catch (error) {
+      return res.status(400).json({ message: error.message });
+    }
+  }
+
+  async validateComment(req, res, next) {
+    try {
+      const content = req.body.content;
+
+      // Valider le commentaire
+      if (validator.isEmpty(content)) {
+        throw new Error('Le commentaire ne peut pas être vide');
+      }
       next();
     } catch (error) {
       return res.status(400).json({ message: error.message });

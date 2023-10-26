@@ -59,9 +59,11 @@ const CommentForm = ({ editMode, currentComment }) => {
             window.location.reload();
           }, 1000);
         } else {
+          const error = await response.json();
           notification.error({
             placement: 'top',
-            message: "Le commentaire n'a pas pu être ajouté."
+            message: "Le commentaire n'a pas pu être ajouté.",
+            description: error.message
           });
         }
       } else {
@@ -77,9 +79,11 @@ const CommentForm = ({ editMode, currentComment }) => {
             window.location.reload();
           }, 1000);
         } else {
+          const error = await response.json();
           notification.error({
             placement: 'top',
-            message: "Le commentaire n'a pas pu être édité."
+            message: "Le commentaire n'a pas pu être édité.",
+            description: error.message
           });
         }
       }

@@ -15,7 +15,7 @@ const createUsers = () => {
       gender: faker.helpers.arrayElement(['M', 'F', 'O']),
       first_name: faker.person.firstName(),
       last_name: faker.person.lastName(),
-      avatar: faker.internet.avatar(),
+      // avatar: faker.internet.avatar(),
       biography: faker.lorem.paragraph(),
       skills: faker.lorem.words(4),
       web_url: faker.internet.url(),
@@ -32,7 +32,7 @@ const createPublications = () => {
       title: faker.lorem.words(5),
       description: faker.lorem.sentence(),
       content: faker.lorem.paragraphs(3),
-      image: faker.image.urlPlaceholder(),
+      // image: faker.image.urlPlaceholder(),
       id_user: faker.number.int({ min: 1, max: nbEntities }),
       date_creation: faker.date.past(),
       date_update: faker.date.recent()

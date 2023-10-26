@@ -106,7 +106,7 @@ const Article = (props) => {
         <div className="xl:flex-1 xl:flex xl:justify-between mx-auto max-w-screen-xl">
           <article className="mx-auto w-full px-5 py-10 bg-white dark:bg-slate-950 rounded-xl text-justify">
             {props.image && (
-              <div className="w-full h-52 max-h-52 mb-10">
+              <div className="w-full mb-10">
                 <img
                   src={props.image ? `${process.env.REACT_APP_SERVER_UPLOADS_URL}/${props.image}` : ''}
                   alt={props.title}

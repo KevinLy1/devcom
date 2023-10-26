@@ -68,6 +68,7 @@ const ProfilePage = () => {
         const response = await apiDeleteUser(user.id_user);
         if (response.ok) {
           notification.success({
+            placement: 'top',
             message: 'Votre compte a bien été supprimé'
           });
           await logout();
@@ -91,6 +92,7 @@ const ProfilePage = () => {
             avatar: null
           });
           notification.success({
+            placement: 'top',
             message: 'Votre avatar a bien été supprimé'
           });
 

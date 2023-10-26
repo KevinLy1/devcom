@@ -28,6 +28,7 @@ const Header = () => {
 
   const handleLogout = async () => {
     try {
+      navigate('/');
       const response = await logout();
       if (response === true) {
         notification.success({
@@ -35,7 +36,6 @@ const Header = () => {
           message: 'Déconnexion réussie',
           description: `Au revoir, ${userData.username} !`
         });
-        navigate('/');
       } else {
         notification.error({
           placement: 'top',

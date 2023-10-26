@@ -45,6 +45,13 @@ const ChangeAvatarForm = () => {
           setTimeout(() => {
             window.location.reload();
           }, 1000);
+        } else {
+          const error = await update.json();
+          notification.error({
+            placement: 'top',
+            message: "Erreur pendant la mise à jour de l'avatar",
+            description: error.message
+          });
         }
       } else {
         const error = await response.json();
@@ -81,7 +88,7 @@ const ChangeAvatarForm = () => {
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="image" className="block mb-1 font-medium">
-              <span className="text-red-600">*</span> Avatar
+              <span className="text-red-600">*</span> Avatar (.jpg, .jpeg, .gif, .png)
             </label>
             <input
               type="file"

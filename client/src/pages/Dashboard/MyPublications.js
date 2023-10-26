@@ -7,8 +7,11 @@ import { FaBook, FaPen, FaTrash } from 'react-icons/fa';
 import { apiDeletePublication } from '../../api/publications';
 import { notification } from 'antd';
 import validator from 'validator';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 
 const MyPublicationsPage = () => {
+  useDocumentTitle('Mes publications');
+
   const { userData } = useAuth();
   const allPublications = usePublications();
   const [myPublications, setMyPublications] = useState([]);

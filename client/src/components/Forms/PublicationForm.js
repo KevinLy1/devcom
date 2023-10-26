@@ -140,6 +140,7 @@ const PublicationForm = ({ editMode, currentPublication }) => {
             form.append('image', imageFile);
 
             const upload = await apiUploadImage(form);
+
             if (upload.ok) {
               const data = await upload.json();
 
@@ -182,8 +183,8 @@ const PublicationForm = ({ editMode, currentPublication }) => {
               for (const categoryId of categoriesFormData.id_category) {
                 await apiAddPublicationCategory(currentPublication, { id_category: categoryId });
               }
-            } catch (error) {
-              console.error(`Erreur lors de la mise à jour des catégories : ${error}`);
+            } catch {
+              console.error(`Erreur interne`);
             }
           }
 
@@ -218,7 +219,7 @@ const PublicationForm = ({ editMode, currentPublication }) => {
                 });
               }
             } catch (error) {
-              //
+              console.error('Erreur interne');
             }
           }
           navigate(`/${formData.type}/${currentPublication}`);

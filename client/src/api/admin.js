@@ -150,7 +150,7 @@ export const apiAdminPublicationCategories = async (id) => {
 };
 
 export const apiAdminAddPublicationCategory = async (id, data) => {
-  return await fetch(`${process.env.REACT_APP_API_URL}/admin//publications/${id}/categories`, {
+  return await fetch(`${process.env.REACT_APP_API_URL}/admin/publications/${id}/categories`, {
     method: 'POST',
     credentials: 'include',
     headers: {
@@ -160,9 +160,13 @@ export const apiAdminAddPublicationCategory = async (id, data) => {
   });
 };
 
-export const apiAdminRemovePublicationCategory = async (id) => {
-  return await fetch(`${process.env.REACT_APP_API_URL}/admin//publications/${id}/categories`, {
+export const apiAdminRemovePublicationCategory = async (id, data) => {
+  return await fetch(`${process.env.REACT_APP_API_URL}/admin/publications/${id}/categories`, {
     method: 'DELETE',
-    credentials: 'include'
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
   });
 };

@@ -61,8 +61,11 @@ const CommentReplyForm = ({ parent, editMode, currentReply }) => {
             window.location.reload();
           }, 1000);
         } else {
+          const error = await response.json();
           notification.error({
-            message: "Le commentaire n'a pas pu être ajouté."
+            placement: 'top',
+            message: "Le commentaire n'a pas pu être ajouté.",
+            description: error.message
           });
         }
       } else {
@@ -78,8 +81,11 @@ const CommentReplyForm = ({ parent, editMode, currentReply }) => {
             window.location.reload();
           }, 1000);
         } else {
+          const error = await response.json();
           notification.error({
-            message: "Le commentaire n'a pas pu être édité."
+            placement: 'top',
+            message: "Le commentaire n'a pas pu être édité.",
+            description: error.message
           });
         }
       }

@@ -6,6 +6,7 @@ const router = require('express').Router();
 const trimmer = require('../../middlewares/trimmer');
 const sanitizer = require('../../middlewares/sanitizer');
 const authentication = require('../../middlewares/authentication');
+const validation = require('../../middlewares/validation');
 const { adminAuthorization } = require('../../middlewares/authorization');
 // const validation
 
@@ -18,7 +19,7 @@ router.get('/', authentication, adminAuthorization, CommentController.getComment
 router.get('/:id', authentication, adminAuthorization, CommentController.getCommentById);
 
 // UPDATE
-router.put('/:id', authentication, adminAuthorization, trimmer, sanitizer, CommentController.updateComment);
+router.put('/:id', authentication, adminAuthorization, trimmer, sanitizer, validation.validateComment, CommentController.updateComment);
 
 // DELETE
 router.delete('/:id', authentication, adminAuthorization, CommentController.deleteComment);

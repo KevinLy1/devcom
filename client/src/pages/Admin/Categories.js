@@ -78,7 +78,7 @@ const AdminCategoriesPage = () => {
                   {category.id_category}
                 </td>
                 <td className="px-5 py-5 border-b border-gray-200 dark:border-slate-700 text-sm">
-                  <Link className="whitespace-no-wrap" to={`/user/${category.id_category}`}>
+                  <Link className="whitespace-no-wrap" to={`/category/${category.id_category}`}>
                     {category.title}
                   </Link>
                 </td>

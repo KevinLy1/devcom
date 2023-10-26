@@ -7,6 +7,7 @@ const trimmer = require('../middlewares/trimmer');
 const sanitizer = require('../middlewares/sanitizer');
 const authentication = require('../middlewares/authentication');
 const { authorPublicationAuthorization } = require('../middlewares/authorization');
+const validation = require('../middlewares/validation');
 
 // Contrôleur
 const PublicationController = require('../controllers/PublicationController');
@@ -14,7 +15,7 @@ const PublicationController = require('../controllers/PublicationController');
 // Routes
 // *************************************** Publications ***************************************
 // CREATE
-router.post('/', authentication, trimmer, sanitizer, PublicationController.createPublication);
+router.post('/', authentication, trimmer, sanitizer, validation.validatePublication, PublicationController.createPublication);
 
 // READ
 router.get('/', PublicationController.getPublications);
@@ -23,7 +24,7 @@ router.get('/discussions/latest', PublicationController.getLatestDiscussions);
 router.get('/:id', PublicationController.getPublicationById);
 
 // UPDATE
-router.put('/:id', authentication, authorPublicationAuthorization, trimmer, sanitizer, PublicationController.updatePublication);
+router.put('/:id', authentication, authorPublicationAuthorization, trimmer, sanitizer, validation.validatePublication, PublicationController.updatePublication);
 
 // DELETE
 router.delete('/:id', authentication, authorPublicationAuthorization, PublicationController.deletePublication);
