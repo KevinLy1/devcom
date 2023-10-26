@@ -29,11 +29,10 @@ const AdminCategoriesPage = () => {
           const updatedCategories = allCategories.filter((category) => category.id_category !== idCategory);
           setCategories(updatedCategories);
         }
-      } catch (error) {
+      } catch {
         notification.error({
           placement: 'top',
-          message: "Une erreur s'est produite pendant la suppression",
-          description: error
+          message: "Une erreur s'est produite pendant la suppression"
         });
       }
     }

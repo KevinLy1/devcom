@@ -50,7 +50,7 @@ const Comment = (props) => {
           });
         }
       } catch {
-        //
+        console.error('Erreur interne');
       }
     }
   };

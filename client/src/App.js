@@ -71,17 +71,13 @@ const App = () => {
             {/* Admin only routes */}
             <Route element={<AdminRoute />}>
               <Route exact path="/admin" element={<AdminDashboardPage />} />
-
               <Route exact path="/admin/users" element={<AdminUsersPage />} />
               <Route exact path="/admin/user/:id/edit" element={<AdminUserPage />} />
-
               <Route exact path="/admin/categories" element={<AdminCategoriesPage />} />
               <Route exact path="/admin/category/new" element={<AdminCategoryPage />} />
               <Route exact path="/admin/category/:id/edit" element={<AdminCategoryPage />} />
-
               <Route exact path="/admin/publications" element={<AdminPublicationsPage />} />
               <Route exact path="/admin/publication/:id/edit/" element={<AdminPublicationPage />} />
-
               <Route exact path="/admin/comments" element={<AdminCommentsPage />} />
               <Route exact path="/admin/comment/:id/edit" element={<AdminCommentPage />} />
             </Route>

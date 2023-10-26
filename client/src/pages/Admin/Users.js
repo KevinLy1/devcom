@@ -30,11 +30,10 @@ const AdminUsersPage = () => {
           const updatedUsers = allUsers.filter((user) => user.id_user !== idUser);
           setUsers(updatedUsers);
         }
-      } catch (error) {
+      } catch {
         notification.error({
           placement: 'top',
-          message: "Une erreur s'est produite pendant la suppression",
-          description: error
+          message: "Une erreur s'est produite pendant la suppression"
         });
       }
     }

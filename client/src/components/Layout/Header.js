@@ -37,14 +37,14 @@ const Header = () => {
       } else {
         notification.error({
           placement: 'top',
-          message: 'Erreur de déconnexion'
+          message: 'Erreur lors de la déconnexion'
         });
       }
-    } catch (error) {
+    } catch {
       notification.error({
         placement: 'top',
-        message: 'Échec de la déconnexion',
-        description: error
+        message: 'Échec lors de la déconnexion',
+        description: 'Erreur interne'
       });
     }
   };

@@ -31,10 +31,9 @@ const AdminPublicationsPage = () => {
           );
           setPublications(updatedPublications);
         }
-      } catch (error) {
+      } catch {
         notification.error({
-          message: "Une erreur s'est produite pendant la suppression",
-          description: error
+          message: "Une erreur s'est produite pendant la suppression"
         });
       }
     }

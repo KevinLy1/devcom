@@ -32,11 +32,10 @@ const AdminCommentsPage = () => {
             window.location.reload();
           }, 1000);
         }
-      } catch (error) {
+      } catch {
         notification.error({
           placement: 'top',
-          message: "Une erreur s'est produite pendant la suppression",
-          description: error
+          message: "Une erreur s'est produite pendant la suppression"
         });
       }
     }

@@ -64,8 +64,8 @@ const useArticle = () => {
         } else if (response.status === 404) {
           navigate('/articles');
         }
-      } catch (error) {
-        console.error('Erreur lors de la récupération des données :', error);
+      } catch {
+        console.error('Erreur interne');
       }
     }
 
@@ -78,11 +78,8 @@ const useArticle = () => {
           const parentComments = data.filter((comment) => comment.parent_comment === null);
           setComments(parentComments);
         }
-      } catch (error) {
-        // notification.error({
-        //   message: 'Erreur lors de la récupération des commentaires',
-        //   description: error
-        // });
+      } catch {
+        console.error('Erreur interne');
       }
     }
 
@@ -106,8 +103,8 @@ const useArticle = () => {
           }
         }
         setCommentAuthor(usersData);
-      } catch (error) {
-        //
+      } catch {
+        console.error('Erreur interne');
       }
     }
 

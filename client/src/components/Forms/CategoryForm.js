@@ -18,8 +18,8 @@ const CategoryForm = ({ editMode, currentCategory }) => {
             title: data.title
           }));
         })
-        .catch((error) => {
-          console.error('Erreur lors de la récupération de la catégorie :', error);
+        .catch(() => {
+          console.error('Erreur interne');
         });
     }
   }, [currentCategory]);

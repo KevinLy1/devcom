@@ -17,8 +17,8 @@ const useFavorites = () => {
           const json = await response.json();
           console.error(json.message);
         }
-      } catch (error) {
-        //
+      } catch {
+        console.error('Erreur interne');
       }
     };
 

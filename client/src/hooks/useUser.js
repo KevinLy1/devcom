@@ -12,8 +12,8 @@ const useUser = () => {
         const response = await apiUserById(id);
         const userData = await response.json();
         setUser(userData);
-      } catch (error) {
-        // console.error('Erreur lors de la récupération des catégories :', error);
+      } catch {
+        console.error('Erreur interne');
       }
     };
 

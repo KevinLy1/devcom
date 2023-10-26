@@ -1,7 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Avatar, Button, Menu, MenuHandler, MenuList, MenuItem } from '@material-tailwind/react';
-import { FaThumbsUp, FaThumbsDown, FaLink, FaShareAlt, FaStar, FaTag } from 'react-icons/fa';
+import {
+  Avatar
+  // Button
+  // Menu, MenuHandler, MenuList, MenuItem
+} from '@material-tailwind/react';
+import {
+  FaThumbsUp,
+  FaThumbsDown,
+  // FaLink,
+  // FaShareAlt,
+  FaStar,
+  FaTag
+} from 'react-icons/fa';
 import { useAuth } from '../../contexts/AuthContext';
 import {
   handleLike,
@@ -11,7 +22,7 @@ import {
   handleFavorite,
   handleCancelFavorite
 } from '../../actions/publicationActions';
-import { notification } from 'antd';
+// import { notification } from 'antd';
 
 const DiscussionCard = (props) => {
   const { userData } = useAuth();
@@ -157,7 +168,7 @@ const DiscussionCard = (props) => {
             </svg>
             <span>{nbComments}</span>
           </div>
-          <Menu>
+          {/* <Menu>
             <MenuHandler>
               <Button>
                 <FaShareAlt />
@@ -176,7 +187,7 @@ const DiscussionCard = (props) => {
                 <FaLink className="inline-block" /> Copier le lien
               </MenuItem>
             </MenuList>
-          </Menu>
+          </Menu> */}
         </div>
       </div>
     </div>

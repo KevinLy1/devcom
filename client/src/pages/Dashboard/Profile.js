@@ -73,7 +73,7 @@ const ProfilePage = () => {
           await logout();
         }
       } catch {
-        //
+        console.error('Erreur interne');
       }
     }
   };
@@ -99,7 +99,7 @@ const ProfilePage = () => {
           }, 1000);
         }
       } catch {
-        //
+        console.error('Erreur interne');
       }
     }
   };

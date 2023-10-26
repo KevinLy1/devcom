@@ -23,8 +23,8 @@ const AdminPublicationForm = ({ currentPublication }) => {
             content: data.content ? validator.unescape(data.content) : ''
           }));
         })
-        .catch((error) => {
-          console.error('Erreur lors de la récupération de la publication :', error);
+        .catch(() => {
+          console.error('Erreur interne');
         });
     }
   }, [currentPublication]);
@@ -56,7 +56,7 @@ const AdminPublicationForm = ({ currentPublication }) => {
         });
       }
     } catch {
-      //
+      console.error('Erreur interne');
     }
   };
 

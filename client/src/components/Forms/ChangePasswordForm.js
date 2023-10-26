@@ -42,8 +42,8 @@ const ChangePasswordForm = () => {
             description: json.message
           });
         }
-      } catch (error) {
-        //
+      } catch {
+        console.error('Erreur interne');
       }
     } else {
       notification.error({

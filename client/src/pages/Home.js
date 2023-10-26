@@ -23,12 +23,14 @@ const HomePage = () => {
     reputations: articleReputations,
     comments: articleComments
   } = useLatestArticles();
+
   const {
     discussions,
     users: discussionUsers,
     reputations: discussionReputations,
     comments: discussionComments
   } = useLatestDiscussions();
+
   const favorites = useFavorites();
 
   return (

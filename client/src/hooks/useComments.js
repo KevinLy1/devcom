@@ -10,8 +10,8 @@ const useComments = () => {
         const response = await apiComments();
         const commentsData = await response.json();
         setComments(commentsData);
-      } catch (error) {
-        console.error('Erreur lors de la récupération des commentaires :', error);
+      } catch {
+        console.error('Erreur interne');
       }
     };
 

@@ -52,7 +52,7 @@ class AuthController {
             })
             .status(200)
             .json({
-              message: 'Authenticated'
+              message: 'Authentifié'
             });
         }
       }
@@ -63,7 +63,11 @@ class AuthController {
   }
 
   async logout(req, res) {
-    return res.clearCookie('refreshToken').clearCookie('accessToken').status(200).json({ message: 'Logout' });
+    return res
+      .clearCookie('refreshToken')
+      .clearCookie('accessToken')
+      .status(200)
+      .json({ message: 'Déconnexion réussie' });
   }
 
   async getAccessTokenData(req, res) {

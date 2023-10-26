@@ -53,7 +53,6 @@ CA_PATH =
 # Connexion à la base de données
 DB_HOST = localhost
 DB_PORT = 3306
-DB_DIALECT = mariadb
 DB_NAME = devcom
 DB_USER = root
 DB_PASSWORD = root

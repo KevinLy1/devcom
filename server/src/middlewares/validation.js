@@ -15,7 +15,6 @@ class Validation {
       const firstName = req.body.first_name;
       const lastName = req.body.last_name;
       const web_url = req.body.web_url;
-      const avatar = req.body.avatar;
       const biography = req.body.biography;
 
       // Valider le nom d'utilisateur (obligatoire)
@@ -43,29 +42,26 @@ class Validation {
       }
 
       // Valider le prénom (facultatif)
-      if (firstName && !validator.isAlpha(firstName) && !validator.isLength(firstName, { min: 2 })) {
-        throw new Error('Le prénom ne doit comporter que des lettres et avoir une longueur minimale de 2 caractères');
+      if (!validator.isEmpty(firstName, { ignore_whitespace: true })) {
+        if (!validator.isAlpha(firstName)) {
+          throw new Error('Le prénom ne doit comporter que des lettres');
+        } else if (!validator.isLength(firstName, { min: 2 })) {
+          throw new Error('Le prénom doit avoir une longueur minimale de 2 caractères');
+        }
       }
 
       // Valider le nom de famille (facultatif)
-      if (lastName && !validator.isAlpha(lastName) && !validator.isLength(lastName, { min: 2 })) {
-        throw new Error(
-          'Le nom de famille ne doit comporter que des lettres et avoir une longueur minimale de 2 caractères'
-        );
+      if (!validator.isEmpty(lastName, { ignore_whitespace: true })) {
+        if (!validator.isAlpha(lastName)) {
+          throw new Error('Le nom de famille ne doit comporter que des lettres');
+        } else if (!validator.isLength(lastName, { min: 2 })) {
+          throw new Error('Le nom de famille doit avoir une longueur minimale de 2 caractères');
+        }
       }
 
       // Valider l'URL du site web (facultatif)
       if (web_url && !validator.isURL(web_url)) {
         throw new Error("L'URL du site web n'est pas valide");
-      }
-
-      // Valider l'URL de l'avatar (facultatif)
-      if (avatar) {
-        const validExtensions = ['.jpg', '.jpeg', '.gif', '.png'];
-        const lowerCaseAvatar = avatar.toLowerCase();
-        if (!validExtensions.some((extension) => lowerCaseAvatar.endsWith(extension))) {
-          throw new Error("L'avatar doit être une image au format JPG, JPEG, GIF, ou PNG");
-        }
       }
 
       // Valider la biographie (facultatif)
@@ -88,7 +84,6 @@ class Validation {
       const firstName = req.body.first_name;
       const lastName = req.body.last_name;
       const web_url = req.body.web_url;
-      const avatar = req.body.avatar;
       const biography = req.body.biography;
 
       // Valider le nom d'utilisateur
@@ -106,8 +101,12 @@ class Validation {
       }
 
       // Valider l'adresse e-mail
-      if (email && !validator.isEmail(email)) {
-        throw new Error("L'adresse e-mail doit être au bon format (ex: exemple@domaine.com)");
+      if (email) {
+        if (!validator.isEmail(email)) {
+          throw new Error("L'adresse e-mail doit être au bon format (ex : exemple@domaine.com)");
+        }
+      } else {
+        throw new Error("L'adresse e-mail ne peut pas être vide");
       }
 
       // Valider la civilité (facultatif)
@@ -115,33 +114,34 @@ class Validation {
         throw new Error('La civilité doit être homme, femme ou autre');
       }
 
-      // Valider le prénom (facultatif)
-      if (firstName && !validator.isAlpha(firstName) && !validator.isLength(firstName, { min: 2 })) {
-        throw new Error('Le prénom ne doit comporter que des lettres et avoir une longueur minimale de 2 caractères');
+      // Valider le prénom
+      if (firstName) {
+        if (!validator.isEmpty(firstName, { ignore_whitespace: true })) {
+          if (!validator.isAlpha(firstName)) {
+            throw new Error('Le prénom ne doit comporter que des lettres');
+          } else if (!validator.isLength(firstName, { min: 2 })) {
+            throw new Error('Le prénom doit avoir une longueur minimale de 2 caractères');
+          }
+        }
       }
 
-      // Valider le nom de famille (facultatif)
-      if (lastName && !validator.isAlpha(lastName) && !validator.isLength(lastName, { min: 2 })) {
-        throw new Error(
-          'Le nom de famille ne doit comporter que des lettres et avoir une longueur minimale de 2 caractères'
-        );
+      // Valider le nom de famille
+      if (lastName) {
+        if (!validator.isEmpty(lastName, { ignore_whitespace: true })) {
+          if (!validator.isAlpha(lastName)) {
+            throw new Error('Le nom de famille ne doit comporter que des lettres');
+          } else if (!validator.isLength(lastName, { min: 2 })) {
+            throw new Error('Le nom de famille doit avoir une longueur minimale de 2 caractères');
+          }
+        }
       }
 
-      // Valider l'URL du site web (facultatif)
+      // Valider l'URL du site web
       if (web_url && !validator.isURL(web_url)) {
         throw new Error("L'URL du site web n'est pas valide");
       }
 
-      // Valider l'URL de l'avatar (facultatif)
-      if (avatar) {
-        const validExtensions = ['.jpg', '.jpeg', '.gif', '.png'];
-        const lowerCaseAvatar = avatar.toLowerCase();
-        if (!validExtensions.some((extension) => lowerCaseAvatar.endsWith(extension))) {
-          throw new Error("L'avatar doit être une image au format JPG, JPEG, GIF, ou PNG");
-        }
-      }
-
-      // Valider la biographie (facultatif)
+      // Valider la biographie
       if (biography && !validator.isLength(biography, { max: 200 })) {
         throw new Error('La biographie ne doit pas dépasser 200 caractères');
       }

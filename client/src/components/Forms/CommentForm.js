@@ -26,8 +26,8 @@ const CommentForm = ({ editMode, currentComment }) => {
             content: data.content ? validator.unescape(data.content) : ''
           }));
         })
-        .catch((error) => {
-          console.error('Erreur lors de la récupération du commentaire :', error);
+        .catch(() => {
+          console.error('Erreur interne');
         });
     }
   }, [currentComment]);
@@ -84,7 +84,7 @@ const CommentForm = ({ editMode, currentComment }) => {
         }
       }
     } catch {
-      //
+      console.error('Erreur interne');
     }
   };
 

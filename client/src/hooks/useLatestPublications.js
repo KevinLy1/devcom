@@ -76,8 +76,8 @@ export const useLatestArticles = () => {
         setCategories(categoriesData);
         setReputations(reputationsData);
         setComments(commentsData);
-      } catch (error) {
-        //
+      } catch {
+        console.error('Erreur interne');
       }
     };
 
@@ -105,8 +105,8 @@ export const useLatestDiscussions = () => {
           const json = await response.json();
           console.error(json.message);
         }
-      } catch (error) {
-        //
+      } catch {
+        console.error('Erreur interne');
       }
     };
 
@@ -155,8 +155,8 @@ export const useLatestDiscussions = () => {
         setCategories(categoriesData);
         setReputations(reputationsData);
         setComments(commentsData);
-      } catch (error) {
-        //
+      } catch {
+        console.error('Erreur interne');
       }
     };
 

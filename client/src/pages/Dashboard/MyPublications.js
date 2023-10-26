@@ -27,10 +27,9 @@ const MyPublicationsPage = () => {
             message: 'La publication a bien été supprimée.'
           });
         }
-      } catch (error) {
+      } catch {
         notification.error({
-          message: "Une erreur s'est produite pendant la suppression",
-          description: error
+          message: "Une erreur s'est produite pendant la suppression"
         });
       }
     }

@@ -40,8 +40,8 @@ const PublicationForm = ({ editMode, currentPublication }) => {
             image: data.image
           }));
         })
-        .catch((error) => {
-          console.error('Erreur lors de la récupération de la publication :', error);
+        .catch(() => {
+          console.error('Erreur interne');
         });
     }
   }, [currentPublication]);
@@ -192,7 +192,7 @@ const PublicationForm = ({ editMode, currentPublication }) => {
         }
       }
     } catch {
-      //
+      console.error('Erreur interne');
     }
   };
 

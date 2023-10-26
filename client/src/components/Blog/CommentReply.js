@@ -32,7 +32,7 @@ const CommentReply = (props) => {
           });
         }
       } catch {
-        //
+        console.error('Erreur interne');
       }
     }
   };

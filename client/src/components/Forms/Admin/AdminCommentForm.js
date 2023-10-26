@@ -72,12 +72,8 @@ const AdminCommentForm = ({ currentComment }) => {
           });
           navigate('/admin/comments');
         }
-      } catch (error) {
-        notification.error({
-          placement: 'top',
-          message: "Une erreur s'est produite pendant la suppression",
-          description: error
-        });
+      } catch {
+        console.error('Erreur interne');
       }
     }
   };

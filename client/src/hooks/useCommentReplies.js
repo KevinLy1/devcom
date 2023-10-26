@@ -14,8 +14,8 @@ const useCommentReplies = (id) => {
           const data = await response.json();
           setReplies(data);
         }
-      } catch (error) {
-        //
+      } catch {
+        console.error('Erreur interne');
       }
     }
 
@@ -36,8 +36,8 @@ const useCommentReplies = (id) => {
           }
         }
         setReplyAuthor(usersData);
-      } catch (error) {
-        //
+      } catch {
+        console.error('Erreur interne');
       }
     }
 

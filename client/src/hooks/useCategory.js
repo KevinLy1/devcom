@@ -20,8 +20,8 @@ export const useCategory = () => {
         const response = await apiCategoryById(id);
         const categoryData = await response.json();
         setCategory(categoryData);
-      } catch (error) {
-        // console.error('Erreur lors de la récupération des catégories :', error);
+      } catch {
+        console.error('Erreur interne');
       }
     };
 
@@ -59,8 +59,8 @@ export const useArticles = () => {
           const json = await response.json();
           console.error(json.message);
         }
-      } catch (error) {
-        //
+      } catch {
+        console.error('Erreur interne');
       }
     };
 
@@ -109,8 +109,8 @@ export const useArticles = () => {
         setCategories(categoriesData);
         setReputations(reputationsData);
         setComments(commentsData);
-      } catch (error) {
-        //
+      } catch {
+        console.error('Erreur interne');
       }
     };
 
@@ -148,8 +148,8 @@ export const useDiscussions = () => {
           const json = await response.json();
           console.error(json.message);
         }
-      } catch (error) {
-        //
+      } catch {
+        console.error('Erreur interne');
       }
     };
 
@@ -198,8 +198,8 @@ export const useDiscussions = () => {
         setCategories(categoriesData);
         setReputations(reputationsData);
         setComments(commentsData);
-      } catch (error) {
-        //
+      } catch {
+        console.error('Erreur interne');
       }
     };
 

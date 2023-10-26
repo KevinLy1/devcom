@@ -16,8 +16,8 @@ const usePublications = () => {
           const json = await response.json();
           console.error(json.message);
         }
-      } catch (error) {
-        //
+      } catch {
+        console.error('Erreur interne');
       }
     };
 
@@ -46,8 +46,8 @@ export const useArticles = () => {
           const json = await response.json();
           console.error(json.message);
         }
-      } catch (error) {
-        //
+      } catch {
+        console.error('Erreur interne');
       }
     };
 
@@ -96,8 +96,8 @@ export const useArticles = () => {
         setCategories(categoriesData);
         setReputations(reputationsData);
         setComments(commentsData);
-      } catch (error) {
-        //
+      } catch {
+        console.error('Erreur interne');
       }
     };
 
@@ -126,8 +126,8 @@ export const useDiscussions = () => {
           const json = await response.json();
           console.error(json.message);
         }
-      } catch (error) {
-        //
+      } catch {
+        console.error('Erreur interne');
       }
     };
 
@@ -176,8 +176,8 @@ export const useDiscussions = () => {
         setCategories(categoriesData);
         setReputations(reputationsData);
         setComments(commentsData);
-      } catch (error) {
-        //
+      } catch {
+        console.error('Erreur interne');
       }
     };
 

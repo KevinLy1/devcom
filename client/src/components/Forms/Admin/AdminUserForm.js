@@ -29,8 +29,8 @@ const AdminUserForm = ({ currentUser }) => {
           role: data.role
         }));
       })
-      .catch((error) => {
-        console.error("Erreur lors de la récupération de l'utilisateur :", error);
+      .catch(() => {
+        console.error('Erreur interne');
       });
   }, [currentUser]);
 

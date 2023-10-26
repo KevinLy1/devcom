@@ -17,8 +17,8 @@ const ChangeAvatarForm = () => {
       .then((data) => {
         setCurrentAvatar(data.avatar);
       })
-      .catch((error) => {
-        console.error("Erreur lors de la récupération de l'avatar :", error);
+      .catch(() => {
+        console.error('Erreur interne');
       });
   }, [userData]);
 
