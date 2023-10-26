@@ -89,7 +89,7 @@ class Publication {
   }
 
   async removeCategory(idPublication, idCategory) {
-    return await EntityRepository.deleteEntity({
+    return await EntityRepository.deleteEntity(joinCategories, {
       id_publication: idPublication,
       id_category: idCategory
     });

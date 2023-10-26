@@ -109,7 +109,7 @@ const ArticleCard = (props) => {
           />
           {props.author}
         </Link>
-        <div className="flex space-x-2 my-4">
+        <div className="flex flex-wrap gap-3 my-4">
           {categories.map((category) => (
             <a key={category.id_category} href={`/category/${category.id_category}`}>
               <div className="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-gray-800 dark:bg-slate-800 rounded cursor-pointer hover:bg-gray-500 dark:hover:bg-gray-700 flex items-center">

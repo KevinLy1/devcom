@@ -75,10 +75,14 @@ export const apiPublicationCategories = async (id) => {
 };
 
 // DELETE
-export const apiRemovePublicationCategory = async (id) => {
+export const apiRemovePublicationCategory = async (id, data) => {
   return await fetch(`${process.env.REACT_APP_API_URL}/publications/${id}/categories`, {
     method: 'DELETE',
-    credentials: 'include'
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
   });
 };
 

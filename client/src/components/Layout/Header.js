@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useTheme from '../../hooks/useTheme';
 import useCategories from '../../hooks/useCategories';
 import {
@@ -20,6 +20,7 @@ import { ChevronDownIcon } from '@heroicons/react/24/outline';
 
 const Header = () => {
   const categories = useCategories();
+  const navigate = useNavigate();
 
   const [openNav, setOpenNav] = useState(false);
   const { theme, toggleTheme } = useTheme();
@@ -34,6 +35,7 @@ const Header = () => {
           message: 'Déconnexion réussie',
           description: `Au revoir, ${userData.username} !`
         });
+        navigate('/');
       } else {
         notification.error({
           placement: 'top',
