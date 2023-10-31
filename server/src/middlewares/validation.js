@@ -44,21 +44,15 @@ class Validation {
       }
 
       // Valider le prénom (facultatif)
-      if (!validator.isEmpty(firstName, { ignore_whitespace: true })) {
-        if (!validator.isAlpha(firstName)) {
-          throw new Error('Le prénom ne doit comporter que des lettres');
-        } else if (!validator.isLength(firstName, { min: 2 })) {
-          throw new Error('Le prénom doit avoir une longueur minimale de 2 caractères');
-        }
+      if (firstName && !validator.isAlpha(firstName) && !validator.isLength(firstName, { min: 2 })) {
+        throw new Error('Le prénom ne doit comporter que des lettres et avoir une longueur minimale de 2 caractères');
       }
 
       // Valider le nom de famille (facultatif)
-      if (!validator.isEmpty(lastName, { ignore_whitespace: true })) {
-        if (!validator.isAlpha(lastName)) {
-          throw new Error('Le nom de famille ne doit comporter que des lettres');
-        } else if (!validator.isLength(lastName, { min: 2 })) {
-          throw new Error('Le nom de famille doit avoir une longueur minimale de 2 caractères');
-        }
+      if (lastName && !validator.isAlpha(lastName) && !validator.isLength(lastName, { min: 2 })) {
+        throw new Error(
+          'Le nom de famille ne doit comporter que des lettres et avoir une longueur minimale de 2 caractères'
+        );
       }
 
       // Valider l'URL du site web (facultatif)
